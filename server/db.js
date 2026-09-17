@@ -21,7 +21,7 @@ const defaultData = {
   categoryColors: { sucree: "#f2b8c6", salee: "#bfe0c4", boisson: "#b8d4f2" },
   orders: [],
   counter: 0,
-  settings: { fondDeCaisse: 0 },
+  settings: { fondDeCaisse: 0, theme: "neo" },
   clotures: []
 };
 
@@ -35,6 +35,7 @@ export async function initDb() {
   // sans ecraser les donnees deja presentes (menu, commandes...).
   db.data.categoryColors ||= structuredClone(defaultData.categoryColors);
   db.data.settings ||= structuredClone(defaultData.settings);
+  db.data.settings.theme ||= "neo";
   db.data.clotures ||= [];
   for (const item of db.data.menu) {
     if (!item.color) {

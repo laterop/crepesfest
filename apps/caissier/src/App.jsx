@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { io } from "socket.io-client";
 import { QRCodeSVG } from "qrcode.react";
 import { API_URL } from "./config.js";
 
@@ -106,6 +107,20 @@ export default function App() {
   useEffect(() => {
     const t = setInterval(() => setClock(new Date()), 1000 * 15);
     return () => clearInterval(t);
+  }, []);
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/settings`)
+      .then((r) => r.json())
+      .then((s) => {
+        document.documentElement.dataset.theme = s.theme || "neo";
+      })
+      .catch(() => {});
+    const socket = io(API_URL);
+    socket.on("settings:update", (s) => {
+      document.documentElement.dataset.theme = s.theme || "neo";
+    });
+    return () => socket.disconnect();
   }, []);
 
   useEffect(() => {

@@ -1,33 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
+
 * { box-sizing: border-box; }
+
+/* ==================== THEME NEO (defaut) ==================== */
+:root {
+  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --bg: #f6eeff;
+  --panel: #ffffff;
+  --panel-soft: #f4ecff;
+  --accent-soft: #efe1ff;
+  --text: #16121f;
+  --muted: #6b6478;
+  --accent: #7c3aed;
+  --success: #16a34a;
+  --success-bg: #dcfce7;
+  --warning-bg: #fef9c3;
+  --warning-text: #854d0e;
+  --danger: #dc2626;
+  --danger-bg: #fee2e2;
+  --shadow-sm: 3px 3px 0 #000;
+  --shadow-md: 5px 5px 0 #000;
+}
+
 html { font-size: 17px; }
 body {
   margin: 0;
-  font-family: Tahoma, Verdana, "Segoe UI", Arial, sans-serif;
-  background: radial-gradient(ellipse at 50% -10%, #7fa8ff 0%, #3a5fc4 55%, #1c2f6b 100%);
-  color: #000;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
 }
-.app { display: flex; flex-direction: column; min-height: 100vh; padding-bottom: 2.6rem; }
+.app { display: flex; flex-direction: column; min-height: 100vh; padding-bottom: 0; }
 
 /* ---------- Title bar ---------- */
 .topbar {
-  background: linear-gradient(180deg, #4a9bff 0%, #1958ee 8%, #1958ee 45%, #0f45cf 88%, #0a2fa0 100%);
-  color: white;
-  padding: 0.5rem 0.5rem 0.5rem 0.8rem;
+  background: var(--panel);
+  color: var(--text);
+  padding: 0.8rem 1.1rem;
   display: flex; justify-content: space-between; align-items: center;
-  border: 1px solid #0a2fa0; border-bottom: 2px solid #0a2fa0;
+  border-bottom: 3px solid #000;
 }
 .title-left { display: flex; align-items: center; gap: 0.5rem; }
-.title-icon { font-size: 1.2rem; }
-.topbar h1 { margin: 0; font-size: 1.05rem; font-weight: 700; text-shadow: 1px 1px 1px rgba(0,0,0,0.4); }
-.title-controls { display: flex; gap: 0.3rem; }
-.win-btn {
-  width: 22px; height: 20px; display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(180deg, #4f92e8 0%, #1c5cd6 100%);
-  border: 1px solid #0a2fa0; border-radius: 2px;
-  font-size: 0.8rem; font-weight: 700; color: white; cursor: default;
-  box-shadow: inset 1px 1px 0 rgba(255,255,255,0.4);
-}
-.win-btn.close { background: linear-gradient(180deg, #f3897a 0%, #d0261a 100%); }
+.title-icon { font-size: 1.3rem; }
+.topbar h1 { margin: 0; font-size: 1.15rem; font-weight: 800; }
+.title-controls, .taskbar { display: none; }
 
 .layout { display: flex; flex: 1; gap: 1.2rem; padding: 1.2rem; align-items: flex-start; }
 .menu { flex: 2; min-width: 0; }
@@ -35,21 +50,22 @@ body {
 .category { margin-bottom: 1.2rem; }
 .category h2 {
   text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.9rem;
-  color: #0a2fa0; margin: 0 0 0.6rem; padding-bottom: 0.3rem;
-  border-bottom: 2px solid #1958ee;
+  color: var(--accent); margin: 0 0 0.6rem; padding-bottom: 0.3rem;
+  border-bottom: 3px solid #000; font-weight: 800;
 }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.7rem; }
 .menu-item {
   display: flex; flex-direction: column; align-items: flex-start; gap: 0.3rem;
-  padding: 1rem; border-radius: 4px; border: 1px solid #7f9db9; border-top-width: 6px;
-  background: linear-gradient(180deg, #ffffff 0%, #ece9d8 100%); cursor: pointer; text-align: left;
-  box-shadow: inset 1px 1px 0 #fff, 2px 2px 4px rgba(0,0,0,0.25);
+  padding: 1rem; border-radius: 14px; border: 3px solid #000; border-top-width: 8px;
+  background: white; cursor: pointer; text-align: left;
+  box-shadow: var(--shadow-sm);
   font-family: inherit;
+  transition: transform 0.05s ease, box-shadow 0.05s ease;
 }
-.menu-item:active { box-shadow: inset 1px 1px 3px rgba(0,0,0,0.35); }
+.menu-item:active { transform: translate(3px, 3px); box-shadow: none; }
 .menu-item:disabled { opacity: 0.4; cursor: not-allowed; }
-.menu-item .name { font-weight: 700; font-size: 1rem; line-height: 1.2; color: #000; }
-.menu-item .price { color: #0a2fa0; font-weight: 700; font-size: 0.95rem; }
+.menu-item .name { font-weight: 700; font-size: 1rem; line-height: 1.2; color: var(--text); }
+.menu-item .price { color: var(--accent); font-weight: 800; font-size: 0.95rem; }
 
 .cart { flex: 1.1; min-width: 340px; display: flex; flex-direction: column; gap: 1rem; }
 
@@ -59,154 +75,153 @@ body {
 .payment-full { flex: 1.4; max-width: 620px; }
 .back-btn {
   align-self: flex-start;
-  padding: 0.5rem 1rem; border-radius: 3px; border: 1px solid #003c74;
-  background: linear-gradient(180deg, #fff 0%, #ece9d8 100%); font-weight: 600;
-  cursor: pointer; font-size: 0.9rem; box-shadow: inset 1px 1px 0 #fff, 1px 1px 2px rgba(0,0,0,0.25);
+  padding: 0.5rem 1.1rem; border-radius: 999px; border: 2px solid #000;
+  background: white; font-weight: 700;
+  cursor: pointer; font-size: 0.9rem; box-shadow: 2px 2px 0 #000;
   font-family: inherit;
 }
-.hint-text { color: #444; font-size: 0.85rem; margin: -0.3rem 0 0.6rem; }
+.hint-text { color: var(--muted); font-size: 0.85rem; margin: -0.3rem 0 0.6rem; }
 
 .panel-card {
-  background: #ece9d8; border: 1px solid #7f9db9; border-radius: 4px; padding: 1.1rem;
-  box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+  background: var(--panel); border: 3px solid #000; border-radius: 16px; padding: 1.1rem;
+  box-shadow: var(--shadow-md);
 }
 .panel-title {
-  margin: 0 0 0.7rem; font-size: 1rem; font-weight: 700; color: #0a2fa0;
-  border-bottom: 1px solid #b8b49a; padding-bottom: 0.4rem;
+  margin: 0 0 0.7rem; font-size: 1.05rem; font-weight: 800; color: var(--text);
+  border-bottom: 2px solid #000; padding-bottom: 0.4rem;
 }
 
 .customer-input {
-  width: 100%; padding: 0.55rem; margin-bottom: 0.7rem; border-radius: 2px;
-  border: 1px solid #7f9db9; font-size: 0.95rem; background: white;
-  box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2); font-family: inherit;
+  width: 100%; padding: 0.6rem; margin-bottom: 0.7rem; border-radius: 10px;
+  border: 2px solid #000; font-size: 0.95rem; background: white; font-family: inherit;
 }
 
 .cart-lines { list-style: none; padding: 0; margin: 0; }
 .cart-line {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0.55rem 0; border-bottom: 1px solid #cfcbb0; gap: 0.6rem;
+  padding: 0.55rem 0; border-bottom: 2px dashed #d8c9f0; gap: 0.6rem;
 }
-.cart-line-name { flex: 1; font-weight: 600; font-size: 0.95rem; }
+.cart-line-name { flex: 1; font-weight: 700; font-size: 0.95rem; }
 .qty-controls { display: flex; align-items: center; gap: 0.5rem; }
 .qty-controls button {
-  width: 30px; height: 30px; border-radius: 50%; border: 1px solid #003c74;
-  background: linear-gradient(180deg, #fff 0%, #ece9d8 100%); cursor: pointer;
-  font-size: 1rem; font-weight: 700; box-shadow: inset 1px 1px 0 #fff, 1px 1px 2px rgba(0,0,0,0.3);
+  width: 30px; height: 30px; border-radius: 50%; border: 2px solid #000;
+  background: white; cursor: pointer;
+  font-size: 1rem; font-weight: 800; box-shadow: 2px 2px 0 #000;
 }
-.qty-controls button:disabled { opacity: 0.3; cursor: not-allowed; }
-.line-total { font-weight: 600; min-width: 62px; text-align: right; }
-.empty { color: #666; padding: 0.8rem 0; font-size: 0.9rem; }
+.qty-controls button:disabled { opacity: 0.3; cursor: not-allowed; box-shadow: none; }
+.line-total { font-weight: 700; min-width: 62px; text-align: right; }
+.empty { color: var(--muted); padding: 0.8rem 0; font-size: 0.9rem; }
 
 .total-row {
   display: flex; justify-content: space-between; align-items: baseline;
-  margin-top: 0.7rem; padding-top: 0.7rem; border-top: 2px solid #b8b49a;
-  font-size: 1.05rem; font-weight: 700;
+  margin-top: 0.7rem; padding-top: 0.7rem; border-top: 3px solid #000;
+  font-size: 1.05rem; font-weight: 800;
 }
-.total-value { font-size: 1.5rem; color: #0a2fa0; }
+.total-value { font-size: 1.6rem; color: var(--accent); }
 
 /* -------- Paiement -------- */
 .payment-card { display: flex; flex-direction: column; gap: 0.8rem; }
 
 .remaining-banner {
-  background: #fff3c4; border: 1px solid #d0a300; color: #6b4e00;
-  border-radius: 3px; padding: 0.7rem 0.9rem; font-weight: 700; text-align: center;
-  box-shadow: inset 1px 1px 2px rgba(0,0,0,0.1);
+  background: var(--warning-bg); border: 2px solid #000; color: var(--warning-text);
+  border-radius: 12px; padding: 0.7rem 0.9rem; font-weight: 800; text-align: center;
 }
-.remaining-banner.paid { background: #dcf5c8; border-color: #3c9c1c; color: #2d5a00; }
+.remaining-banner.paid { background: var(--success-bg); color: #14532d; }
 
 .payment-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem; }
 .payment-chip {
   display: flex; align-items: center; gap: 0.5rem; background: white;
-  border: 1px solid #7f9db9; border-radius: 3px; padding: 0.5rem 0.7rem; font-size: 0.9rem;
+  border: 2px solid #000; border-radius: 999px; padding: 0.5rem 0.8rem; font-size: 0.9rem;
 }
-.chip-method { font-weight: 700; color: #0a2fa0; }
-.chip-amount { font-weight: 600; }
-.chip-change { color: #2d7a12; font-size: 0.82rem; }
-.chip-items { color: #666; font-size: 0.8rem; font-style: italic; }
+.chip-method { font-weight: 800; color: var(--accent); }
+.chip-amount { font-weight: 700; }
+.chip-change { color: var(--success); font-size: 0.82rem; font-weight: 600; }
+.chip-items { color: var(--muted); font-size: 0.8rem; font-style: italic; }
 .chip-remove {
-  margin-left: auto; background: none; border: none; color: #a30000;
-  font-size: 1rem; cursor: pointer; padding: 0.1rem 0.3rem; font-weight: 700;
+  margin-left: auto; background: none; border: none; color: var(--danger);
+  font-size: 1rem; cursor: pointer; padding: 0.1rem 0.3rem; font-weight: 800;
 }
 
 .split-toggle { display: flex; gap: 0.4rem; }
 .split-toggle button {
-  flex: 1; padding: 0.5rem; border-radius: 3px; border: 1px solid #003c74;
-  background: linear-gradient(180deg, #fff 0%, #ece9d8 100%); font-size: 0.82rem; cursor: pointer;
-  box-shadow: inset 1px 1px 0 #fff, 1px 1px 2px rgba(0,0,0,0.25); font-family: inherit;
+  flex: 1; padding: 0.5rem; border-radius: 999px; border: 2px solid #000;
+  background: white; font-size: 0.82rem; cursor: pointer; font-weight: 700;
+  box-shadow: 2px 2px 0 #000; font-family: inherit;
 }
-.split-toggle button.active { background: linear-gradient(180deg, #4a9bff 0%, #0a2fa0 100%); color: white; }
+.split-toggle button.active { background: var(--accent); color: white; }
 
 .split-items { display: flex; flex-direction: column; gap: 0.5rem; }
 .split-item-row {
   display: flex; align-items: center; justify-content: space-between;
-  gap: 0.5rem; padding: 0.4rem 0; border-bottom: 1px solid #cfcbb0;
+  gap: 0.5rem; padding: 0.4rem 0; border-bottom: 2px dashed #d8c9f0;
 }
-.split-item-name { font-size: 0.9rem; font-weight: 600; }
-.split-item-avail { font-weight: 400; color: #666; font-size: 0.8rem; }
-.split-items-total { text-align: right; font-weight: 700; padding-top: 0.3rem; }
+.split-item-name { font-size: 0.9rem; font-weight: 700; }
+.split-item-avail { font-weight: 500; color: var(--muted); font-size: 0.8rem; }
+.split-items-total { text-align: right; font-weight: 800; padding-top: 0.3rem; }
 
 .payment-entry {
-  border: 1px solid #7f9db9; border-radius: 4px; padding: 0.9rem;
-  display: flex; flex-direction: column; gap: 0.7rem; background: white;
+  border: 3px solid #000; border-radius: 16px; padding: 0.9rem;
+  display: flex; flex-direction: column; gap: 0.7rem; background: var(--panel-soft);
+  box-shadow: var(--shadow-sm);
 }
 .entry-header { display: flex; align-items: center; justify-content: space-between; }
-.entry-title { font-weight: 700; font-size: 0.95rem; color: #0a2fa0; }
+.entry-title { font-weight: 800; font-size: 0.95rem; color: var(--text); }
 .mode-toggle {
-  background: none; border: none; color: #0a2fa0; text-decoration: underline;
-  font-size: 0.8rem; cursor: pointer; padding: 0.2rem 0; font-family: inherit;
+  background: none; border: none; color: var(--accent); text-decoration: underline;
+  font-size: 0.8rem; cursor: pointer; padding: 0.2rem 0; font-family: inherit; font-weight: 700;
 }
 
 .quick-amounts { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 .quick-amounts button {
-  flex: 1; min-width: 80px; padding: 0.5rem; border-radius: 3px;
-  border: 1px solid #003c74; background: linear-gradient(180deg, #fff 0%, #ece9d8 100%);
-  font-size: 0.85rem; cursor: pointer; box-shadow: inset 1px 1px 0 #fff, 1px 1px 2px rgba(0,0,0,0.25);
+  flex: 1; min-width: 80px; padding: 0.5rem; border-radius: 999px;
+  border: 2px solid #000; background: white;
+  font-size: 0.85rem; cursor: pointer; font-weight: 700; box-shadow: 2px 2px 0 #000;
   font-family: inherit;
 }
 
 .amount-input {
-  width: 100%; padding: 0.65rem; border-radius: 2px; border: 1px solid #7f9db9;
-  font-size: 1.1rem; background: white; box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2);
-  font-family: inherit;
+  width: 100%; padding: 0.65rem; border-radius: 10px; border: 2px solid #000;
+  font-size: 1.1rem; background: white; font-family: inherit;
 }
 
 .numpad-wrap { display: flex; flex-direction: column; gap: 0.5rem; }
 .amount-display {
-  background: white; border: 1px solid #7f9db9; border-radius: 2px;
+  background: white; border: 3px solid #000; border-radius: 12px;
   padding: 0.7rem; text-align: right; display: flex; flex-direction: column;
-  align-items: flex-end; gap: 0.15rem; box-shadow: inset 1px 1px 3px rgba(0,0,0,0.25);
+  align-items: flex-end; gap: 0.15rem; box-shadow: var(--shadow-sm);
 }
-.amount-value { font-size: 1.5rem; font-weight: 700; color: #0a2fa0; }
-.amount-raw { font-size: 0.75rem; color: #888; }
+.amount-value { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+.amount-raw { font-size: 0.75rem; color: var(--muted); }
 
 .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
 .keypad-btn {
-  padding: 0; height: 54px; border-radius: 4px; border: 1px solid #003c74;
-  background: linear-gradient(180deg, #fff 0%, #ece9d8 100%); font-size: 1.3rem; font-weight: 700;
-  cursor: pointer; box-shadow: inset 1px 1px 0 #fff, 1px 1px 3px rgba(0,0,0,0.3);
+  padding: 0; height: 54px; border-radius: 12px; border: 2px solid #000;
+  background: white; font-size: 1.3rem; font-weight: 800;
+  cursor: pointer; box-shadow: 2px 2px 0 #000;
+  transition: transform 0.05s ease, box-shadow 0.05s ease;
 }
-.keypad-btn:active { box-shadow: inset 1px 1px 4px rgba(0,0,0,0.4); }
-.keypad-btn.back { color: #a30000; font-size: 1.5rem; }
+.keypad-btn:active { transform: translate(2px, 2px); box-shadow: none; }
+.keypad-btn.back { color: var(--danger); font-size: 1.5rem; }
 .keypad-clear {
-  padding: 0.55rem; border-radius: 3px; border: 1px solid #7a0e08;
-  background: linear-gradient(180deg, #ff9b8c 0%, #d0261a 100%); color: white; font-weight: 700;
-  cursor: pointer; box-shadow: inset 1px 1px 0 rgba(255,255,255,0.4);
+  padding: 0.55rem; border-radius: 999px; border: 2px solid #000;
+  background: var(--danger); color: white; font-weight: 800;
+  cursor: pointer; box-shadow: var(--shadow-sm);
 }
 
 .method-select { display: flex; gap: 0.4rem; }
 .method-select button {
-  flex: 1; padding: 0.6rem; border-radius: 3px; border: 1px solid #003c74;
-  background: linear-gradient(180deg, #fff 0%, #ece9d8 100%); font-weight: 600; cursor: pointer;
-  font-size: 0.9rem; box-shadow: inset 1px 1px 0 #fff, 1px 1px 2px rgba(0,0,0,0.25); font-family: inherit;
+  flex: 1; padding: 0.6rem; border-radius: 999px; border: 2px solid #000;
+  background: white; font-weight: 700; cursor: pointer;
+  font-size: 0.9rem; box-shadow: 2px 2px 0 #000; font-family: inherit;
 }
-.method-select button.active { background: linear-gradient(180deg, #4a9bff 0%, #0a2fa0 100%); color: white; }
+.method-select button.active { background: var(--accent); color: white; }
 
 .cash-received-row { display: flex; flex-direction: column; gap: 0.4rem; }
-.cash-received-label { font-size: 0.82rem; color: #444; }
+.cash-received-label { font-size: 0.82rem; color: var(--muted); }
 .bill-buttons { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 .bill-buttons button {
-  padding: 0.45rem 0.7rem; border-radius: 3px; border: 1px solid #7f9db9;
-  background: white; cursor: pointer; font-size: 0.85rem; font-weight: 600; font-family: inherit;
+  padding: 0.45rem 0.7rem; border-radius: 999px; border: 2px solid #000;
+  background: white; cursor: pointer; font-size: 0.85rem; font-weight: 700; font-family: inherit;
 }
 .bill-buttons button:disabled { opacity: 0.35; cursor: not-allowed; }
 
@@ -215,56 +230,171 @@ body {
 .qr-block { text-align: center; font-size: 0.9rem; }
 
 .add-payment {
-  padding: 0.7rem; border-radius: 3px; border: 1px solid #1c4a0a;
-  background: linear-gradient(180deg, #6fce4f 0%, #2d7a12 100%);
-  color: white; font-weight: 700; cursor: pointer; font-size: 0.95rem;
-  box-shadow: inset 1px 1px 0 rgba(255,255,255,0.5);
+  padding: 0.7rem; border-radius: 999px; border: 2px solid #000;
+  background: var(--success);
+  color: white; font-weight: 800; cursor: pointer; font-size: 0.95rem;
+  box-shadow: var(--shadow-sm);
 }
 
-.change { font-weight: 700; color: #2d7a12; font-size: 0.9rem; }
+.change { font-weight: 800; color: var(--success); font-size: 0.9rem; }
 
 .error {
-  color: #a30000; background: #ffe0dc; border: 1px solid #d0261a;
-  border-radius: 3px; padding: 0.5rem 0.7rem; font-size: 0.85rem;
+  color: var(--danger); background: var(--danger-bg); border: 2px solid #000;
+  border-radius: 10px; padding: 0.5rem 0.7rem; font-size: 0.85rem; font-weight: 600;
 }
 
 .submit {
-  width: 100%; padding: 0.9rem; background: linear-gradient(180deg, #6fce4f 0%, #2d7a12 100%);
-  color: white; border: 1px solid #1c4a0a; border-radius: 4px; font-size: 1.05rem; font-weight: 700;
-  cursor: pointer; box-shadow: inset 1px 1px 0 rgba(255,255,255,0.5), 2px 2px 4px rgba(0,0,0,0.3);
+  width: 100%; padding: 0.9rem; background: var(--success);
+  color: white; border: 3px solid #000; border-radius: 999px; font-size: 1.05rem; font-weight: 800;
+  cursor: pointer; box-shadow: var(--shadow-md);
+  transition: transform 0.05s ease, box-shadow 0.05s ease;
 }
+.submit:active { transform: translate(3px, 3px); box-shadow: none; }
 .submit:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .last-order {
-  background: #dcf5c8; color: #2d5a00; padding: 0.6rem; border-radius: 3px;
-  text-align: center; font-weight: 600; font-size: 0.9rem; border: 1px solid #3c9c1c;
+  background: var(--success-bg); color: #14532d; padding: 0.6rem; border-radius: 10px;
+  text-align: center; font-weight: 700; font-size: 0.9rem; border: 2px solid #000;
 }
 
-/* ---------- Taskbar ---------- */
-.taskbar {
-  position: fixed; left: 0; right: 0; bottom: 0; height: 2.6rem;
-  background: linear-gradient(180deg, #2a6fe0 0%, #1e4fc0 8%, #163d9a 90%, #10306f 100%);
-  border-top: 1px solid #4a9bff;
-  display: flex; align-items: center; gap: 0.6rem; padding: 0 0.4rem;
-  z-index: 10;
-}
-.start-btn {
-  display: flex; align-items: center; gap: 0.35rem;
-  background: linear-gradient(180deg, #6fce4f 0%, #3c9c1c 55%, #2d7a12 100%);
-  border: 1px solid #1c4a0a; border-radius: 4px;
-  color: white; font-weight: 800; font-style: italic; font-size: 0.9rem;
-  padding: 0.4rem 0.9rem; cursor: pointer;
-  box-shadow: inset 1px 1px 0 rgba(255,255,255,0.5); font-family: inherit;
-}
-.start-flag { font-style: normal; }
-.taskbar-sep { width: 1px; height: 1.8rem; background: rgba(255,255,255,0.3); }
-.taskbar-item {
-  background: #2f5fc4; border: 1px solid #163d9a; border-radius: 3px;
-  color: white; font-size: 0.85rem; padding: 0.35rem 0.9rem;
-  box-shadow: inset 1px 1px 2px rgba(0,0,0,0.4);
-}
-.taskbar-clock {
-  margin-left: auto; color: white; font-size: 0.85rem;
-  background: #163d9a; border: 1px solid #0f2c73; border-radius: 3px;
-  padding: 0.35rem 0.8rem;
+/* ==================== THEME XP ==================== */
+html[data-theme="xp"] {
+  font-size: 17px;
+
+  body {
+    font-family: Tahoma, Verdana, "Segoe UI", Arial, sans-serif;
+    background: radial-gradient(ellipse at 50% -10%, #7fa8ff 0%, #3a5fc4 55%, #1c2f6b 100%);
+    color: #000;
+  }
+  .app { padding-bottom: 2.6rem; }
+
+  .topbar {
+    background: linear-gradient(180deg, #4a9bff 0%, #1958ee 8%, #1958ee 45%, #0f45cf 88%, #0a2fa0 100%);
+    color: white; padding: 0.5rem 0.5rem 0.5rem 0.8rem; border: 1px solid #0a2fa0; border-bottom: 2px solid #0a2fa0;
+  }
+  .topbar h1 { font-weight: 700; text-shadow: 1px 1px 1px rgba(0,0,0,0.4); }
+  .title-controls { display: flex; gap: 0.3rem; }
+  .win-btn {
+    width: 22px; height: 20px; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(180deg, #4f92e8 0%, #1c5cd6 100%);
+    border: 1px solid #0a2fa0; border-radius: 2px;
+    font-size: 0.8rem; font-weight: 700; color: white; cursor: default;
+    box-shadow: inset 1px 1px 0 rgba(255,255,255,0.4);
+  }
+  .win-btn.close { background: linear-gradient(180deg, #f3897a 0%, #d0261a 100%); }
+
+  .category h2 { color: #0a2fa0; border-bottom: 2px solid #1958ee; font-weight: 400; }
+  .menu-item {
+    border-radius: 4px; border: 1px solid #7f9db9; border-top-width: 6px;
+    background: linear-gradient(180deg, #ffffff 0%, #ece9d8 100%);
+    box-shadow: inset 1px 1px 0 #fff, 2px 2px 4px rgba(0,0,0,0.25);
+  }
+  .menu-item:active { transform: none; box-shadow: inset 1px 1px 3px rgba(0,0,0,0.35); }
+  .menu-item .price { color: #0a2fa0; }
+
+  .back-btn {
+    border-radius: 3px; border: 1px solid #003c74;
+    background: linear-gradient(180deg, #fff 0%, #ece9d8 100%);
+    box-shadow: inset 1px 1px 0 #fff, 1px 1px 2px rgba(0,0,0,0.25);
+  }
+  .hint-text { color: #444; }
+
+  .panel-card { background: #ece9d8; border: 1px solid #7f9db9; border-radius: 4px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3); }
+  .panel-title { color: #0a2fa0; border-bottom: 1px solid #b8b49a; font-weight: 700; }
+
+  .customer-input { border-radius: 2px; border: 1px solid #7f9db9; box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2); }
+
+  .cart-line { border-bottom: 1px solid #cfcbb0; }
+  .cart-line-name { font-weight: 600; }
+  .qty-controls button {
+    border-radius: 50%; border: 1px solid #003c74;
+    background: linear-gradient(180deg, #fff 0%, #ece9d8 100%);
+    box-shadow: inset 1px 1px 0 #fff, 1px 1px 2px rgba(0,0,0,0.3);
+  }
+  .qty-controls button:disabled { box-shadow: inset 1px 1px 0 #fff, 1px 1px 2px rgba(0,0,0,0.3); }
+  .empty { color: #666; }
+
+  .total-row { border-top: 2px solid #b8b49a; font-weight: 700; }
+  .total-value { color: #0a2fa0; font-size: 1.5rem; }
+
+  .remaining-banner { background: #fff3c4; border: 1px solid #d0a300; color: #6b4e00; border-radius: 3px; box-shadow: inset 1px 1px 2px rgba(0,0,0,0.1); }
+  .remaining-banner.paid { background: #dcf5c8; border-color: #3c9c1c; color: #2d5a00; }
+
+  .payment-chip { background: white; border: 1px solid #7f9db9; border-radius: 3px; }
+  .chip-method { color: #0a2fa0; font-weight: 700; }
+  .chip-change { color: #2d7a12; font-weight: 400; }
+  .chip-items { color: #666; }
+  .chip-remove { color: #a30000; }
+
+  .split-toggle button { border-radius: 3px; border: 1px solid #003c74; background: linear-gradient(180deg, #fff 0%, #ece9d8 100%); box-shadow: inset 1px 1px 0 #fff, 1px 1px 2px rgba(0,0,0,0.25); font-weight: 400; }
+  .split-toggle button.active { background: linear-gradient(180deg, #4a9bff 0%, #0a2fa0 100%); }
+  .split-item-row { border-bottom: 1px solid #cfcbb0; }
+  .split-item-name { font-weight: 600; }
+  .split-item-avail { color: #666; font-weight: 400; }
+
+  .payment-entry { border: 1px solid #7f9db9; border-radius: 4px; background: white; box-shadow: none; }
+  .entry-title { color: #0a2fa0; font-weight: 700; }
+  .mode-toggle { color: #0a2fa0; font-weight: 400; }
+
+  .quick-amounts button, .bill-buttons button {
+    border-radius: 3px; border: 1px solid #003c74; background: linear-gradient(180deg, #fff 0%, #ece9d8 100%);
+    box-shadow: inset 1px 1px 0 #fff, 1px 1px 2px rgba(0,0,0,0.25); font-weight: 400;
+  }
+  .bill-buttons button { border: 1px solid #7f9db9; background: white; font-weight: 600; box-shadow: none; }
+
+  .amount-input, .amount-display { border-radius: 2px; border: 1px solid #7f9db9; box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2); }
+  .amount-value { color: #0a2fa0; }
+  .amount-raw { color: #888; }
+
+  .keypad-btn { border-radius: 4px; border: 1px solid #003c74; background: linear-gradient(180deg, #fff 0%, #ece9d8 100%); box-shadow: inset 1px 1px 0 #fff, 1px 1px 3px rgba(0,0,0,0.3); }
+  .keypad-btn:active { transform: none; box-shadow: inset 1px 1px 4px rgba(0,0,0,0.4); }
+  .keypad-btn.back { color: #a30000; }
+  .keypad-clear { border-radius: 3px; border: 1px solid #7a0e08; background: linear-gradient(180deg, #ff9b8c 0%, #d0261a 100%); box-shadow: inset 1px 1px 0 rgba(255,255,255,0.4); }
+
+  .method-select button { border-radius: 3px; border: 1px solid #003c74; background: linear-gradient(180deg, #fff 0%, #ece9d8 100%); box-shadow: inset 1px 1px 0 #fff, 1px 1px 2px rgba(0,0,0,0.25); font-weight: 600; }
+  .method-select button.active { background: linear-gradient(180deg, #4a9bff 0%, #0a2fa0 100%); }
+
+  .cash-received-label { color: #444; }
+
+  .add-payment { border-radius: 3px; border: 1px solid #1c4a0a; background: linear-gradient(180deg, #6fce4f 0%, #2d7a12 100%); box-shadow: inset 1px 1px 0 rgba(255,255,255,0.5); }
+  .change { color: #2d7a12; }
+
+  .error { color: #a30000; background: #ffe0dc; border: 1px solid #d0261a; border-radius: 3px; font-weight: 400; }
+
+  .submit {
+    background: linear-gradient(180deg, #6fce4f 0%, #2d7a12 100%);
+    border: 1px solid #1c4a0a; border-radius: 4px;
+    box-shadow: inset 1px 1px 0 rgba(255,255,255,0.5), 2px 2px 4px rgba(0,0,0,0.3);
+  }
+  .submit:active { transform: none; box-shadow: inset 1px 1px 0 rgba(255,255,255,0.5), 2px 2px 4px rgba(0,0,0,0.3); }
+
+  .last-order { background: #dcf5c8; color: #2d5a00; border: 1px solid #3c9c1c; border-radius: 3px; font-weight: 600; }
+
+  .taskbar {
+    display: flex;
+    position: fixed; left: 0; right: 0; bottom: 0; height: 2.6rem;
+    background: linear-gradient(180deg, #2a6fe0 0%, #1e4fc0 8%, #163d9a 90%, #10306f 100%);
+    border-top: 1px solid #4a9bff;
+    align-items: center; gap: 0.6rem; padding: 0 0.4rem; z-index: 10;
+  }
+  .start-btn {
+    display: flex; align-items: center; gap: 0.35rem;
+    background: linear-gradient(180deg, #6fce4f 0%, #3c9c1c 55%, #2d7a12 100%);
+    border: 1px solid #1c4a0a; border-radius: 4px;
+    color: white; font-weight: 800; font-style: italic; font-size: 0.9rem;
+    padding: 0.4rem 0.9rem; cursor: pointer;
+    box-shadow: inset 1px 1px 0 rgba(255,255,255,0.5); font-family: inherit;
+  }
+  .start-flag { font-style: normal; }
+  .taskbar-sep { width: 1px; height: 1.8rem; background: rgba(255,255,255,0.3); }
+  .taskbar-item {
+    background: #2f5fc4; border: 1px solid #163d9a; border-radius: 3px;
+    color: white; font-size: 0.85rem; padding: 0.35rem 0.9rem;
+    box-shadow: inset 1px 1px 2px rgba(0,0,0,0.4);
+  }
+  .taskbar-clock {
+    margin-left: auto; color: white; font-size: 0.85rem;
+    background: #163d9a; border: 1px solid #0f2c73; border-radius: 3px;
+    padding: 0.35rem 0.8rem;
+  }
 }

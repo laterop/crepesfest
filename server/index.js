@@ -75,6 +75,7 @@ app.get("/api/settings", (req, res) => {
 app.put("/api/settings", async (req, res) => {
   Object.assign(db.data.settings, req.body);
   await db.write();
+  io.emit("settings:update", db.data.settings);
   res.json(db.data.settings);
 });
 
@@ -284,6 +285,7 @@ app.post("/api/cloture", async (req, res) => {
 
 io.on("connection", (socket) => {
   socket.emit("orders:update", activeOrders());
+  socket.emit("settings:update", db.data.settings);
 });
 
 server.listen(PORT, () => {

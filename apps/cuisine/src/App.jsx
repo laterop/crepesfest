@@ -57,6 +57,9 @@ export default function App() {
     socket.on("connect", () => setConnected(true));
     socket.on("disconnect", () => setConnected(false));
     socket.on("orders:update", (data) => setOrders(data));
+    socket.on("settings:update", (s) => {
+      document.documentElement.dataset.theme = s.theme || "neo";
+    });
     return () => socket.disconnect();
   }, []);
 

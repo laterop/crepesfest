@@ -10,7 +10,7 @@ export default function App() {
   const [dirtyIds, setDirtyIds] = useState({});
   const [orders, setOrders] = useState([]);
   const [stats, setStats] = useState(null);
-  const [settings, setSettings] = useState({ fondDeCaisse: 0 });
+  const [settings, setSettings] = useState({ fondDeCaisse: 0, theme: "neo" });
   const [fondDeCaisseInput, setFondDeCaisseInput] = useState("0");
   const [clotures, setClotures] = useState([]);
   const [clotureBusy, setClotureBusy] = useState(false);
@@ -23,6 +23,10 @@ export default function App() {
     const t = setInterval(() => setClock(new Date()), 1000 * 15);
     return () => clearInterval(t);
   }, []);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = settings.theme || "neo";
+  }, [settings.theme]);
 
   useEffect(() => {
     if (!printCloture) return;
@@ -121,6 +125,15 @@ export default function App() {
   async function deleteItem(id) {
     await fetch(`${API_URL}/api/menu/${id}`, { method: "DELETE" });
     loadMenu();
+  }
+
+  async function saveTheme(theme) {
+    await fetch(`${API_URL}/api/settings`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ theme })
+    });
+    loadSettings();
   }
 
   async function saveFondDeCaisse() {
@@ -376,6 +389,27 @@ export default function App() {
 
       {tab === "caisse" && (
         <section className="panel">
+          <h2>Theme</h2>
+          <p className="hint-text">
+            S'applique aussitot sur les 4 interfaces (caisse, cuisine, gestion, accueil).
+          </p>
+          <div className="theme-picker">
+            <button
+              type="button"
+              className={`theme-option ${(settings.theme || "neo") === "neo" ? "active" : ""}`}
+              onClick={() => saveTheme("neo")}
+            >
+              Moderne (violet)
+            </button>
+            <button
+              type="button"
+              className={`theme-option ${settings.theme === "xp" ? "active" : ""}`}
+              onClick={() => saveTheme("xp")}
+            >
+              Windows XP
+            </button>
+          </div>
+
           <h2>Fond de caisse</h2>
           <p className="hint-text">
             Le montant d'especes que t'as mis dans la caisse au debut de la journee, pour rendre la monnaie.

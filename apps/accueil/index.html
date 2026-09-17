@@ -5,14 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CrepesFest</title>
   <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
     * { box-sizing: border-box; }
     html, body { height: 100%; margin: 0; }
+
+    /* ---------- NEO (defaut) ---------- */
     body {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f6eeff;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.5rem;
+      color: #16121f;
+    }
+    .xp-view { display: none; }
+    .neo-view {
+      display: flex; flex-direction: column; align-items: center; gap: 1.6rem;
+      max-width: 640px; width: 100%;
+    }
+    .neo-title { font-size: 2.2rem; font-weight: 800; margin: 0; text-align: center; }
+    .neo-sub { color: #6b6478; font-size: 1rem; margin: -1rem 0 0; text-align: center; }
+    .neo-cards {
+      display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center; width: 100%;
+    }
+    a.neo-card {
+      text-decoration: none; color: #16121f;
+      background: white; border: 3px solid #000; border-radius: 16px;
+      box-shadow: 5px 5px 0 #000;
+      padding: 1.6rem 1.4rem; width: 170px; text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      transition: transform 0.05s ease, box-shadow 0.05s ease;
+    }
+    a.neo-card:active { transform: translate(4px, 4px); box-shadow: 1px 1px 0 #000; }
+    a.neo-card .icon { font-size: 2.4rem; }
+    a.neo-card .label { font-size: 1.05rem; font-weight: 800; }
+    a.neo-card .desc { font-size: 0.78rem; color: #6b6478; }
+
+    /* ---------- XP ---------- */
+    html[data-theme="xp"] body {
       font-family: Tahoma, Verdana, "Segoe UI", Arial, sans-serif;
       background: linear-gradient(180deg, #3a93ff 0%, #6fb4ff 35%, #bfe7ff 55%, #7fbf5a 58%, #4a8f3a 100%);
-      display: flex; align-items: center; justify-content: center;
-      padding: 1rem;
     }
+    html[data-theme="xp"] .neo-view { display: none; }
+    html[data-theme="xp"] .xp-view { display: block; }
 
     .window {
       width: 100%;
@@ -62,9 +96,7 @@
     }
     a.icon-link:hover { border-color: #0a2fa0; background: rgba(10,47,160,0.08); }
     a.icon-link .icon { font-size: 2.8rem; filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.35)); }
-    a.icon-link .label {
-      font-size: 0.85rem; font-weight: 700; text-align: center;
-    }
+    a.icon-link .label { font-size: 0.85rem; font-weight: 700; text-align: center; }
     a.icon-link .drive { font-size: 0.72rem; color: #444; }
 
     .statusbar {
@@ -101,60 +133,95 @@
   </style>
 </head>
 <body>
-  <div class="window">
-    <div class="titlebar">
-      <div class="title-left">
-        <span>🖥️</span>
-        <h1>Poste de travail - CrepesFest</h1>
-      </div>
-      <div class="win-controls">
-        <span class="win-btn min">_</span>
-        <span class="win-btn max">□</span>
-        <span class="win-btn close">×</span>
-      </div>
+  <div class="neo-view">
+    <h1 class="neo-title">CrepesFest</h1>
+    <p class="neo-sub">Choisis ton espace</p>
+    <div class="neo-cards">
+      <a class="neo-card" href="https://caissier-laterop.vercel.app">
+        <span class="icon">💳</span>
+        <span class="label">Caisse</span>
+        <span class="desc">Prise de commande</span>
+      </a>
+      <a class="neo-card" href="https://cuisine-laterop.vercel.app">
+        <span class="icon">🍽️</span>
+        <span class="label">Cuisine</span>
+        <span class="desc">Suivi des commandes</span>
+      </a>
+      <a class="neo-card" href="https://admin-laterop.vercel.app">
+        <span class="icon">⚙️</span>
+        <span class="label">Gestion</span>
+        <span class="desc">Menu, stats, caisse</span>
+      </a>
     </div>
-    <div class="menubar">
-      <span>Fichier</span><span>Edition</span><span>Affichage</span><span>Favoris</span><span>?</span>
-    </div>
-    <div class="content">
-      <p class="sub">Choisis le poste auquel tu veux acceder :</p>
-      <div class="icons">
-        <a class="icon-link" href="https://caissier-laterop.vercel.app">
-          <span class="icon">💽</span>
-          <span class="label">Caisse (C:)</span>
-          <span class="drive">Prise de commande</span>
-        </a>
-        <a class="icon-link" href="https://cuisine-laterop.vercel.app">
-          <span class="icon">💽</span>
-          <span class="label">Cuisine (D:)</span>
-          <span class="drive">Suivi des commandes</span>
-        </a>
-        <a class="icon-link" href="https://admin-laterop.vercel.app">
-          <span class="icon">💽</span>
-          <span class="label">Gestion (E:)</span>
-          <span class="drive">Menu, stats, caisse</span>
-        </a>
-      </div>
-    </div>
-    <div class="statusbar">3 objet(s)</div>
   </div>
 
-  <div class="taskbar">
-    <div class="start-btn"><span class="start-flag">⊞</span> Demarrer</div>
-    <div class="taskbar-sep"></div>
-    <div class="taskbar-item">Poste de travail</div>
-    <div class="taskbar-clock" id="clock">--:--</div>
+  <div class="xp-view">
+    <div class="window">
+      <div class="titlebar">
+        <div class="title-left">
+          <span>🖥️</span>
+          <h1>Poste de travail - CrepesFest</h1>
+        </div>
+        <div class="win-controls">
+          <span class="win-btn min">_</span>
+          <span class="win-btn max">□</span>
+          <span class="win-btn close">×</span>
+        </div>
+      </div>
+      <div class="menubar">
+        <span>Fichier</span><span>Edition</span><span>Affichage</span><span>Favoris</span><span>?</span>
+      </div>
+      <div class="content">
+        <p class="sub">Choisis le poste auquel tu veux acceder :</p>
+        <div class="icons">
+          <a class="icon-link" href="https://caissier-laterop.vercel.app">
+            <span class="icon">💽</span>
+            <span class="label">Caisse (C:)</span>
+            <span class="drive">Prise de commande</span>
+          </a>
+          <a class="icon-link" href="https://cuisine-laterop.vercel.app">
+            <span class="icon">💽</span>
+            <span class="label">Cuisine (D:)</span>
+            <span class="drive">Suivi des commandes</span>
+          </a>
+          <a class="icon-link" href="https://admin-laterop.vercel.app">
+            <span class="icon">💽</span>
+            <span class="label">Gestion (E:)</span>
+            <span class="drive">Menu, stats, caisse</span>
+          </a>
+        </div>
+      </div>
+      <div class="statusbar">3 objet(s)</div>
+    </div>
+
+    <div class="taskbar">
+      <div class="start-btn"><span class="start-flag">⊞</span> Demarrer</div>
+      <div class="taskbar-sep"></div>
+      <div class="taskbar-item">Poste de travail</div>
+      <div class="taskbar-clock" id="clock">--:--</div>
+    </div>
   </div>
 
   <script>
+    var API_URL = "https://crepesfest-api.onrender.com";
+
     function tick() {
+      var el = document.getElementById("clock");
+      if (!el) return;
       var d = new Date();
       var h = String(d.getHours()).padStart(2, "0");
       var m = String(d.getMinutes()).padStart(2, "0");
-      document.getElementById("clock").textContent = h + ":" + m;
+      el.textContent = h + ":" + m;
     }
     tick();
     setInterval(tick, 15000);
+
+    fetch(API_URL + "/api/settings")
+      .then(function (r) { return r.json(); })
+      .then(function (s) {
+        document.documentElement.setAttribute("data-theme", s.theme || "neo");
+      })
+      .catch(function () {});
   </script>
 </body>
 </html>
