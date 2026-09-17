@@ -91,9 +91,10 @@ export default function App() {
   const [payments, setPayments] = useState([]);
 
   // Formulaire d'ajout d'un paiement.
+  const [splitByItems, setSplitByItems] = useState(false);
+  const [selectedUnits, setSelectedUnits] = useState({}); // menuItemId -> qty pour cette part
   const [entryMethod, setEntryMethod] = useState("especes");
   const [entryAmountRaw, setEntryAmountRaw] = useState("");
-  const [entryCashReceived, setEntryCashReceived] = useState(null); // number | null
   const [entryCbConfirmed, setEntryCbConfirmed] = useState(false);
 
   const [lastOrder, setLastOrder] = useState(null);
@@ -135,11 +136,41 @@ export default function App() {
   const remaining = useMemo(() => Math.max(0, round2(total - paidSoFar)), [total, paidSoFar]);
   const fullyPaid = total > 0 && remaining <= 0.001;
 
-  const entryAmount = cashValue(entryAmountRaw);
+  // Quantites deja attribuees a un paiement precedent, par produit.
+  const allocatedQty = useMemo(() => {
+    const map = {};
+    for (const p of payments) {
+      for (const it of p.items || []) {
+        map[it.menuItemId] = (map[it.menuItemId] || 0) + it.qty;
+      }
+    }
+    return map;
+  }, [payments]);
+
+  function availableQty(menuItemId, cartQty) {
+    return Math.max(0, cartQty - (allocatedQty[menuItemId] || 0));
+  }
+
+  const itemsAmount = useMemo(() => {
+    return round2(
+      Object.entries(selectedUnits).reduce((sum, [id, qty]) => {
+        const item = menu.find((m) => m.id === id);
+        return item ? sum + item.price * qty : sum;
+      }, 0)
+    );
+  }, [selectedUnits, menu]);
+
+  const rawAmount = cashValue(entryAmountRaw);
+  // En especes : la saisie represente ce que le client donne, la part
+  // facturee ne peut pas depasser le reste a payer (le surplus devient de la
+  // monnaie a rendre automatiquement).
+  const entryAmount = splitByItems
+    ? itemsAmount
+    : entryMethod === "especes"
+    ? Math.min(rawAmount, remaining)
+    : rawAmount;
   const entryChange =
-    entryMethod === "especes" && entryCashReceived != null
-      ? Math.max(0, round2(entryCashReceived - entryAmount))
-      : null;
+    !splitByItems && entryMethod === "especes" ? Math.max(0, round2(rawAmount - remaining)) : 0;
 
   function addToCart(id) {
     setCart((c) => ({ ...c, [id]: (c[id] || 0) + 1 }));
@@ -149,10 +180,10 @@ export default function App() {
     setCart((c) => ({ ...c, [id]: Math.max(0, (c[id] || 0) - 1) }));
   }
 
-  function resetPaymentEntry(nextRemaining) {
-    setEntryAmountRaw(nextRemaining > 0 ? nextRemaining.toFixed(2) : "");
-    setEntryCashReceived(null);
+  function resetPaymentEntry() {
+    setEntryAmountRaw("");
     setEntryCbConfirmed(false);
+    setSelectedUnits({});
   }
 
   function resetOrder() {
@@ -160,21 +191,75 @@ export default function App() {
     setCustomerName("");
     setPayments([]);
     setEntryMethod("especes");
-    resetPaymentEntry(0);
+    setSplitByItems(false);
+    resetPaymentEntry();
   }
 
   function setQuickAmount(value) {
     setEntryAmountRaw(round2(value).toFixed(2));
-    setEntryCashReceived(null);
+  }
+
+  function changeUnitQty(menuItemId, cartQty, delta) {
+    setSelectedUnits((s) => {
+      const current = s[menuItemId] || 0;
+      const max = availableQty(menuItemId, cartQty);
+      const next = Math.max(0, Math.min(max, current + delta));
+      return { ...s, [menuItemId]: next };
+    });
   }
 
   function addPayment() {
     setError("");
-    if (entryAmount <= 0) {
+
+    if (splitByItems) {
+      const items = Object.entries(selectedUnits)
+        .filter(([, qty]) => qty > 0)
+        .map(([id, qty]) => {
+          const item = menu.find((m) => m.id === id);
+          return { menuItemId: id, name: item?.name || id, qty };
+        });
+      if (items.length === 0) {
+        setError("Selectionne au moins un article pour cette part");
+        return;
+      }
+      if (entryMethod === "cb" && !entryCbConfirmed) {
+        setError("Confirme le paiement CB sur le terminal avant d'ajouter cette part");
+        return;
+      }
+      const part = {
+        id: `${Date.now()}-${Math.random()}`,
+        method: entryMethod,
+        amount: itemsAmount,
+        items
+      };
+      setPayments((p) => [...p, part]);
+      resetPaymentEntry();
+      return;
+    }
+
+    if (entryMethod === "especes") {
+      if (rawAmount <= 0) {
+        setError("Indique le montant recu du client");
+        return;
+      }
+      const part = {
+        id: `${Date.now()}-${Math.random()}`,
+        method: "especes",
+        amount: entryAmount,
+        cashReceived: rawAmount,
+        change: entryChange
+      };
+      setPayments((p) => [...p, part]);
+      resetPaymentEntry();
+      return;
+    }
+
+    // cb / qr : montant fixe, ne peut pas depasser le reste.
+    if (rawAmount <= 0) {
       setError("Indique un montant pour cette part");
       return;
     }
-    if (entryAmount > remaining + 0.01) {
+    if (rawAmount > remaining + 0.01) {
       setError(`Cette part depasse le reste a payer (${remaining.toFixed(2)} EUR)`);
       return;
     }
@@ -182,26 +267,13 @@ export default function App() {
       setError("Confirme le paiement CB sur le terminal avant d'ajouter cette part");
       return;
     }
-
-    const part = { id: `${Date.now()}-${Math.random()}`, method: entryMethod, amount: round2(entryAmount) };
-    if (entryMethod === "especes") {
-      const received = entryCashReceived ?? entryAmount;
-      part.cashReceived = received;
-      part.change = Math.max(0, round2(received - entryAmount));
-    }
-
-    const nextRemaining = Math.max(0, round2(remaining - part.amount));
+    const part = { id: `${Date.now()}-${Math.random()}`, method: entryMethod, amount: round2(rawAmount) };
     setPayments((p) => [...p, part]);
-    resetPaymentEntry(nextRemaining);
+    resetPaymentEntry();
   }
 
   function removePayment(id) {
-    setPayments((p) => {
-      const next = p.filter((x) => x.id !== id);
-      const nextPaid = round2(next.reduce((sum, x) => sum + x.amount, 0));
-      resetPaymentEntry(Math.max(0, round2(total - nextPaid)));
-      return next;
-    });
+    setPayments((p) => p.filter((x) => x.id !== id));
   }
 
   async function submitOrder() {
@@ -217,7 +289,8 @@ export default function App() {
           payments: payments.map((p) => ({
             method: p.method,
             amount: p.amount,
-            cashReceived: p.cashReceived
+            cashReceived: p.cashReceived,
+            items: p.items
           })),
           customerName
         })
@@ -252,6 +325,7 @@ export default function App() {
                   <button
                     key={item.id}
                     className="menu-item"
+                    style={{ borderTopColor: item.color || "#e0c9a6" }}
                     disabled={!item.available}
                     onClick={() => addToCart(item.id)}
                   >
@@ -312,6 +386,11 @@ export default function App() {
                   <li key={p.id} className="payment-chip">
                     <span className="chip-method">{METHOD_LABEL[p.method]}</span>
                     <span className="chip-amount">{p.amount.toFixed(2)} EUR</span>
+                    {p.items && (
+                      <span className="chip-items">
+                        {p.items.map((it) => `${it.qty}x ${it.name}`).join(", ")}
+                      </span>
+                    )}
                     {p.method === "especes" && p.change > 0 && (
                       <span className="chip-change">rendu {p.change.toFixed(2)} EUR</span>
                     )}
@@ -336,18 +415,91 @@ export default function App() {
                   </button>
                 </div>
 
-                <div className="quick-amounts">
-                  <button type="button" onClick={() => setQuickAmount(remaining)}>
-                    Tout le reste ({remaining.toFixed(2)} EUR)
+                <div className="split-toggle">
+                  <button
+                    type="button"
+                    className={!splitByItems ? "active" : ""}
+                    onClick={() => {
+                      setSplitByItems(false);
+                      resetPaymentEntry();
+                    }}
+                  >
+                    Montant libre
                   </button>
-                  {[2, 3, 4].map((n) => (
-                    <button key={n} type="button" onClick={() => setQuickAmount(remaining / n)}>
-                      ÷{n}
-                    </button>
-                  ))}
+                  <button
+                    type="button"
+                    className={splitByItems ? "active" : ""}
+                    onClick={() => {
+                      setSplitByItems(true);
+                      resetPaymentEntry();
+                    }}
+                  >
+                    Par article (conso/personne)
+                  </button>
                 </div>
 
-                <NumPad raw={entryAmountRaw} onChange={setEntryAmountRaw} numpadMode={numpadMode} />
+                {splitByItems ? (
+                  <div className="split-items">
+                    {cartLines.map((l) => {
+                      const avail = availableQty(l.id, l.qty);
+                      const selected = selectedUnits[l.id] || 0;
+                      return (
+                        <div key={l.id} className="split-item-row">
+                          <span className="split-item-name">
+                            {l.name}
+                            <span className="split-item-avail">
+                              {" "}
+                              ({avail} restant{avail > 1 ? "s" : ""})
+                            </span>
+                          </span>
+                          <div className="qty-controls">
+                            <button
+                              type="button"
+                              disabled={selected === 0}
+                              onClick={() => changeUnitQty(l.id, l.qty, -1)}
+                            >
+                              -
+                            </button>
+                            <span>{selected}</span>
+                            <button
+                              type="button"
+                              disabled={selected >= avail}
+                              onClick={() => changeUnitQty(l.id, l.qty, 1)}
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                    <div className="split-items-total">Part selectionnee : {itemsAmount.toFixed(2)} EUR</div>
+                  </div>
+                ) : (
+                  <>
+                    <div className="quick-amounts">
+                      <button type="button" onClick={() => setQuickAmount(remaining)}>
+                        Tout le reste ({remaining.toFixed(2)} EUR)
+                      </button>
+                      {[2, 3, 4].map((n) => (
+                        <button key={n} type="button" onClick={() => setQuickAmount(remaining / n)}>
+                          ÷{n}
+                        </button>
+                      ))}
+                    </div>
+
+                    <NumPad raw={entryAmountRaw} onChange={setEntryAmountRaw} numpadMode={numpadMode} />
+
+                    {entryMethod === "especes" && (
+                      <div className="bill-buttons">
+                        {[5, 10, 20, 50].map((bill) => (
+                          <button key={bill} type="button" onClick={() => setQuickAmount(bill)}>
+                            {bill} EUR
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                )}
 
                 <div className="method-select">
                   {PAYMENT_METHODS.map((m) => (
@@ -358,7 +510,6 @@ export default function App() {
                       onClick={() => {
                         setEntryMethod(m.id);
                         setEntryCbConfirmed(false);
-                        setEntryCashReceived(null);
                       }}
                     >
                       {m.label}
@@ -366,28 +517,8 @@ export default function App() {
                   ))}
                 </div>
 
-                {entryMethod === "especes" && (
-                  <div className="cash-received-row">
-                    <span className="cash-received-label">Espece recu si different du montant :</span>
-                    <div className="bill-buttons">
-                      {[5, 10, 20, 50].map((bill) => (
-                        <button
-                          key={bill}
-                          type="button"
-                          disabled={bill < entryAmount}
-                          onClick={() => setEntryCashReceived(bill)}
-                        >
-                          {bill} EUR
-                        </button>
-                      ))}
-                      <button type="button" onClick={() => setEntryCashReceived(null)}>
-                        Exact
-                      </button>
-                    </div>
-                    {entryChange !== null && entryChange > 0 && (
-                      <div className="change">Monnaie a rendre : {entryChange.toFixed(2)} EUR</div>
-                    )}
-                  </div>
+                {entryMethod === "especes" && !splitByItems && entryChange > 0 && (
+                  <div className="change">Monnaie a rendre : {entryChange.toFixed(2)} EUR</div>
                 )}
 
                 {entryMethod === "cb" && (

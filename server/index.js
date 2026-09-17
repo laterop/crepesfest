@@ -23,8 +23,12 @@ function computeOrderTotal(items) {
   return items.reduce((sum, it) => sum + it.unitPrice * it.qty, 0);
 }
 
+function activeOrders() {
+  return db.data.orders.filter((o) => !o.archived);
+}
+
 function broadcastOrders() {
-  io.emit("orders:update", db.data.orders);
+  io.emit("orders:update", activeOrders());
 }
 
 // -------- Menu --------
@@ -33,15 +37,45 @@ app.get("/api/menu", (req, res) => {
 });
 
 app.post("/api/menu", async (req, res) => {
-  const { name, price, category, available = true } = req.body;
+  const { name, price, category, available = true, color } = req.body;
   if (!name || price == null) {
     return res.status(400).json({ error: "name et price sont requis" });
   }
-  const item = { id: nanoid(8), name, price: Number(price), category: category || "autre", available };
+  const item = {
+    id: nanoid(8),
+    name,
+    price: Number(price),
+    category: category || "autre",
+    available,
+    color: color || db.data.categoryColors[category] || "#e0c9a6"
+  };
   db.data.menu.push(item);
   await db.write();
   io.emit("menu:update", db.data.menu);
   res.status(201).json(item);
+});
+
+// -------- Couleurs de categorie --------
+app.get("/api/category-colors", (req, res) => {
+  res.json(db.data.categoryColors);
+});
+
+app.put("/api/category-colors", async (req, res) => {
+  Object.assign(db.data.categoryColors, req.body);
+  await db.write();
+  io.emit("menu:update", db.data.menu);
+  res.json(db.data.categoryColors);
+});
+
+// -------- Reglages caisse --------
+app.get("/api/settings", (req, res) => {
+  res.json(db.data.settings);
+});
+
+app.put("/api/settings", async (req, res) => {
+  Object.assign(db.data.settings, req.body);
+  await db.write();
+  res.json(db.data.settings);
 });
 
 app.put("/api/menu/:id", async (req, res) => {
@@ -62,8 +96,8 @@ app.delete("/api/menu/:id", async (req, res) => {
 
 // -------- Orders --------
 app.get("/api/orders", (req, res) => {
-  const { status } = req.query;
-  let orders = db.data.orders;
+  const { status, all } = req.query;
+  let orders = all ? db.data.orders : activeOrders();
   if (status) orders = orders.filter((o) => o.status === status);
   res.json(orders.sort((a, b) => a.createdAt.localeCompare(b.createdAt)));
 });
@@ -106,6 +140,13 @@ app.post("/api/orders", async (req, res) => {
   const enrichedPayments = payments.map((p) => {
     const amount = Math.round(Number(p.amount || 0) * 100) / 100;
     const entry = { method: p.method, amount };
+    if (Array.isArray(p.items) && p.items.length > 0) {
+      entry.items = p.items.map((it) => ({
+        menuItemId: it.menuItemId,
+        name: it.name,
+        qty: it.qty
+      }));
+    }
     if (p.method === "especes") {
       const received = Number(p.cashReceived ?? amount);
       entry.cashReceived = received;
@@ -128,6 +169,7 @@ app.post("/api/orders", async (req, res) => {
     total,
     payments: enrichedPayments,
     status: "nouvelle",
+    archived: false,
     createdAt: new Date().toISOString()
   };
 
@@ -170,13 +212,13 @@ app.patch("/api/orders/:id/paiement", async (req, res) => {
 });
 
 // -------- Stats --------
-app.get("/api/stats", (req, res) => {
-  const orders = db.data.orders.filter((o) => o.status !== "annulee");
-  const totalVentes = orders.reduce((sum, o) => sum + o.total, 0);
-  const nbCommandes = orders.length;
+function computeStats(orders) {
+  const kept = orders.filter((o) => o.status !== "annulee");
+  const totalVentes = kept.reduce((sum, o) => sum + o.total, 0);
+  const nbCommandes = kept.length;
 
   const parProduit = {};
-  for (const o of orders) {
+  for (const o of kept) {
     for (const it of o.items) {
       parProduit[it.name] = (parProduit[it.name] || 0) + it.qty;
     }
@@ -186,7 +228,7 @@ app.get("/api/stats", (req, res) => {
     .sort((a, b) => b.qty - a.qty);
 
   const parPaiement = {};
-  for (const o of orders) {
+  for (const o of kept) {
     const pays = o.payments || (o.payment ? [{ method: o.payment.method, amount: o.total }] : []);
     for (const p of pays) {
       const m = p.method || "inconnu";
@@ -194,17 +236,54 @@ app.get("/api/stats", (req, res) => {
     }
   }
 
-  res.json({
+  return {
     totalVentes: Math.round(totalVentes * 100) / 100,
     nbCommandes,
     panierMoyen: nbCommandes ? Math.round((totalVentes / nbCommandes) * 100) / 100 : 0,
     topProduits,
     parPaiement
-  });
+  };
+}
+
+app.get("/api/stats", (req, res) => {
+  res.json(computeStats(activeOrders()));
+});
+
+// -------- Cloture de caisse (ticket Z) --------
+app.get("/api/clotures", (req, res) => {
+  res.json(db.data.clotures);
+});
+
+app.post("/api/cloture", async (req, res) => {
+  const orders = activeOrders();
+  if (orders.length === 0) {
+    return res.status(400).json({ error: "aucune commande a cloturer" });
+  }
+  const stats = computeStats(orders);
+  const fondDeCaisse = Math.round(Number(db.data.settings.fondDeCaisse || 0) * 100) / 100;
+  const especesAttendues = Math.round((fondDeCaisse + (stats.parPaiement.especes || 0)) * 100) / 100;
+
+  const report = {
+    id: nanoid(8),
+    date: new Date().toISOString(),
+    ...stats,
+    fondDeCaisse,
+    especesAttendues
+  };
+
+  db.data.clotures.unshift(report);
+  for (const o of db.data.orders) {
+    if (!o.archived) o.archived = true;
+  }
+  db.data.counter = 0;
+  await db.write();
+  broadcastOrders();
+
+  res.status(201).json(report);
 });
 
 io.on("connection", (socket) => {
-  socket.emit("orders:update", db.data.orders);
+  socket.emit("orders:update", activeOrders());
 });
 
 server.listen(PORT, () => {

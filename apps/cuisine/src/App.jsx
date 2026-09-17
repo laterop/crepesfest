@@ -12,6 +12,13 @@ export default function App() {
   const [orders, setOrders] = useState([]);
   const [connected, setConnected] = useState(false);
 
+  // Le grand ecran cuisine n'a souvent aucune interaction possible (pas de
+  // souris, pas de tactile). On ouvre alors cette URL avec ?affichage=1 :
+  // c'est un affichage pur, sans bouton. Le controle des statuts se fait
+  // depuis un autre appareil (le telephone de la personne en cuisine) qui
+  // ouvre la meme page SANS le parametre.
+  const isDisplayOnly = new URLSearchParams(window.location.search).get("affichage") === "1";
+
   useEffect(() => {
     const socket = io(API_URL);
     socket.on("connect", () => setConnected(true));
@@ -40,7 +47,7 @@ export default function App() {
   return (
     <div className="app">
       <header className="topbar">
-        <h1>CrepesFest - Cuisine</h1>
+        <h1>CrepesFest - Cuisine{isDisplayOnly ? " (affichage)" : ""}</h1>
         <span className={connected ? "status ok" : "status ko"}>
           {connected ? "Connecte" : "Deconnecte"}
         </span>
@@ -73,7 +80,9 @@ export default function App() {
                         minute: "2-digit"
                       })}
                     </span>
-                    <button onClick={() => updateStatus(order.id, col.next)}>{col.nextLabel}</button>
+                    {!isDisplayOnly && (
+                      <button onClick={() => updateStatus(order.id, col.next)}>{col.nextLabel}</button>
+                    )}
                   </div>
                 </div>
               ))}

@@ -28,3 +28,30 @@ input[type="text"], input[type="number"], td input { padding: 0.3rem; border: 1p
 .bar-fill { background: #6b3fa0; height: 100%; }
 .bar-fill.alt { background: #d97b3f; }
 .bar-value { font-size: 0.85rem; text-align: right; }
+
+.color-input { width: 44px !important; height: 32px; padding: 2px !important; cursor: pointer; }
+
+.hint-text { color: #777; font-size: 0.85rem; margin: 0.2rem 0 0.8rem; }
+.fond-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+.fond-row input { width: 100px !important; padding: 0.4rem; border: 1px solid #ddd; border-radius: 6px; }
+.fond-row button { padding: 0.4rem 0.9rem; background: #6b3fa0; color: white; border: none; border-radius: 6px; cursor: pointer; }
+.current-value { font-weight: 700; margin-bottom: 1.5rem; }
+
+.cloture-btn {
+  padding: 0.7rem 1.2rem; background: #c0392b; color: white; border: none;
+  border-radius: 8px; cursor: pointer; font-weight: 700; margin-bottom: 0.6rem;
+}
+.cloture-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.error-text { color: #c0392b; margin-bottom: 0.8rem; }
+
+.clotures-list { display: flex; flex-direction: column; gap: 0.8rem; }
+.cloture-card { background: #f4f0e8; border-radius: 10px; padding: 0.9rem; }
+.cloture-header { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 0.4rem; }
+.cloture-total { color: #6b3fa0; font-size: 1.1rem; }
+.cloture-details { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.85rem; color: #555; margin-bottom: 0.4rem; }
+.cloture-details .highlight { font-weight: 700; color: #241a0d; }
+.cloture-payments { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.cloture-chip {
+  background: white; border: 1px solid #ddd; border-radius: 999px;
+  padding: 0.2rem 0.6rem; font-size: 0.8rem; text-transform: capitalize;
+}
