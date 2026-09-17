@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CrepesFest</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, sans-serif;
+      background: linear-gradient(135deg, #c8632c 0%, #8a5a2b 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    h1 {
+      color: white;
+      font-size: 2.2rem;
+      margin: 0 0 0.4rem;
+      text-align: center;
+    }
+    p.sub {
+      color: rgba(255,255,255,0.85);
+      margin: 0 0 2.2rem;
+      text-align: center;
+    }
+    .cards {
+      display: flex;
+      gap: 1.4rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 900px;
+    }
+    a.card {
+      text-decoration: none;
+      background: white;
+      color: #241a0d;
+      border-radius: 16px;
+      padding: 2rem 1.6rem;
+      width: 220px;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+      transition: transform 0.15s ease;
+    }
+    a.card:active { transform: scale(0.97); }
+    .icon { font-size: 2.6rem; margin-bottom: 0.7rem; display: block; }
+    .label { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .desc { font-size: 0.85rem; color: #777; }
+  </style>
+</head>
+<body>
+  <h1>CrepesFest</h1>
+  <p class="sub">Choisis ton acces</p>
+  <div class="cards">
+    <a class="card" href="https://caissier-laterop.vercel.app">
+      <span class="icon">💳</span>
+      <div class="label">Caisse</div>
+      <div class="desc">Prise de commande et paiement</div>
+    </a>
+    <a class="card" href="https://cuisine-laterop.vercel.app">
+      <span class="icon">🍽️</span>
+      <div class="label">Cuisine</div>
+      <div class="desc">Suivi des commandes</div>
+    </a>
+    <a class="card" href="https://admin-laterop.vercel.app">
+      <span class="icon">⚙️</span>
+      <div class="label">Gestion</div>
+      <div class="desc">Menu, stats, caisse</div>
+    </a>
+  </div>
+</body>
+</html>

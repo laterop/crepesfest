@@ -6,6 +6,8 @@ const TABS = ["menu", "commandes", "stats", "caisse"];
 export default function App() {
   const [tab, setTab] = useState("menu");
   const [menu, setMenu] = useState([]);
+  const [draftMenu, setDraftMenu] = useState({});
+  const [dirtyIds, setDirtyIds] = useState({});
   const [orders, setOrders] = useState([]);
   const [stats, setStats] = useState(null);
   const [settings, setSettings] = useState({ fondDeCaisse: 0 });
@@ -34,6 +36,35 @@ export default function App() {
   }
   function loadClotures() {
     fetch(`${API_URL}/api/clotures`).then((r) => r.json()).then(setClotures);
+  }
+
+  useEffect(() => {
+    const d = {};
+    for (const item of menu) {
+      d[item.id] = {
+        name: item.name,
+        price: item.price,
+        category: item.category,
+        color: item.color || "#e0c9a6"
+      };
+    }
+    setDraftMenu(d);
+  }, [menu]);
+
+  function setDraftField(id, field, value) {
+    setDraftMenu((prev) => ({ ...prev, [id]: { ...prev[id], [field]: value } }));
+    setDirtyIds((prev) => ({ ...prev, [id]: true }));
+  }
+
+  async function saveRow(id) {
+    const patch = draftMenu[id];
+    if (!patch) return;
+    await updateItem(id, { ...patch, price: Number(patch.price) });
+    setDirtyIds((prev) => {
+      const next = { ...prev };
+      delete next[id];
+      return next;
+    });
   }
 
   useEffect(() => {
@@ -135,53 +166,72 @@ export default function App() {
                 <th>Categorie</th>
                 <th>Dispo</th>
                 <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
-              {menu.map((item) => (
-                <tr key={item.id}>
-                  <td>
-                    <input
-                      type="color"
-                      className="color-input"
-                      defaultValue={item.color || "#e0c9a6"}
-                      onBlur={(e) => updateItem(item.id, { color: e.target.value })}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      defaultValue={item.name}
-                      onBlur={(e) => updateItem(item.id, { name: e.target.value })}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      step="0.1"
-                      defaultValue={item.price}
-                      onBlur={(e) => updateItem(item.id, { price: Number(e.target.value) })}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      defaultValue={item.category}
-                      onBlur={(e) => updateItem(item.id, { category: e.target.value })}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={item.available}
-                      onChange={(e) => updateItem(item.id, { available: e.target.checked })}
-                    />
-                  </td>
-                  <td>
-                    <button className="danger" onClick={() => deleteItem(item.id)}>
-                      Supprimer
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {menu.map((item) => {
+                const draft = draftMenu[item.id] || {
+                  name: item.name,
+                  price: item.price,
+                  category: item.category,
+                  color: item.color || "#e0c9a6"
+                };
+                const dirty = !!dirtyIds[item.id];
+                return (
+                  <tr key={item.id} className={dirty ? "row-dirty" : ""}>
+                    <td>
+                      <input
+                        type="color"
+                        className="color-input"
+                        value={draft.color}
+                        onChange={(e) => setDraftField(item.id, "color", e.target.value)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        value={draft.name}
+                        onChange={(e) => setDraftField(item.id, "name", e.target.value)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        step="0.1"
+                        value={draft.price}
+                        onChange={(e) => setDraftField(item.id, "price", e.target.value)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        value={draft.category}
+                        onChange={(e) => setDraftField(item.id, "category", e.target.value)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        checked={item.available}
+                        onChange={(e) => updateItem(item.id, { available: e.target.checked })}
+                      />
+                    </td>
+                    <td>
+                      <button
+                        className={dirty ? "save-btn dirty" : "save-btn"}
+                        disabled={!dirty}
+                        onClick={() => saveRow(item.id)}
+                      >
+                        Enregistrer
+                      </button>
+                    </td>
+                    <td>
+                      <button className="danger" onClick={() => deleteItem(item.id)}>
+                        Supprimer
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
 
