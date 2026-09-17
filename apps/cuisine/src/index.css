@@ -181,3 +181,340 @@ html[data-theme="xp"] {
     padding: 0.3rem 0.7rem;
   }
 }
+
+/* ==================== THEME CLASSIC (Windows 95/98) ==================== */
+html[data-theme="classic"] {
+  font-size: clamp(14px, 1.3vw + 9px, 26px);
+
+  body {
+    font-family: "MS Sans Serif", Tahoma, Geneva, sans-serif;
+    background: #c0c0c0;
+    color: #000;
+    overflow: hidden;
+  }
+  .app { padding-bottom: 2.4rem; }
+
+  .topbar {
+    background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+    color: white; font-weight: 700;
+    padding: 0.6rem 0.8rem; border-bottom: 2px solid #808080; border-radius: 0;
+  }
+  .title-icon { font-size: 1.3rem; }
+  .topbar h1 { font-size: 1.4rem; font-weight: 700; color: white; }
+  .title-controls { display: flex; gap: 0.3rem; }
+  .win-btn {
+    width: 22px; height: 20px; display: flex; align-items: center; justify-content: center;
+    background: #c0c0c0; border: 1px outset #c0c0c0; border-radius: 0;
+    font-size: 0.8rem; font-weight: 700; color: #000; cursor: default;
+  }
+  .win-btn.close { background: #c0c0c0; }
+
+  .status { border-radius: 0; border: 1px outset #c0c0c0; }
+  .status.ok { background: #008000; color: white; }
+  .status.ko { background: #800000; color: white; }
+
+  .hint { color: #000080; text-shadow: none; }
+
+  .column {
+    background: #c0c0c0; color: #000; border-radius: 0;
+    border: 2px outset #c0c0c0; box-shadow: none;
+  }
+  .column.drag-target { border-style: inset; background: #d4d4d4; }
+  .column h2 { color: #000080; border-bottom: 1px solid #808080; }
+  .count { background: #000080; color: white; border-radius: 0; border: 1px outset #c0c0c0; }
+
+  .card {
+    background: white; color: #000;
+    border-radius: 0; border: 2px outset #c0c0c0;
+    box-shadow: none;
+  }
+  .card-header .number { color: #000080; }
+  .card-header .customer { color: #444; }
+  .card ul { color: #000; }
+  .time { color: #444; }
+
+  .drag-ghost {
+    background: white; color: #000;
+    border-radius: 0; border: 2px outset #c0c0c0; box-shadow: 4px 4px 8px rgba(0,0,0,0.4);
+  }
+
+  .taskbar {
+    display: flex;
+    position: fixed; left: 0; right: 0; bottom: 0; height: 2.4rem;
+    background: #c0c0c0; border-top: 2px outset #c0c0c0;
+    align-items: center; gap: 0.6rem; padding: 0 0.4rem; z-index: 10;
+  }
+  .start-btn {
+    display: flex; align-items: center; gap: 0.35rem;
+    background: #c0c0c0; border: 2px outset #c0c0c0; border-radius: 0;
+    color: #000; font-weight: 800; font-size: 0.85rem;
+    padding: 0.35rem 0.8rem; cursor: pointer; font-family: inherit;
+  }
+  .start-flag { font-style: normal; }
+  .taskbar-sep { width: 1px; height: 1.7rem; background: #808080; }
+  .taskbar-item {
+    background: #c0c0c0; border: 1px inset #c0c0c0; border-radius: 0;
+    color: #000; font-size: 0.8rem; padding: 0.3rem 0.8rem;
+  }
+  .taskbar-clock {
+    margin-left: auto; color: #000; font-size: 0.8rem;
+    background: #c0c0c0; border: 1px inset #c0c0c0; border-radius: 0;
+    padding: 0.3rem 0.7rem;
+  }
+}
+
+/* ==================== THEME WIN7 (Aero) ==================== */
+html[data-theme="win7"] {
+  font-size: clamp(14px, 1.3vw + 9px, 26px);
+
+  body {
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    background: linear-gradient(180deg, #bcd9f7 0%, #8cb8ec 100%);
+    color: #0a2a5e;
+    overflow: hidden;
+  }
+  .app { padding-bottom: 2.4rem; }
+
+  .topbar {
+    background: linear-gradient(180deg, #e8f1fc 0%, #bcd9f7 15%, #8cb8ec 45%, #5f95dd 46%, #3f78c9 100%);
+    color: #0a2a5e; text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+    box-shadow: 0 2px 10px rgba(0,40,100,0.3);
+    padding: 0.6rem 0.8rem; border-bottom: none; border-radius: 0;
+  }
+  .title-icon { font-size: 1.3rem; }
+  .topbar h1 { font-size: 1.4rem; font-weight: 700; color: #0a2a5e; }
+  .title-controls { display: flex; gap: 0.3rem; }
+  .win-btn {
+    width: 22px; height: 20px; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(180deg, #ffffff 0%, #cfe2f7 100%);
+    border: 1px solid #6f9bd0; border-radius: 4px;
+    font-size: 0.8rem; font-weight: 700; color: #0a2a5e; cursor: default;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+  }
+  .win-btn.close { background: linear-gradient(180deg, #ff9a8c 0%, #d0261a 100%); color: white; }
+
+  .status { border-radius: 999px; border: none; }
+  .status.ok { background: linear-gradient(180deg, #c8f7c5, #3a9c35); color: white; }
+  .status.ko { background: linear-gradient(180deg, #ffb3ab, #c11); color: white; }
+
+  .hint { color: #0a2a5e; text-shadow: 0 1px 0 rgba(255,255,255,0.5); }
+
+  .column {
+    background: rgba(255,255,255,0.85); color: #16121f; border-radius: 10px;
+    border: 1px solid #9fb9d9; box-shadow: 0 2px 10px rgba(0,40,100,0.15);
+  }
+  .column.drag-target {
+    border-color: #3f78c9;
+    box-shadow: 0 0 0 3px rgba(63,120,201,0.35), 0 2px 10px rgba(0,40,100,0.15);
+  }
+  .column h2 { color: #1c3f75; border-bottom: 1px solid #cfe0f4; }
+  .count {
+    background: linear-gradient(180deg, #6a9ee0 0%, #3f78c9 100%); color: white;
+    border-radius: 999px; border: none;
+  }
+
+  .card {
+    background: linear-gradient(180deg, #ffffff 0%, #eef5fd 100%); color: #16121f;
+    border-radius: 8px; border: 1px solid #9fb9d9;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+  .card-header .number { color: #3f78c9; }
+  .card-header .customer { color: #5a6c85; }
+  .card ul { color: #16121f; }
+  .time { color: #5a6c85; }
+
+  .drag-ghost {
+    background: linear-gradient(180deg, #ffffff 0%, #eef5fd 100%); color: #16121f;
+    border-radius: 8px; border: 1px solid #6f9bd0; box-shadow: 0 8px 24px rgba(0,40,100,0.35);
+  }
+
+  .taskbar {
+    display: flex;
+    position: fixed; left: 0; right: 0; bottom: 0; height: 2.4rem;
+    background: linear-gradient(180deg, rgba(60,90,140,0.95) 0%, rgba(20,40,80,0.97) 100%);
+    border-top: 1px solid rgba(255,255,255,0.3);
+    align-items: center; gap: 0.6rem; padding: 0 0.4rem; z-index: 10;
+  }
+  .start-btn {
+    display: flex; align-items: center; gap: 0.35rem;
+    border-radius: 999px;
+    background: radial-gradient(circle at 35% 30%, #7fc7ff, #1c5fa8 60%, #0b3d75);
+    box-shadow: 0 0 8px rgba(80,160,255,0.6);
+    border: none;
+    color: white; font-weight: 800; font-size: 0.85rem;
+    padding: 0.35rem 0.9rem; cursor: pointer; font-family: inherit;
+  }
+  .start-flag { font-style: normal; }
+  .taskbar-sep { width: 1px; height: 1.7rem; background: rgba(255,255,255,0.3); }
+  .taskbar-item {
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 4px;
+    color: white; font-size: 0.8rem; padding: 0.3rem 0.8rem;
+  }
+  .taskbar-clock {
+    margin-left: auto; color: white; font-size: 0.8rem;
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 4px;
+    padding: 0.3rem 0.7rem;
+  }
+}
+
+/* ==================== THEME WIN10 (Fluent flat) ==================== */
+html[data-theme="win10"] {
+  font-size: clamp(14px, 1.3vw + 9px, 26px);
+
+  body {
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    background: #f3f3f3;
+    color: #000;
+    overflow: hidden;
+  }
+  .app { padding-bottom: 2.4rem; }
+
+  .topbar {
+    background: #ffffff; color: #000; border-bottom: 1px solid #e0e0e0;
+    padding: 0.6rem 0.8rem; border-radius: 0; box-shadow: none;
+  }
+  .title-icon { font-size: 1.3rem; }
+  .topbar h1 { font-size: 1.4rem; font-weight: 700; color: #000; }
+  .title-controls { display: flex; gap: 0.3rem; }
+  .win-btn {
+    width: 22px; height: 20px; display: flex; align-items: center; justify-content: center;
+    background: transparent; border: none; border-radius: 2px;
+    font-size: 0.8rem; font-weight: 700; color: #000; cursor: default;
+  }
+  .win-btn.close { background: transparent; color: #000; }
+
+  .status { border-radius: 2px; border: none; }
+  .status.ok { background: #107c10; color: white; }
+  .status.ko { background: #e81123; color: white; }
+
+  .hint { color: #0078d7; text-shadow: none; }
+
+  .column {
+    background: #ffffff; color: #000; border-radius: 2px;
+    border: 1px solid #e0e0e0; box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  }
+  .column.drag-target { border-color: #0078d7; border-width: 2px; }
+  .column h2 { color: #000; border-bottom: 1px solid #e0e0e0; }
+  .count { background: #0078d7; color: white; border-radius: 2px; border: none; }
+
+  .card {
+    background: #ffffff; color: #000; border-radius: 2px;
+    border: 1px solid #e0e0e0; box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  }
+  .card-header .number { color: #0078d7; }
+  .card-header .customer { color: #555; }
+  .card ul { color: #000; }
+  .time { color: #555; }
+
+  .drag-ghost {
+    background: #ffffff; color: #000; border-radius: 2px;
+    border: 1px solid #e0e0e0; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  .taskbar {
+    display: flex;
+    position: fixed; left: 0; right: 0; bottom: 0; height: 2.4rem;
+    background: #1f1f1f; border-top: none;
+    align-items: center; gap: 0.6rem; padding: 0 0.4rem; z-index: 10;
+  }
+  .start-btn {
+    display: flex; align-items: center; gap: 0.35rem;
+    background: transparent; border: none; border-radius: 0;
+    color: white; font-weight: 700; font-size: 0.85rem;
+    padding: 0.35rem 0.8rem; cursor: pointer; font-family: inherit;
+  }
+  .start-flag { font-style: normal; }
+  .taskbar-sep { width: 1px; height: 1.7rem; background: rgba(255,255,255,0.15); }
+  .taskbar-item {
+    background: rgba(255,255,255,0.08); border: none; border-radius: 0;
+    color: white; font-size: 0.8rem; padding: 0.3rem 0.8rem;
+  }
+  .taskbar-clock {
+    margin-left: auto; color: white; font-size: 0.8rem;
+    background: transparent; border-left: 1px solid rgba(255,255,255,0.15); border-radius: 0;
+    padding: 0.3rem 0.7rem;
+  }
+}
+
+/* ==================== THEME WIN11 (Fluent/Mica) ==================== */
+html[data-theme="win11"] {
+  font-size: clamp(14px, 1.3vw + 9px, 26px);
+
+  body {
+    font-family: "Segoe UI Variable", "Segoe UI", Tahoma, Arial, sans-serif;
+    background: #f3f3f3;
+    color: #000;
+    overflow: hidden;
+  }
+  .app { padding-bottom: 2.4rem; }
+
+  .topbar {
+    background: #f3f3f3; color: #000; border-bottom: 1px solid #e5e5e5;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    padding: 0.6rem 0.8rem; border-radius: 0;
+  }
+  .title-icon { font-size: 1.3rem; }
+  .topbar h1 { font-size: 1.4rem; font-weight: 700; color: #000; }
+  .title-controls { display: flex; gap: 0.3rem; }
+  .win-btn {
+    width: 22px; height: 20px; display: flex; align-items: center; justify-content: center;
+    background: transparent; border: none; border-radius: 4px;
+    font-size: 0.8rem; font-weight: 700; color: #000; cursor: default;
+  }
+  .win-btn.close { background: transparent; color: #000; }
+
+  .status { border-radius: 999px; border: none; }
+  .status.ok { background: #0f7b0f; color: white; }
+  .status.ko { background: #c42b1c; color: white; }
+
+  .hint { color: #0078d4; text-shadow: none; }
+
+  .column {
+    background: #ffffff; color: #000; border-radius: 12px;
+    border: 1px solid #e5e5e5; box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  }
+  .column.drag-target {
+    border-color: #0078d4;
+    box-shadow: 0 0 0 3px rgba(0,120,212,0.25), 0 2px 10px rgba(0,0,0,0.08);
+  }
+  .column h2 { color: #000; border-bottom: 1px solid #e5e5e5; }
+  .count { background: #0078d4; color: white; border-radius: 999px; border: none; }
+
+  .card {
+    background: #ffffff; color: #000; border-radius: 10px;
+    border: 1px solid #e5e5e5; box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .card-header .number { color: #0078d4; }
+  .card-header .customer { color: #555; }
+  .card ul { color: #000; }
+  .time { color: #555; }
+
+  .drag-ghost {
+    background: #ffffff; color: #000; border-radius: 10px;
+    border: 1px solid #e5e5e5; box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  }
+
+  .taskbar {
+    display: flex; justify-content: center;
+    position: fixed; left: 0; right: 0; bottom: 0; height: 2.4rem;
+    background: rgba(243,243,243,0.9); border-top: 1px solid rgba(0,0,0,0.06);
+    align-items: center; gap: 0.6rem; padding: 0 0.4rem; z-index: 10;
+  }
+  .start-btn {
+    display: flex; align-items: center; gap: 0.35rem;
+    border-radius: 999px; background: white; border: 1px solid #e0e0e0;
+    color: #0078d4; font-weight: 700; font-size: 0.85rem;
+    padding: 0.35rem 0.9rem; cursor: pointer; font-family: inherit;
+  }
+  .start-flag { font-style: normal; }
+  .taskbar-sep { width: 1px; height: 1.7rem; background: rgba(0,0,0,0.1); }
+  .taskbar-item {
+    border-radius: 999px; background: rgba(255,255,255,0.7); border: 1px solid #e0e0e0;
+    color: #000; font-size: 0.8rem; padding: 0.3rem 0.8rem;
+  }
+  .taskbar-clock {
+    margin-left: 0.6rem; color: #000; font-size: 0.8rem;
+    border-radius: 999px; background: rgba(255,255,255,0.7); border: 1px solid #e0e0e0;
+    padding: 0.3rem 0.7rem;
+  }
+}

@@ -45,8 +45,16 @@
       font-family: Tahoma, Verdana, "Segoe UI", Arial, sans-serif;
       background: linear-gradient(180deg, #3a93ff 0%, #6fb4ff 35%, #bfe7ff 55%, #7fbf5a 58%, #4a8f3a 100%);
     }
-    html[data-theme="xp"] .neo-view { display: none; }
-    html[data-theme="xp"] .xp-view { display: block; }
+    html[data-theme="xp"] .neo-view,
+    html[data-theme="win7"] .neo-view,
+    html[data-theme="win10"] .neo-view,
+    html[data-theme="win11"] .neo-view,
+    html[data-theme="classic"] .neo-view { display: none; }
+    html[data-theme="xp"] .xp-view,
+    html[data-theme="win7"] .xp-view,
+    html[data-theme="win10"] .xp-view,
+    html[data-theme="win11"] .xp-view,
+    html[data-theme="classic"] .xp-view { display: block; }
 
     .window {
       width: 100%;
@@ -129,6 +137,210 @@
       margin-left: auto; color: white; font-size: 0.8rem;
       background: #163d9a; border: 1px solid #0f2c73; border-radius: 3px;
       padding: 0.3rem 0.7rem;
+    }
+
+    /* ---------- WIN7 (Aero) ---------- */
+    html[data-theme="win7"] body {
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      background: linear-gradient(180deg, #bcd9f7 0%, #6fa8e8 100%);
+    }
+    html[data-theme="win7"] .window {
+      background: rgba(255,255,255,0.9);
+      border: 1px solid #9fb9d9;
+      border-radius: 8px;
+      box-shadow: 0 8px 30px rgba(0,20,60,0.4);
+    }
+    html[data-theme="win7"] .titlebar {
+      background: linear-gradient(180deg, #e8f1fc 0%, #bcd9f7 15%, #8cb8ec 45%, #5f95dd 46%, #3f78c9 100%);
+      color: #0a2a5e;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+      border-radius: 8px 8px 0 0;
+    }
+    html[data-theme="win7"] .titlebar h1 { color: #0a2a5e; text-shadow: 0 1px 0 rgba(255,255,255,0.6); }
+    html[data-theme="win7"] .win-btn {
+      background: linear-gradient(180deg, #ffffff, #b7d2f2);
+      border: 1px solid #6a93c9; border-radius: 3px; color: #1a3a66;
+    }
+    html[data-theme="win7"] .win-btn.close {
+      background: linear-gradient(180deg, #ffb3ab, #c11); color: white; border: 1px solid #a11;
+    }
+    html[data-theme="win7"] .menubar {
+      background: rgba(255,255,255,0.6); border-bottom: 1px solid #9fb9d9; color: #1a3a66;
+    }
+    html[data-theme="win7"] .content { }
+    html[data-theme="win7"] .content p.sub { color: #1a3a66; }
+    html[data-theme="win7"] .icons { }
+    html[data-theme="win7"] a.icon-link { color: #0a2a5e; }
+    html[data-theme="win7"] a.icon-link:hover { background: rgba(63,120,201,0.15); border-radius: 6px; border-color: transparent; }
+    html[data-theme="win7"] a.icon-link .icon { }
+    html[data-theme="win7"] a.icon-link .label { }
+    html[data-theme="win7"] a.icon-link .drive { }
+    html[data-theme="win7"] .statusbar {
+      background: rgba(255,255,255,0.6); border-top: 1px solid #9fb9d9; color: #1a3a66;
+    }
+    html[data-theme="win7"] .taskbar {
+      background: linear-gradient(180deg, rgba(60,90,140,0.95) 0%, rgba(20,40,80,0.97) 100%);
+      border-top: 1px solid rgba(255,255,255,0.3);
+    }
+    html[data-theme="win7"] .start-btn {
+      border-radius: 999px;
+      background: radial-gradient(circle at 35% 30%, #7fc7ff, #1c5fa8 60%, #0b3d75);
+      box-shadow: 0 0 8px rgba(80,160,255,0.6); color: white;
+    }
+    html[data-theme="win7"] .start-flag { }
+    html[data-theme="win7"] .taskbar-sep { }
+    html[data-theme="win7"] .taskbar-item {
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 4px; color: white;
+    }
+    html[data-theme="win7"] .taskbar-clock {
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 4px; color: white;
+    }
+
+    /* ---------- WIN10 (flat) ---------- */
+    html[data-theme="win10"] body {
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      background: #0078d7;
+    }
+    html[data-theme="win10"] .window {
+      background: #ffffff; border: 1px solid #e0e0e0; border-radius: 2px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    html[data-theme="win10"] .titlebar {
+      background: #ffffff; color: #000; border-bottom: 1px solid #e0e0e0;
+      border-radius: 0; text-shadow: none;
+    }
+    html[data-theme="win10"] .titlebar h1 { color: #000; text-shadow: none; }
+    html[data-theme="win10"] .win-btn {
+      background: transparent; color: #000; border: none; border-radius: 0;
+      box-shadow: none;
+    }
+    html[data-theme="win10"] .win-btn.close { background: transparent; color: #000; }
+    html[data-theme="win10"] .menubar {
+      background: #f3f3f3; border-bottom: 1px solid #e0e0e0; color: #000;
+    }
+    html[data-theme="win10"] .content { }
+    html[data-theme="win10"] .content p.sub { color: #000; }
+    html[data-theme="win10"] .icons { }
+    html[data-theme="win10"] a.icon-link { color: #000; }
+    html[data-theme="win10"] a.icon-link:hover { background: #e5f1fb; border-radius: 2px; border-color: transparent; }
+    html[data-theme="win10"] a.icon-link .icon { }
+    html[data-theme="win10"] a.icon-link .label { }
+    html[data-theme="win10"] a.icon-link .drive { }
+    html[data-theme="win10"] .statusbar {
+      background: #f3f3f3; border-top: 1px solid #e0e0e0; color: #000;
+    }
+    html[data-theme="win10"] .taskbar {
+      background: #1f1f1f; border-top: none;
+    }
+    html[data-theme="win10"] .start-btn {
+      background: transparent; border-radius: 2px; color: white; font-style: normal; box-shadow: none;
+    }
+    html[data-theme="win10"] .start-flag { }
+    html[data-theme="win10"] .taskbar-sep { }
+    html[data-theme="win10"] .taskbar-item {
+      background: rgba(255,255,255,0.08); border: none; border-radius: 0; color: white;
+    }
+    html[data-theme="win10"] .taskbar-clock {
+      background: transparent; color: white; border-left: 1px solid rgba(255,255,255,0.15); border-radius: 0;
+    }
+
+    /* ---------- WIN11 (Fluent/Mica) ---------- */
+    html[data-theme="win11"] body {
+      font-family: "Segoe UI Variable", "Segoe UI", Tahoma, Arial, sans-serif;
+      background: linear-gradient(160deg, #e8f0fe 0%, #f3f3f3 100%);
+    }
+    html[data-theme="win11"] .window {
+      background: #ffffff; border: 1px solid #e5e5e5; border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15); overflow: hidden;
+    }
+    html[data-theme="win11"] .titlebar {
+      background: #f3f3f3; color: #000; border-bottom: 1px solid #e5e5e5;
+      border-radius: 12px 12px 0 0; text-shadow: none;
+    }
+    html[data-theme="win11"] .titlebar h1 { color: #000; text-shadow: none; }
+    html[data-theme="win11"] .win-btn {
+      background: transparent; color: #000; border: none; border-radius: 4px;
+      box-shadow: none;
+    }
+    html[data-theme="win11"] .win-btn.close { background: transparent; color: #000; }
+    html[data-theme="win11"] .menubar {
+      background: #f9f9f9; border-bottom: 1px solid #e5e5e5; color: #000;
+    }
+    html[data-theme="win11"] .content { }
+    html[data-theme="win11"] .content p.sub { color: #000; }
+    html[data-theme="win11"] .icons { }
+    html[data-theme="win11"] a.icon-link { color: #000; }
+    html[data-theme="win11"] a.icon-link:hover { background: #f3f3f3; border-radius: 8px; border-color: transparent; }
+    html[data-theme="win11"] a.icon-link .icon { }
+    html[data-theme="win11"] a.icon-link .label { }
+    html[data-theme="win11"] a.icon-link .drive { }
+    html[data-theme="win11"] .statusbar {
+      background: #f9f9f9; border-top: 1px solid #e5e5e5; color: #000;
+    }
+    html[data-theme="win11"] .taskbar {
+      background: rgba(243,243,243,0.9); border-top: 1px solid rgba(0,0,0,0.06);
+      justify-content: center;
+    }
+    html[data-theme="win11"] .start-btn {
+      border-radius: 999px; background: white; border: 1px solid #e0e0e0; color: #0078d4; box-shadow: none;
+    }
+    html[data-theme="win11"] .start-flag { }
+    html[data-theme="win11"] .taskbar-sep { }
+    html[data-theme="win11"] .taskbar-item {
+      border-radius: 999px; background: rgba(255,255,255,0.7); border: 1px solid #e0e0e0; color: #000;
+    }
+    html[data-theme="win11"] .taskbar-clock {
+      border-radius: 999px; background: rgba(255,255,255,0.7); border: 1px solid #e0e0e0; color: #000;
+      margin-left: 0.6rem;
+    }
+
+    /* ---------- CLASSIC (Win 95/98) ---------- */
+    html[data-theme="classic"] body {
+      font-family: "MS Sans Serif", Tahoma, Geneva, sans-serif;
+      background: #008080;
+    }
+    html[data-theme="classic"] .window {
+      background: #c0c0c0; border: 2px outset #c0c0c0; border-radius: 0; box-shadow: none;
+    }
+    html[data-theme="classic"] .titlebar {
+      background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+      color: white; border-radius: 0;
+    }
+    html[data-theme="classic"] .titlebar h1 { color: white; }
+    html[data-theme="classic"] .win-btn {
+      background: #c0c0c0; border: 1px outset #c0c0c0; color: #000; border-radius: 0;
+      box-shadow: none;
+    }
+    html[data-theme="classic"] .win-btn.close { background: #c0c0c0; color: #000; }
+    html[data-theme="classic"] .menubar {
+      background: #c0c0c0; border-bottom: 1px solid #808080; color: #000;
+    }
+    html[data-theme="classic"] .content { }
+    html[data-theme="classic"] .content p.sub { color: #000; }
+    html[data-theme="classic"] .icons { }
+    html[data-theme="classic"] a.icon-link { color: #000; border-color: transparent; }
+    html[data-theme="classic"] a.icon-link:hover { background: #000080; color: white; border-color: transparent; }
+    html[data-theme="classic"] a.icon-link .icon { }
+    html[data-theme="classic"] a.icon-link .label { }
+    html[data-theme="classic"] a.icon-link .drive { }
+    html[data-theme="classic"] .statusbar {
+      background: #c0c0c0; border-top: 1px solid #808080; color: #000;
+    }
+    html[data-theme="classic"] .taskbar {
+      background: #c0c0c0; border-top: 2px outset #c0c0c0;
+    }
+    html[data-theme="classic"] .start-btn {
+      background: #c0c0c0; border: 2px outset #c0c0c0; color: #000; font-weight: 700; font-style: normal;
+      border-radius: 0; box-shadow: none;
+    }
+    html[data-theme="classic"] .start-flag { }
+    html[data-theme="classic"] .taskbar-sep { }
+    html[data-theme="classic"] .taskbar-item {
+      background: #c0c0c0; border: 1px inset #c0c0c0; color: #000; border-radius: 0;
+      box-shadow: none;
+    }
+    html[data-theme="classic"] .taskbar-clock {
+      background: #c0c0c0; border: 1px inset #c0c0c0; color: #000; border-radius: 0;
     }
   </style>
 </head>

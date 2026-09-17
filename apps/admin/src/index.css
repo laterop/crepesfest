@@ -316,6 +316,545 @@ html[data-theme="xp"] {
   }
 }
 
+/* ==================== THEME CLASSIC (Windows 95/98) ==================== */
+html[data-theme="classic"] {
+  body {
+    margin: 0;
+    font-family: "MS Sans Serif", Tahoma, Geneva, sans-serif;
+    background: #c0c0c0;
+    color: #000;
+    min-height: 100vh;
+  }
+  .app { min-height: 100vh; padding-bottom: 2.4rem; }
+
+  .topbar {
+    background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+    color: white;
+    padding: 0.4rem 0.5rem 0.4rem 0.7rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border: 2px outset #c0c0c0; border-radius: 0;
+  }
+  .title-left { gap: 0.5rem; }
+  .title-icon { font-size: 1.1rem; }
+  .topbar h1 { margin: 0; font-size: 0.95rem; font-weight: 700; letter-spacing: 0; }
+  .title-controls { display: flex; gap: 0.2rem; }
+  .win-btn {
+    width: 18px; height: 16px; display: flex; align-items: center; justify-content: center;
+    background: #c0c0c0; border: 1px outset #c0c0c0; border-radius: 0;
+    font-size: 0.7rem; font-weight: 700; color: #000; cursor: default;
+  }
+  .win-btn.close { background: #c0c0c0; }
+
+  .tabs { display: flex; gap: 2px; padding: 0.7rem 1rem 0 1rem; }
+  .tabs button {
+    padding: 0.45rem 1.1rem; border: 2px outset #c0c0c0; border-bottom: none;
+    border-radius: 0; background: #c0c0c0;
+    cursor: pointer; text-transform: capitalize; font-family: inherit; font-size: 0.85rem;
+    color: #000; position: relative; top: 0; box-shadow: none;
+  }
+  .tabs button.active { background: #c0c0c0; font-weight: 700; color: #000; border-bottom: 2px solid #c0c0c0; z-index: 2; }
+
+  .panel {
+    background: #c0c0c0; margin: 0 1rem 1rem; padding: 1.1rem;
+    border: 2px outset #c0c0c0; border-radius: 0;
+    box-shadow: none;
+  }
+  .panel h2 { margin: 0 0 0.8rem; font-size: 1rem; color: #000080; border-bottom: 1px solid #808080; padding-bottom: 0.3rem; font-weight: 700; }
+  .panel h3 { font-size: 0.9rem; color: #333; font-weight: 400; }
+
+  table { background: white; border: 2px inset #c0c0c0; border-radius: 0; }
+  th, td { border-bottom: 1px solid #808080; }
+  th { background: #c0c0c0; border-bottom: 1px solid #000; color: #000; }
+
+  input[type="text"], input[type="number"], td input, .new-item input {
+    border: 2px inset #c0c0c0; border-radius: 0;
+    background: white; box-shadow: none;
+  }
+  input[type="text"]:focus, input[type="number"]:focus, td input:focus { outline: none; }
+
+  .new-item button, .fond-row button, .cloture-btn, .save-btn.dirty {
+    background: #c0c0c0;
+    border: 2px outset #c0c0c0; border-radius: 0; color: #000;
+    box-shadow: none; font-weight: 600;
+  }
+  .new-item button:active, .fond-row button:active, .cloture-btn:active, .save-btn.dirty:active {
+    transform: none; border-style: inset;
+  }
+  .cloture-btn { background: #c0c0c0; color: #000; border-color: #c0c0c0; font-weight: 700; }
+
+  .danger {
+    background: #c0c0c0; color: #000; border: 2px outset #c0c0c0;
+    padding: 0.3rem 0.7rem; border-radius: 0; box-shadow: none; font-weight: 700;
+  }
+
+  .row-dirty { background: #ffffc0; }
+  .save-btn { background: #c0c0c0; color: #808080; border: 2px outset #c0c0c0; border-radius: 0; }
+  .save-btn.dirty { color: #000080; }
+
+  .color-input { border: 2px inset #c0c0c0 !important; border-radius: 0 !important; }
+
+  .stat-card { background: #c0c0c0; border: 2px outset #c0c0c0; border-radius: 0; box-shadow: none; }
+  .stat-card .value { color: #000080; }
+  .stat-card .label { color: #333; }
+
+  .bar-track { background: white; border: 2px inset #c0c0c0; border-radius: 0; }
+  .bar-fill { background: #000080; }
+  .bar-fill.alt { background: #808000; }
+
+  .hint-text { color: #333; }
+  .current-value { color: #000080; font-weight: 700; }
+  .error-text { color: #800000; }
+
+  .cloture-card { background: #c0c0c0; border: 2px outset #c0c0c0; border-radius: 0; box-shadow: none; }
+  .print-btn {
+    border: 2px outset #c0c0c0; border-radius: 0; background: #c0c0c0;
+    box-shadow: none;
+  }
+  .cloture-total { color: #000080; }
+  .cloture-details .highlight { color: #000; }
+  .cloture-chip { background: #c0c0c0; border: 1px solid #808080; border-radius: 0; }
+
+  .theme-option {
+    border: 2px outset #c0c0c0; border-radius: 0; background: #c0c0c0;
+    box-shadow: none;
+  }
+  .theme-option.active { background: #000080; color: white; border-style: inset; }
+
+  .taskbar {
+    display: flex;
+    position: fixed; left: 0; right: 0; bottom: 0; height: 2.4rem;
+    background: #c0c0c0;
+    border-top: 2px outset #c0c0c0;
+    align-items: center; gap: 0.6rem; padding: 0 0.4rem; z-index: 10;
+  }
+  .start-btn {
+    display: flex; align-items: center; gap: 0.35rem;
+    background: #c0c0c0;
+    border: 2px outset #c0c0c0; border-radius: 0;
+    color: #000; font-weight: 700; font-style: normal; font-size: 0.85rem;
+    padding: 0.35rem 0.8rem; cursor: pointer;
+    box-shadow: none;
+  }
+  .start-flag { font-style: normal; }
+  .taskbar-sep { width: 1px; height: 1.7rem; background: #808080; }
+  .taskbar-item {
+    background: #c0c0c0; border: 1px inset #c0c0c0; border-radius: 0;
+    color: #000; font-size: 0.8rem; padding: 0.3rem 0.8rem;
+    box-shadow: none;
+  }
+  .taskbar-clock {
+    margin-left: auto; color: #000; font-size: 0.8rem;
+    background: #c0c0c0; border: 1px inset #c0c0c0; border-radius: 0;
+    padding: 0.3rem 0.7rem;
+  }
+}
+
+/* ==================== THEME WIN7 (Aero) ==================== */
+html[data-theme="win7"] {
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    background: linear-gradient(180deg, #a9d0f5 0%, #5b8fd6 60%, #3f78c9 100%);
+    color: #1a3a66;
+    min-height: 100vh;
+  }
+  .app { min-height: 100vh; padding-bottom: 2.4rem; }
+
+  .topbar {
+    background: linear-gradient(180deg, #e8f1fc 0%, #bcd9f7 15%, #8cb8ec 45%, #5f95dd 46%, #3f78c9 100%);
+    color: #0a2a5e;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+    box-shadow: 0 2px 10px rgba(0,40,100,0.3);
+    padding: 0.5rem 0.7rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-radius: 8px 8px 0 0;
+  }
+  .title-left { gap: 0.5rem; }
+  .title-icon { font-size: 1.1rem; }
+  .topbar h1 { margin: 0; font-size: 0.98rem; font-weight: 700; }
+  .title-controls { display: flex; gap: 0.35rem; }
+  .win-btn {
+    width: 22px; height: 20px; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(180deg, #ffffff 0%, #dbe9fb 45%, #b7d2f2 46%, #9dc0ea 100%);
+    border: 1px solid #6a93c9; border-radius: 4px;
+    font-size: 0.75rem; font-weight: 700; color: #1a3a66; cursor: default;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  }
+  .win-btn.close { background: linear-gradient(180deg, #ffb3ab 0%, #f77 45%, #e33 46%, #c11 100%); color: white; }
+
+  .tabs { display: flex; gap: 0.4rem; padding: 0.8rem 1rem 0 1rem; }
+  .tabs button {
+    padding: 0.5rem 1.1rem; border: 1px solid #6a93c9; border-radius: 6px 6px 0 0;
+    background: linear-gradient(180deg, #ffffff 0%, #dbe9fb 45%, #b7d2f2 46%, #9dc0ea 100%);
+    cursor: pointer; text-transform: capitalize; font-family: inherit; font-size: 0.85rem;
+    color: #1a3a66; font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+  .tabs button.active { background: #ffffff; color: #0a2a5e; font-weight: 700; border-bottom: 2px solid #3f78c9; }
+
+  .panel {
+    background: rgba(255,255,255,0.88); margin: 0 1rem 1rem; padding: 1.2rem;
+    border: 1px solid #9fb9d9; border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,40,100,0.15);
+  }
+  .panel h2 { margin: 0 0 0.8rem; font-size: 1.05rem; color: #1a3a66; font-weight: 700; }
+  .panel h3 { font-size: 0.92rem; color: #48679a; font-weight: 600; }
+
+  table { background: white; border: 1px solid #9fb9d9; border-radius: 6px; }
+  th, td { border-bottom: 1px solid #dbe9fb; }
+  th { background: #eaf2fc; border-bottom: 1px solid #9fb9d9; color: #1a3a66; }
+
+  input[type="text"], input[type="number"], td input, .new-item input {
+    border: 1px solid #9fb9d9; border-radius: 4px;
+    background: white; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  }
+  input[type="text"]:focus, input[type="number"]:focus, td input:focus { outline: 2px solid #3f78c9; }
+
+  .new-item button, .fond-row button, .cloture-btn, .save-btn.dirty {
+    background: linear-gradient(180deg, #ffffff 0%, #dbe9fb 45%, #b7d2f2 46%, #9dc0ea 100%);
+    border: 1px solid #6a93c9; border-radius: 5px; color: #1a3a66;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15); font-weight: 600;
+  }
+  .new-item button:active, .fond-row button:active, .cloture-btn:active, .save-btn.dirty:active {
+    transform: none; box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+  }
+  .cloture-btn { background: linear-gradient(180deg, #ffb3ab 0%, #f77 45%, #e33 46%, #c11 100%); color: white; border-color: #a11; font-weight: 700; }
+
+  .danger {
+    background: linear-gradient(180deg, #ffb3ab 0%, #f77 45%, #e33 46%, #c11 100%); color: white; border: 1px solid #a11;
+    padding: 0.35rem 0.8rem; border-radius: 5px; box-shadow: 0 1px 2px rgba(0,0,0,0.15); font-weight: 600;
+  }
+
+  .row-dirty { background: #fff3c4; }
+  .save-btn { background: #e6eef8; color: #99a; border: 1px solid #cdd; border-radius: 5px; }
+  .save-btn.dirty { color: #1a3a66; }
+
+  .color-input { border: 1px solid #9fb9d9 !important; border-radius: 4px !important; }
+
+  .stat-card { background: rgba(255,255,255,0.88); border: 1px solid #9fb9d9; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,40,100,0.15); }
+  .stat-card .value { color: #3f78c9; }
+  .stat-card .label { color: #48679a; }
+
+  .bar-track { background: #eaf2fc; border: 1px solid #9fb9d9; border-radius: 999px; }
+  .bar-fill { background: linear-gradient(180deg, #7fc7ff 0%, #1c5fa8 100%); }
+  .bar-fill.alt { background: linear-gradient(180deg, #9be89b 0%, #2d9c2d 100%); }
+
+  .hint-text { color: #48679a; }
+  .current-value { color: #1c5fa8; font-weight: 700; }
+  .error-text { color: #c11; }
+
+  .cloture-card { background: rgba(255,255,255,0.9); border: 1px solid #9fb9d9; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,40,100,0.12); }
+  .print-btn {
+    border: 1px solid #6a93c9; border-radius: 5px; background: linear-gradient(180deg, #ffffff 0%, #dbe9fb 45%, #b7d2f2 46%, #9dc0ea 100%);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  }
+  .cloture-total { color: #1c5fa8; }
+  .cloture-details .highlight { color: #1a3a66; }
+  .cloture-chip { background: #eaf2fc; border: 1px solid #9fb9d9; border-radius: 999px; }
+
+  .theme-option {
+    border: 1px solid #6a93c9; border-radius: 5px; background: linear-gradient(180deg, #ffffff 0%, #dbe9fb 45%, #b7d2f2 46%, #9dc0ea 100%);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  }
+  .theme-option.active { background: #3f78c9; color: white; }
+
+  .taskbar {
+    display: flex;
+    position: fixed; left: 0; right: 0; bottom: 0; height: 2.6rem;
+    background: linear-gradient(180deg, rgba(60,90,140,0.95) 0%, rgba(20,40,80,0.97) 100%);
+    border-top: 1px solid rgba(255,255,255,0.3);
+    align-items: center; gap: 0.6rem; padding: 0 0.5rem; z-index: 10;
+  }
+  .start-btn {
+    display: flex; align-items: center; gap: 0.35rem;
+    background: radial-gradient(circle at 35% 30%, #7fc7ff, #1c5fa8 60%, #0b3d75);
+    border: none; border-radius: 999px;
+    color: white; font-weight: 700; font-style: normal; font-size: 0.85rem;
+    padding: 0.4rem 1rem; cursor: pointer;
+    box-shadow: 0 0 8px rgba(80,160,255,0.6);
+  }
+  .start-flag { font-style: normal; }
+  .taskbar-sep { width: 1px; height: 1.7rem; background: rgba(255,255,255,0.25); }
+  .taskbar-item {
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 4px;
+    color: white; font-size: 0.8rem; padding: 0.3rem 0.8rem;
+    box-shadow: none;
+  }
+  .taskbar-clock {
+    margin-left: auto; color: white; font-size: 0.8rem;
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 4px;
+    padding: 0.3rem 0.7rem;
+  }
+}
+
+/* ==================== THEME WIN10 (Fluent flat) ==================== */
+html[data-theme="win10"] {
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    background: #e5e5e5;
+    color: #000;
+    min-height: 100vh;
+  }
+  .app { min-height: 100vh; padding-bottom: 2.4rem; }
+
+  .topbar {
+    background: #ffffff;
+    color: #000;
+    padding: 0.5rem 0.7rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid #e0e0e0; border-radius: 0; box-shadow: none;
+  }
+  .title-left { gap: 0.5rem; }
+  .title-icon { font-size: 1.1rem; }
+  .topbar h1 { margin: 0; font-size: 0.95rem; font-weight: 600; }
+  .title-controls { display: flex; gap: 0; }
+  .win-btn {
+    width: 30px; height: 24px; display: flex; align-items: center; justify-content: center;
+    background: transparent; border: none; border-radius: 0;
+    font-size: 0.75rem; font-weight: 400; color: #000; cursor: default;
+    box-shadow: none;
+  }
+  .win-btn.close { background: transparent; color: #000; }
+
+  .tabs { display: flex; gap: 0.2rem; padding: 0.7rem 1rem 0 1rem; }
+  .tabs button {
+    padding: 0.5rem 1.1rem; border: 1px solid #d0d0d0; border-radius: 2px;
+    background: #f3f3f3;
+    cursor: pointer; text-transform: capitalize; font-family: inherit; font-size: 0.85rem;
+    color: #000; font-weight: 400; box-shadow: none;
+  }
+  .tabs button.active { background: #0078d7; color: white; font-weight: 600; border-color: #0078d7; }
+
+  .panel {
+    background: #ffffff; margin: 0 1rem 1rem; padding: 1.2rem;
+    border: 1px solid #e0e0e0; border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  }
+  .panel h2 { margin: 0 0 0.8rem; font-size: 1rem; color: #000; font-weight: 600; }
+  .panel h3 { font-size: 0.9rem; color: #555; font-weight: 400; }
+
+  table { background: white; border: 1px solid #e0e0e0; border-radius: 0; }
+  th, td { border-bottom: 1px solid #e0e0e0; }
+  th { background: #f3f3f3; border-bottom: 1px solid #e0e0e0; color: #000; }
+
+  input[type="text"], input[type="number"], td input, .new-item input {
+    border: 1px solid #b3b3b3; border-radius: 2px;
+    background: white; box-shadow: none;
+  }
+  input[type="text"]:focus, input[type="number"]:focus, td input:focus { outline: 2px solid #0078d7; }
+
+  .new-item button, .fond-row button, .cloture-btn, .save-btn.dirty {
+    background: #0078d7;
+    border: none; border-radius: 2px; color: white;
+    box-shadow: none; font-weight: 600;
+  }
+  .new-item button:active, .fond-row button:active, .cloture-btn:active, .save-btn.dirty:active {
+    transform: none; background: #106ebe;
+  }
+  .cloture-btn { background: #0078d7; color: white; border: none; font-weight: 600; }
+
+  .danger {
+    background: #e81123; color: white; border: none;
+    padding: 0.35rem 0.8rem; border-radius: 2px; box-shadow: none; font-weight: 600;
+  }
+
+  .row-dirty { background: #fff8dc; }
+  .save-btn { background: #f3f3f3; color: #999; border: 1px solid #d0d0d0; border-radius: 2px; }
+  .save-btn.dirty { color: white; }
+
+  .color-input { border: 1px solid #b3b3b3 !important; border-radius: 2px !important; }
+
+  .stat-card { background: #ffffff; border: 1px solid #e0e0e0; border-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+  .stat-card .value { color: #0078d7; }
+  .stat-card .label { color: #555; }
+
+  .bar-track { background: #f3f3f3; border: 1px solid #e0e0e0; border-radius: 0; }
+  .bar-fill { background: #0078d7; }
+  .bar-fill.alt { background: #107c10; }
+
+  .hint-text { color: #555; }
+  .current-value { color: #0078d7; font-weight: 600; }
+  .error-text { color: #e81123; }
+
+  .cloture-card { background: #ffffff; border: 1px solid #e0e0e0; border-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+  .print-btn {
+    border: 1px solid #d0d0d0; border-radius: 2px; background: #f3f3f3;
+    box-shadow: none;
+  }
+  .cloture-total { color: #0078d7; }
+  .cloture-details .highlight { color: #000; }
+  .cloture-chip { background: #f3f3f3; border: 1px solid #d0d0d0; border-radius: 2px; }
+
+  .theme-option {
+    border: 1px solid #d0d0d0; border-radius: 2px; background: #f3f3f3;
+    box-shadow: none;
+  }
+  .theme-option.active { background: #0078d7; color: white; border-color: #0078d7; }
+
+  .taskbar {
+    display: flex;
+    position: fixed; left: 0; right: 0; bottom: 0; height: 2.4rem;
+    background: #1f1f1f;
+    border-top: none;
+    align-items: center; gap: 0.6rem; padding: 0 0.5rem; z-index: 10;
+  }
+  .start-btn {
+    display: flex; align-items: center; gap: 0.35rem;
+    background: transparent;
+    border: none; border-radius: 2px;
+    color: white; font-weight: 400; font-style: normal; font-size: 0.85rem;
+    padding: 0.4rem 0.8rem; cursor: pointer;
+    box-shadow: none;
+  }
+  .start-flag { font-style: normal; }
+  .taskbar-sep { width: 1px; height: 1.6rem; background: rgba(255,255,255,0.15); }
+  .taskbar-item {
+    background: rgba(255,255,255,0.08); border: none; border-radius: 0;
+    color: white; font-size: 0.8rem; padding: 0.3rem 0.8rem;
+    box-shadow: none;
+  }
+  .taskbar-clock {
+    margin-left: auto; color: white; font-size: 0.8rem;
+    background: transparent; border-left: 1px solid rgba(255,255,255,0.15); border-radius: 0;
+    padding: 0.3rem 0.7rem;
+  }
+}
+
+/* ==================== THEME WIN11 (Fluent/Mica) ==================== */
+html[data-theme="win11"] {
+  body {
+    margin: 0;
+    font-family: "Segoe UI Variable", "Segoe UI", Tahoma, Arial, sans-serif;
+    background: #f3f3f3;
+    color: #000;
+    min-height: 100vh;
+  }
+  .app { min-height: 100vh; padding-bottom: 2.6rem; }
+
+  .topbar {
+    background: #f3f3f3;
+    color: #000;
+    padding: 0.55rem 0.8rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid #e5e5e5; border-radius: 10px 10px 0 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+  }
+  .title-left { gap: 0.5rem; }
+  .title-icon { font-size: 1.1rem; }
+  .topbar h1 { margin: 0; font-size: 0.95rem; font-weight: 600; }
+  .title-controls { display: flex; gap: 0.2rem; }
+  .win-btn {
+    width: 28px; height: 24px; display: flex; align-items: center; justify-content: center;
+    background: transparent; border: none; border-radius: 4px;
+    font-size: 0.75rem; font-weight: 400; color: #000; cursor: default;
+    box-shadow: none;
+  }
+  .win-btn.close { background: transparent; color: #000; }
+
+  .tabs { display: flex; gap: 0.3rem; padding: 0.8rem 1rem 0 1rem; }
+  .tabs button {
+    padding: 0.5rem 1.1rem; border: 1px solid #e0e0e0; border-radius: 8px;
+    background: #f3f3f3;
+    cursor: pointer; text-transform: capitalize; font-family: inherit; font-size: 0.85rem;
+    color: #000; font-weight: 500; box-shadow: none;
+  }
+  .tabs button.active { background: #ffffff; color: #0078d4; font-weight: 600; box-shadow: 0 1px 4px rgba(0,0,0,0.12); border-color: #e0e0e0; }
+
+  .panel {
+    background: #ffffff; margin: 0 1rem 1rem; padding: 1.2rem;
+    border: 1px solid #e5e5e5; border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  }
+  .panel h2 { margin: 0 0 0.8rem; font-size: 1.02rem; color: #000; font-weight: 600; }
+  .panel h3 { font-size: 0.9rem; color: #555; font-weight: 400; }
+
+  table { background: white; border: 1px solid #e5e5e5; border-radius: 8px; overflow: hidden; }
+  th, td { border-bottom: 1px solid #e5e5e5; }
+  th { background: #f3f3f3; border-bottom: 1px solid #e5e5e5; color: #000; }
+
+  input[type="text"], input[type="number"], td input, .new-item input {
+    border: 1px solid #d1d1d1; border-radius: 6px;
+    background: white; box-shadow: none;
+  }
+  input[type="text"]:focus, input[type="number"]:focus, td input:focus { outline: 2px solid #0078d4; }
+
+  .new-item button, .fond-row button, .cloture-btn, .save-btn.dirty {
+    background: #0078d4;
+    border: none; border-radius: 6px; color: white;
+    box-shadow: none; font-weight: 600;
+  }
+  .new-item button:active, .fond-row button:active, .cloture-btn:active, .save-btn.dirty:active {
+    transform: none; background: #005fa3;
+  }
+  .cloture-btn { background: #0078d4; color: white; border: none; font-weight: 600; }
+
+  .danger {
+    background: #c42b1c; color: white; border: none;
+    padding: 0.35rem 0.8rem; border-radius: 6px; box-shadow: none; font-weight: 600;
+  }
+
+  .row-dirty { background: #fff8dc; }
+  .save-btn { background: #f3f3f3; color: #999; border: 1px solid #e0e0e0; border-radius: 6px; }
+  .save-btn.dirty { color: white; }
+
+  .color-input { border: 1px solid #d1d1d1 !important; border-radius: 6px !important; }
+
+  .stat-card { background: #ffffff; border: 1px solid #e5e5e5; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+  .stat-card .value { color: #0078d4; }
+  .stat-card .label { color: #555; }
+
+  .bar-track { background: #f3f3f3; border: 1px solid #e5e5e5; border-radius: 999px; }
+  .bar-fill { background: #0078d4; }
+  .bar-fill.alt { background: #107c10; }
+
+  .hint-text { color: #555; }
+  .current-value { color: #0078d4; font-weight: 600; }
+  .error-text { color: #c42b1c; }
+
+  .cloture-card { background: #ffffff; border: 1px solid #e5e5e5; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .print-btn {
+    border: 1px solid #e0e0e0; border-radius: 6px; background: #f3f3f3;
+    box-shadow: none;
+  }
+  .cloture-total { color: #0078d4; }
+  .cloture-details .highlight { color: #000; }
+  .cloture-chip { background: #f3f3f3; border: 1px solid #e0e0e0; border-radius: 999px; }
+
+  .theme-option {
+    border: 1px solid #e0e0e0; border-radius: 999px; background: #f3f3f3;
+    box-shadow: none;
+  }
+  .theme-option.active { background: #0078d4; color: white; border-color: #0078d4; }
+
+  .taskbar {
+    display: flex; justify-content: center;
+    position: fixed; left: 0; right: 0; bottom: 0; height: 2.8rem;
+    background: rgba(243,243,243,0.9);
+    border-top: 1px solid rgba(0,0,0,0.06); border-radius: 0;
+    align-items: center; gap: 0.6rem; padding: 0 0.5rem; z-index: 10;
+  }
+  .start-btn {
+    display: flex; align-items: center; gap: 0.35rem;
+    background: white;
+    border: 1px solid #e0e0e0; border-radius: 999px;
+    color: #0078d4; font-weight: 600; font-style: normal; font-size: 0.85rem;
+    padding: 0.4rem 1rem; cursor: pointer;
+    box-shadow: none;
+  }
+  .start-flag { font-style: normal; }
+  .taskbar-sep { width: 1px; height: 1.6rem; background: rgba(0,0,0,0.1); }
+  .taskbar-item {
+    background: rgba(255,255,255,0.7); border: 1px solid #e0e0e0; border-radius: 999px;
+    color: #000; font-size: 0.8rem; padding: 0.3rem 0.8rem;
+    box-shadow: none;
+  }
+  .taskbar-clock {
+    margin-left: 0.6rem; color: #000; font-size: 0.8rem;
+    background: rgba(255,255,255,0.7); border: 1px solid #e0e0e0; border-radius: 999px;
+    padding: 0.3rem 0.7rem;
+  }
+}
+
 /* ---------- Ticket imprimable (ticket Z) - toujours le meme, quel que soit le theme ---------- */
 .print-ticket {
   position: fixed; left: -9999px; top: -9999px;

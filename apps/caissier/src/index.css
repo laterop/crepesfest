@@ -398,3 +398,554 @@ html[data-theme="xp"] {
     padding: 0.35rem 0.8rem;
   }
 }
+
+/* ==================== THEME CLASSIC (Windows 95/98) ==================== */
+html[data-theme="classic"] {
+  font-size: 17px;
+
+  body {
+    font-family: "MS Sans Serif", Tahoma, Geneva, sans-serif;
+    background: #c0c0c0;
+    color: #000;
+  }
+  .app { padding-bottom: 2.6rem; }
+
+  .topbar {
+    background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+    color: white; font-weight: 700; border-radius: 0;
+    padding: 0.5rem 0.5rem 0.5rem 0.8rem; border: 1px solid #000; border-bottom: 2px solid #000;
+  }
+  .topbar h1 { font-weight: 700; }
+  .title-controls { display: flex; gap: 0.3rem; }
+  .win-btn {
+    width: 22px; height: 20px; display: flex; align-items: center; justify-content: center;
+    border: 1px outset #c0c0c0; background: #c0c0c0; border-radius: 0;
+    font-size: 0.8rem; font-weight: 700; color: #000; cursor: default;
+  }
+  .win-btn.close { background: #c0c0c0; }
+
+  .category h2 { color: #000080; border-bottom: 2px solid #000; font-weight: 700; }
+  .menu-item {
+    border-radius: 0; border: 2px outset #c0c0c0; border-top-width: 2px;
+    background: #c0c0c0; box-shadow: none;
+  }
+  .menu-item:active { transform: none; border-style: inset; }
+  .menu-item .name { color: #000; }
+  .menu-item .price { color: #000080; }
+
+  .back-btn { border-radius: 0; border: 2px outset #c0c0c0; background: #c0c0c0; box-shadow: none; }
+  .back-btn:active { border-style: inset; }
+  .hint-text { color: #444; }
+
+  .panel-card { background: #c0c0c0; border: 2px outset #c0c0c0; border-radius: 0; box-shadow: none; }
+  .panel-title { color: #000080; border-bottom: 1px solid #808080; font-weight: 700; }
+
+  .customer-input { border-radius: 0; border: 2px inset #c0c0c0; background: white; box-shadow: none; }
+
+  .cart-line { border-bottom: 1px solid #808080; }
+  .cart-line-name { font-weight: 600; color: #000; }
+  .qty-controls button {
+    border-radius: 0; border: 2px outset #c0c0c0; background: #c0c0c0; box-shadow: none;
+  }
+  .qty-controls button:active { border-style: inset; }
+  .empty { color: #444; }
+
+  .total-row { border-top: 2px solid #000; font-weight: 700; }
+  .total-value { color: #000080; font-size: 1.5rem; }
+
+  .remaining-banner { background: #ffffcc; border: 2px inset #c0c0c0; color: #000; border-radius: 0; }
+  .remaining-banner.paid { background: #ccffcc; border: 2px inset #c0c0c0; color: #000; }
+
+  .payment-chip { background: white; border: 2px inset #c0c0c0; border-radius: 0; }
+  .chip-method { color: #000080; font-weight: 700; }
+  .chip-change { color: #006400; font-weight: 400; }
+  .chip-items { color: #444; }
+  .chip-remove { color: #800000; }
+
+  .split-toggle button { border-radius: 0; border: 2px outset #c0c0c0; background: #c0c0c0; box-shadow: none; font-weight: 400; }
+  .split-toggle button:active { border-style: inset; }
+  .split-toggle button.active { background: #000080; color: white; border-style: outset; }
+  .split-item-row { border-bottom: 1px solid #808080; }
+  .split-item-name { font-weight: 600; }
+  .split-item-avail { color: #444; font-weight: 400; }
+
+  .payment-entry { border: 2px outset #c0c0c0; border-radius: 0; background: #c0c0c0; box-shadow: none; }
+  .entry-title { color: #000080; font-weight: 700; }
+  .mode-toggle { color: #000080; font-weight: 400; }
+
+  .quick-amounts button, .bill-buttons button {
+    border-radius: 0; border: 2px outset #c0c0c0; background: #c0c0c0; box-shadow: none; font-weight: 400;
+  }
+  .quick-amounts button:active, .bill-buttons button:active { border-style: inset; }
+
+  .amount-input, .amount-display { border-radius: 0; border: 2px inset #c0c0c0; background: white; box-shadow: none; }
+  .amount-value { color: #000080; }
+  .amount-raw { color: #444; }
+
+  .keypad-btn { border-radius: 0; border: 2px outset #c0c0c0; background: #c0c0c0; box-shadow: none; }
+  .keypad-btn:active { transform: none; border-style: inset; }
+  .keypad-btn.back { color: #800000; }
+  .keypad-clear { border-radius: 0; border: 2px outset #c0c0c0; background: #c0c0c0; color: #800000; font-weight: 800; box-shadow: none; }
+  .keypad-clear:active { border-style: inset; }
+
+  .method-select button { border-radius: 0; border: 2px outset #c0c0c0; background: #c0c0c0; box-shadow: none; font-weight: 600; }
+  .method-select button:active { border-style: inset; }
+  .method-select button.active { background: #000080; color: white; border-style: outset; }
+
+  .cash-received-label { color: #444; }
+
+  .add-payment { border-radius: 0; border: 2px outset #c0c0c0; background: #c0c0c0; color: #000; font-weight: 800; box-shadow: none; }
+  .add-payment:active { border-style: inset; }
+  .change { color: #006400; }
+
+  .error { color: #800000; background: #ffe0dc; border: 1px solid #800000; border-radius: 0; font-weight: 400; }
+
+  .submit {
+    background: #c0c0c0; color: #000; border: 2px outset #c0c0c0; border-radius: 0;
+    box-shadow: none;
+  }
+  .submit:active { transform: none; border-style: inset; }
+
+  .last-order { background: #ccffcc; color: #000; border: 2px inset #c0c0c0; border-radius: 0; font-weight: 600; }
+
+  .taskbar {
+    display: flex;
+    position: fixed; left: 0; right: 0; bottom: 0; height: 2.6rem;
+    background: #c0c0c0; border-top: 2px outset #c0c0c0;
+    align-items: center; gap: 0.6rem; padding: 0 0.4rem; z-index: 10;
+  }
+  .start-btn {
+    display: flex; align-items: center; gap: 0.35rem;
+    border: 2px outset #c0c0c0; background: #c0c0c0; border-radius: 0;
+    color: #000; font-weight: 700; font-style: normal; font-size: 0.9rem;
+    padding: 0.4rem 0.9rem; cursor: pointer; box-shadow: none; font-family: inherit;
+  }
+  .start-flag { font-style: normal; }
+  .taskbar-sep { width: 1px; height: 1.8rem; background: #808080; }
+  .taskbar-item {
+    background: #c0c0c0; border: 1px inset #c0c0c0; border-radius: 0;
+    color: #000; font-size: 0.85rem; padding: 0.35rem 0.9rem; box-shadow: none;
+  }
+  .taskbar-clock {
+    margin-left: auto; color: #000; font-size: 0.85rem;
+    background: #c0c0c0; border: 1px inset #c0c0c0; border-radius: 0;
+    padding: 0.35rem 0.8rem;
+  }
+}
+
+/* ==================== THEME WIN7 (Aero) ==================== */
+html[data-theme="win7"] {
+  font-size: 17px;
+
+  body {
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    background: linear-gradient(180deg, #bcd9f7 0%, #6f9fd8 100%);
+    color: #1a2b40;
+  }
+  .app { padding-bottom: 2.8rem; }
+
+  .topbar {
+    background: linear-gradient(180deg, #e8f1fc 0%, #bcd9f7 15%, #8cb8ec 45%, #5f95dd 46%, #3f78c9 100%);
+    border-radius: 8px 8px 0 0; color: #0a2a5e; text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+    box-shadow: 0 2px 10px rgba(0,40,100,0.3);
+    padding: 0.5rem 0.6rem 0.5rem 0.9rem; border: none;
+  }
+  .topbar h1 { font-weight: 700; }
+  .title-controls { display: flex; gap: 0.3rem; }
+  .win-btn {
+    width: 24px; height: 20px; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(180deg, #ffffff 0%, #cfe4fb 45%, #a9cdf2 46%, #8fbceb 100%);
+    border: 1px solid #6a93c9; border-radius: 4px;
+    font-size: 0.8rem; font-weight: 700; color: #1a3a66; cursor: default;
+    box-shadow: 0 1px 1px rgba(255,255,255,0.6) inset;
+  }
+  .win-btn.close { background: linear-gradient(180deg, #ff9a91 0%, #f4665a 46%, #d33 100%); color: white; border-color: #a11; }
+
+  .category h2 { color: #1a3a66; border-bottom: 2px solid #6a93c9; font-weight: 600; }
+  .menu-item {
+    border-radius: 5px; border: 1px solid #6a93c9; border-top-width: 5px;
+    background: linear-gradient(180deg, #ffffff 0%, #dbe9fb 45%, #b7d2f2 46%, #9dc0ea 100%);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  }
+  .menu-item:active { transform: none; box-shadow: inset 0 1px 4px rgba(0,0,0,0.25); }
+  .menu-item .name { color: #1a3a66; }
+  .menu-item .price { color: #1a3a66; }
+
+  .back-btn {
+    border-radius: 5px; border: 1px solid #6a93c9;
+    background: linear-gradient(180deg, #ffffff 0%, #dbe9fb 45%, #b7d2f2 46%, #9dc0ea 100%);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15); color: #1a3a66; font-weight: 600;
+  }
+  .hint-text { color: #3a5578; }
+
+  .panel-card {
+    background: rgba(255,255,255,0.88); border: 1px solid #9fb9d9; border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,40,100,0.15);
+  }
+  .panel-title { color: #1a3a66; border-bottom: 1px solid #c5d6ec; font-weight: 700; }
+
+  .customer-input { border-radius: 4px; border: 1px solid #9fb9d9; background: white; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
+
+  .cart-line { border-bottom: 1px dashed #c5d6ec; }
+  .cart-line-name { font-weight: 600; color: #1a2b40; }
+  .qty-controls button {
+    border-radius: 50%; border: 1px solid #6a93c9;
+    background: linear-gradient(180deg, #ffffff 0%, #dbe9fb 45%, #b7d2f2 46%, #9dc0ea 100%);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15); color: #1a3a66;
+  }
+  .empty { color: #5a7391; }
+
+  .total-row { border-top: 2px solid #6a93c9; font-weight: 700; }
+  .total-value { color: #1a3a66; font-size: 1.5rem; }
+
+  .remaining-banner { background: rgba(255,247,200,0.9); border: 1px solid #d8c86b; color: #6b4e00; border-radius: 6px; }
+  .remaining-banner.paid { background: rgba(210,247,200,0.9); border-color: #6bb95a; color: #14532d; }
+
+  .payment-chip { background: rgba(255,255,255,0.9); border: 1px solid #9fb9d9; border-radius: 999px; }
+  .chip-method { color: #1a3a66; font-weight: 700; }
+  .chip-change { color: #2f7a2a; font-weight: 600; }
+  .chip-items { color: #5a7391; }
+  .chip-remove { color: #d33; }
+
+  .split-toggle button {
+    border-radius: 999px; border: 1px solid #6a93c9;
+    background: linear-gradient(180deg, #ffffff 0%, #dbe9fb 45%, #b7d2f2 46%, #9dc0ea 100%);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15); font-weight: 600; color: #1a3a66;
+  }
+  .split-toggle button.active { background: linear-gradient(180deg, #6fa3e0 0%, #3f78c9 100%); color: white; }
+  .split-item-row { border-bottom: 1px dashed #c5d6ec; }
+  .split-item-name { font-weight: 600; }
+  .split-item-avail { color: #5a7391; font-weight: 500; }
+
+  .payment-entry { border: 1px solid #9fb9d9; border-radius: 8px; background: rgba(255,255,255,0.88); box-shadow: 0 2px 10px rgba(0,40,100,0.15); }
+  .entry-title { color: #1a3a66; font-weight: 700; }
+  .mode-toggle { color: #3f78c9; font-weight: 600; }
+
+  .quick-amounts button, .bill-buttons button {
+    border-radius: 999px; border: 1px solid #6a93c9;
+    background: linear-gradient(180deg, #ffffff 0%, #dbe9fb 45%, #b7d2f2 46%, #9dc0ea 100%);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15); font-weight: 600; color: #1a3a66;
+  }
+
+  .amount-input { border-radius: 4px; border: 1px solid #9fb9d9; background: white; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
+  .amount-display { background: rgba(255,255,255,0.88); border: 1px solid #9fb9d9; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,40,100,0.15); }
+  .amount-value { color: #3f78c9; }
+  .amount-raw { color: #5a7391; }
+
+  .keypad-btn {
+    border-radius: 5px; border: 1px solid #6a93c9;
+    background: linear-gradient(180deg, #ffffff 0%, #dbe9fb 45%, #b7d2f2 46%, #9dc0ea 100%);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15); color: #1a3a66;
+  }
+  .keypad-btn:active { transform: none; box-shadow: inset 0 1px 4px rgba(0,0,0,0.25); }
+  .keypad-btn.back { color: #d33; }
+  .keypad-clear {
+    border-radius: 5px; border: 1px solid #a11;
+    background: linear-gradient(180deg, #ffd6d1 0%, #ff9a91 45%, #f4665a 46%, #d33 100%);
+    color: white; box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  }
+
+  .method-select button {
+    border-radius: 999px; border: 1px solid #6a93c9;
+    background: linear-gradient(180deg, #ffffff 0%, #dbe9fb 45%, #b7d2f2 46%, #9dc0ea 100%);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15); font-weight: 600; color: #1a3a66;
+  }
+  .method-select button.active { background: linear-gradient(180deg, #6fa3e0 0%, #3f78c9 100%); color: white; }
+
+  .cash-received-label { color: #5a7391; }
+
+  .add-payment {
+    border-radius: 999px; border: 1px solid #2f7a2a;
+    background: linear-gradient(180deg, #c8f7c5 0%, #8fe08a 45%, #5cc157 46%, #3a9c35 100%);
+    color: #0f3d0d; box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  }
+  .change { color: #2f7a2a; }
+
+  .error { color: #a11; background: #ffe0dc; border: 1px solid #d33; border-radius: 6px; font-weight: 600; }
+
+  .submit {
+    background: linear-gradient(180deg, #c8f7c5 0%, #8fe08a 45%, #5cc157 46%, #3a9c35 100%);
+    color: #0f3d0d; border: 1px solid #2f7a2a; border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .submit:active { transform: none; box-shadow: inset 0 1px 4px rgba(0,0,0,0.25); }
+
+  .last-order { background: rgba(210,247,200,0.9); color: #14532d; border: 1px solid #6bb95a; border-radius: 6px; font-weight: 600; }
+
+  .taskbar {
+    display: flex;
+    position: fixed; left: 0; right: 0; bottom: 0; height: 2.8rem;
+    background: linear-gradient(180deg, rgba(60,90,140,0.95) 0%, rgba(20,40,80,0.97) 100%);
+    border-top: 1px solid rgba(255,255,255,0.3);
+    align-items: center; gap: 0.6rem; padding: 0 0.4rem; z-index: 10;
+  }
+  .start-btn {
+    display: flex; align-items: center; gap: 0.35rem;
+    border-radius: 999px;
+    background: radial-gradient(circle at 35% 30%, #7fc7ff, #1c5fa8 60%, #0b3d75);
+    box-shadow: 0 0 8px rgba(80,160,255,0.6);
+    color: white; font-weight: 700; font-style: normal; font-size: 0.9rem;
+    padding: 0.4rem 0.9rem; cursor: pointer; border: none; font-family: inherit;
+  }
+  .start-flag { font-style: normal; }
+  .taskbar-sep { width: 1px; height: 1.8rem; background: rgba(255,255,255,0.3); }
+  .taskbar-item {
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 4px;
+    color: white; font-size: 0.85rem; padding: 0.35rem 0.9rem;
+  }
+  .taskbar-clock {
+    margin-left: auto; color: white; font-size: 0.85rem;
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 4px;
+    padding: 0.35rem 0.8rem;
+  }
+}
+
+/* ==================== THEME WIN10 (Fluent flat) ==================== */
+html[data-theme="win10"] {
+  font-size: 17px;
+
+  body {
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    background: #fafafa;
+    color: #000;
+  }
+  .app { padding-bottom: 2.6rem; }
+
+  .topbar {
+    background: #ffffff; color: #000; border-radius: 0; border-bottom: 1px solid #e0e0e0;
+    padding: 0.5rem 0.6rem 0.5rem 0.9rem; box-shadow: none;
+  }
+  .topbar h1 { font-weight: 600; }
+  .title-controls { display: flex; gap: 0; }
+  .win-btn {
+    width: 30px; height: 24px; display: flex; align-items: center; justify-content: center;
+    background: transparent; border: none; border-radius: 0;
+    font-size: 0.8rem; font-weight: 400; color: #000; cursor: default;
+  }
+  .win-btn.close { background: transparent; color: #000; }
+
+  .category h2 { color: #0078d7; border-bottom: 1px solid #e0e0e0; font-weight: 600; }
+  .menu-item {
+    border-radius: 2px; border: 1px solid #e0e0e0; border-top-width: 1px;
+    background: #ffffff; box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  }
+  .menu-item:active { transform: none; background: #f0f0f0; }
+  .menu-item .name { color: #000; }
+  .menu-item .price { color: #0078d7; }
+
+  .back-btn { border-radius: 2px; border: 1px solid #d0d0d0; background: #f3f3f3; color: #000; box-shadow: none; }
+  .hint-text { color: #666; }
+
+  .panel-card { background: #ffffff; border: 1px solid #e0e0e0; border-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+  .panel-title { color: #000; border-bottom: 1px solid #e0e0e0; font-weight: 600; }
+
+  .customer-input { border-radius: 2px; border: 1px solid #b3b3b3; background: white; box-shadow: none; }
+
+  .cart-line { border-bottom: 1px solid #eaeaea; }
+  .cart-line-name { font-weight: 600; color: #000; }
+  .qty-controls button { border-radius: 2px; border: 1px solid #d0d0d0; background: #f3f3f3; box-shadow: none; color: #000; }
+  .empty { color: #666; }
+
+  .total-row { border-top: 1px solid #e0e0e0; font-weight: 700; }
+  .total-value { color: #0078d7; font-size: 1.5rem; }
+
+  .remaining-banner { background: #fff4ce; border: 1px solid #ffb900; color: #6b4e00; border-radius: 2px; }
+  .remaining-banner.paid { background: #dff6dd; border-color: #107c10; color: #0e5c0e; }
+
+  .payment-chip { background: #f3f3f3; border: 1px solid #d0d0d0; border-radius: 2px; }
+  .chip-method { color: #0078d7; font-weight: 600; }
+  .chip-change { color: #107c10; font-weight: 600; }
+  .chip-items { color: #666; }
+  .chip-remove { color: #e81123; }
+
+  .split-toggle button { border-radius: 2px; border: 1px solid #d0d0d0; background: #f3f3f3; box-shadow: none; font-weight: 600; color: #000; }
+  .split-toggle button.active { background: #0078d7; color: white; border-color: #0078d7; }
+  .split-item-row { border-bottom: 1px solid #eaeaea; }
+  .split-item-name { font-weight: 600; }
+  .split-item-avail { color: #666; font-weight: 400; }
+
+  .payment-entry { border: 1px solid #e0e0e0; border-radius: 2px; background: #ffffff; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+  .entry-title { color: #000; font-weight: 600; }
+  .mode-toggle { color: #0078d7; font-weight: 600; }
+
+  .quick-amounts button, .bill-buttons button {
+    border-radius: 2px; border: 1px solid #d0d0d0; background: #f3f3f3; box-shadow: none; font-weight: 600; color: #000;
+  }
+
+  .amount-input, .amount-display { border-radius: 2px; border: 1px solid #b3b3b3; background: white; box-shadow: none; }
+  .amount-value { color: #0078d7; }
+  .amount-raw { color: #666; }
+
+  .keypad-btn { border-radius: 2px; border: 1px solid #d0d0d0; background: #f3f3f3; box-shadow: none; color: #000; }
+  .keypad-btn:active { transform: none; background: #e6e6e6; }
+  .keypad-btn.back { color: #e81123; }
+  .keypad-clear { border-radius: 2px; border: none; background: #e81123; color: white; box-shadow: none; }
+
+  .method-select button { border-radius: 2px; border: 1px solid #d0d0d0; background: #f3f3f3; box-shadow: none; font-weight: 600; color: #000; }
+  .method-select button.active { background: #0078d7; color: white; border-color: #0078d7; }
+
+  .cash-received-label { color: #666; }
+
+  .add-payment { border-radius: 2px; border: none; background: #0078d7; color: white; font-weight: 600; box-shadow: none; }
+  .change { color: #107c10; }
+
+  .error { color: #e81123; background: #fde7e9; border: 1px solid #e81123; border-radius: 2px; font-weight: 400; }
+
+  .submit {
+    background: #0078d7; color: white; border: none; border-radius: 2px;
+    box-shadow: none; font-weight: 600;
+  }
+  .submit:active { transform: none; background: #005fa3; }
+
+  .last-order { background: #dff6dd; color: #0e5c0e; border: 1px solid #107c10; border-radius: 2px; font-weight: 600; }
+
+  .taskbar {
+    display: flex;
+    position: fixed; left: 0; right: 0; bottom: 0; height: 2.6rem;
+    background: #1f1f1f; border-top: none;
+    align-items: center; gap: 0.6rem; padding: 0 0.4rem; z-index: 10;
+  }
+  .start-btn {
+    display: flex; align-items: center; gap: 0.35rem;
+    background: transparent; border-radius: 2px;
+    color: white; font-weight: 600; font-style: normal; font-size: 0.9rem;
+    padding: 0.4rem 0.9rem; cursor: pointer; border: none; font-family: inherit; box-shadow: none;
+  }
+  .start-flag { font-style: normal; }
+  .taskbar-sep { width: 1px; height: 1.8rem; background: rgba(255,255,255,0.15); }
+  .taskbar-item {
+    background: rgba(255,255,255,0.08); border: none; border-radius: 0;
+    color: white; font-size: 0.85rem; padding: 0.35rem 0.9rem;
+  }
+  .taskbar-clock {
+    margin-left: auto; color: white; font-size: 0.85rem;
+    background: transparent; border-left: 1px solid rgba(255,255,255,0.15); border-radius: 0;
+    padding: 0.35rem 0.8rem;
+  }
+}
+
+/* ==================== THEME WIN11 (Fluent/Mica) ==================== */
+html[data-theme="win11"] {
+  font-size: 17px;
+
+  body {
+    font-family: "Segoe UI Variable", "Segoe UI", Tahoma, Arial, sans-serif;
+    background: #f3f3f3;
+    color: #000;
+  }
+  .app { padding-bottom: 2.8rem; }
+
+  .topbar {
+    background: #f3f3f3; color: #000; border-bottom: 1px solid #e5e5e5;
+    border-radius: 10px 10px 0 0; box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+    padding: 0.55rem 0.7rem 0.55rem 0.9rem;
+  }
+  .topbar h1 { font-weight: 600; }
+  .title-controls { display: flex; gap: 0.2rem; }
+  .win-btn {
+    width: 30px; height: 24px; display: flex; align-items: center; justify-content: center;
+    background: transparent; border: none; border-radius: 4px;
+    font-size: 0.8rem; font-weight: 400; color: #000; cursor: default;
+  }
+  .win-btn.close { background: transparent; color: #000; }
+
+  .category h2 { color: #0078d4; border-bottom: 1px solid #e5e5e5; font-weight: 600; }
+  .menu-item {
+    border-radius: 12px; border: 1px solid #e5e5e5; border-top-width: 1px;
+    background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  }
+  .menu-item:active { transform: none; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  .menu-item .name { color: #000; }
+  .menu-item .price { color: #0078d4; }
+
+  .back-btn { border-radius: 8px; border: 1px solid #e0e0e0; background: #f3f3f3; color: #000; box-shadow: none; }
+  .hint-text { color: #616161; }
+
+  .panel-card { background: #ffffff; border: 1px solid #e5e5e5; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+  .panel-title { color: #000; border-bottom: 1px solid #e5e5e5; font-weight: 600; }
+
+  .customer-input { border-radius: 8px; border: 1px solid #d1d1d1; background: white; box-shadow: none; }
+
+  .cart-line { border-bottom: 1px solid #eeeeee; }
+  .cart-line-name { font-weight: 600; color: #000; }
+  .qty-controls button { border-radius: 999px; border: 1px solid #e0e0e0; background: #f3f3f3; box-shadow: none; color: #000; }
+  .empty { color: #616161; }
+
+  .total-row { border-top: 1px solid #e5e5e5; font-weight: 700; }
+  .total-value { color: #0078d4; font-size: 1.5rem; }
+
+  .remaining-banner { background: #fff4ce; border: 1px solid #ffd75e; color: #6b4e00; border-radius: 10px; }
+  .remaining-banner.paid { background: #dff6dd; border-color: #6ccb6c; color: #0e5c0e; }
+
+  .payment-chip { background: #f3f3f3; border: 1px solid #e0e0e0; border-radius: 999px; }
+  .chip-method { color: #0078d4; font-weight: 600; }
+  .chip-change { color: #107c10; font-weight: 600; }
+  .chip-items { color: #616161; }
+  .chip-remove { color: #c42b1c; }
+
+  .split-toggle button { border-radius: 999px; border: 1px solid #e0e0e0; background: #f3f3f3; box-shadow: none; font-weight: 600; color: #000; }
+  .split-toggle button.active { background: #0078d4; color: white; border-color: #0078d4; }
+  .split-item-row { border-bottom: 1px solid #eeeeee; }
+  .split-item-name { font-weight: 600; }
+  .split-item-avail { color: #616161; font-weight: 400; }
+
+  .payment-entry { border: 1px solid #e5e5e5; border-radius: 12px; background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+  .entry-title { color: #000; font-weight: 600; }
+  .mode-toggle { color: #0078d4; font-weight: 600; }
+
+  .quick-amounts button, .bill-buttons button {
+    border-radius: 999px; border: 1px solid #e0e0e0; background: #f3f3f3; box-shadow: none; font-weight: 600; color: #000;
+  }
+
+  .amount-input { border-radius: 8px; border: 1px solid #d1d1d1; background: white; box-shadow: none; }
+  .amount-display { background: white; border: 1px solid #d1d1d1; border-radius: 10px; box-shadow: none; }
+  .amount-value { color: #0078d4; }
+  .amount-raw { color: #616161; }
+
+  .keypad-btn { border-radius: 8px; border: 1px solid #e0e0e0; background: #f3f3f3; box-shadow: none; color: #000; }
+  .keypad-btn:active { transform: none; background: #e6e6e6; }
+  .keypad-btn.back { color: #c42b1c; }
+  .keypad-clear { border-radius: 8px; border: none; background: #c42b1c; color: white; box-shadow: none; }
+
+  .method-select button { border-radius: 999px; border: 1px solid #e0e0e0; background: #f3f3f3; box-shadow: none; font-weight: 600; color: #000; }
+  .method-select button.active { background: #0078d4; color: white; border-color: #0078d4; }
+
+  .cash-received-label { color: #616161; }
+
+  .add-payment { border-radius: 8px; border: none; background: #0078d4; color: white; font-weight: 600; box-shadow: none; }
+  .change { color: #107c10; }
+
+  .error { color: #c42b1c; background: #fde7e9; border: 1px solid #c42b1c; border-radius: 8px; font-weight: 400; }
+
+  .submit {
+    background: #0078d4; color: white; border: none; border-radius: 8px;
+    box-shadow: none; font-weight: 600;
+  }
+  .submit:active { transform: none; background: #005a9e; }
+
+  .last-order { background: #dff6dd; color: #0e5c0e; border: 1px solid #6ccb6c; border-radius: 10px; font-weight: 600; }
+
+  .taskbar {
+    display: flex; justify-content: center;
+    position: fixed; left: 0; right: 0; bottom: 0; height: 2.8rem;
+    background: rgba(243,243,243,0.9); border-top: 1px solid rgba(0,0,0,0.06);
+    align-items: center; gap: 0.6rem; padding: 0 0.4rem; z-index: 10;
+  }
+  .start-btn {
+    display: flex; align-items: center; gap: 0.35rem;
+    border-radius: 999px; background: white; border: 1px solid #e0e0e0;
+    color: #0078d4; font-weight: 600; font-style: normal; font-size: 0.9rem;
+    padding: 0.4rem 0.9rem; cursor: pointer; font-family: inherit; box-shadow: none;
+  }
+  .start-flag { font-style: normal; }
+  .taskbar-sep { width: 1px; height: 1.8rem; background: rgba(0,0,0,0.1); }
+  .taskbar-item {
+    border-radius: 999px; background: rgba(255,255,255,0.7); border: 1px solid #e0e0e0;
+    color: #000; font-size: 0.85rem; padding: 0.35rem 0.9rem;
+  }
+  .taskbar-clock {
+    margin-left: 0.6rem; color: #000; font-size: 0.85rem;
+    border-radius: 999px; background: rgba(255,255,255,0.7); border: 1px solid #e0e0e0;
+    padding: 0.35rem 0.8rem;
+  }
+}

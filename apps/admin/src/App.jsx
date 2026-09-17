@@ -394,20 +394,23 @@ export default function App() {
             S'applique aussitot sur les 4 interfaces (caisse, cuisine, gestion, accueil).
           </p>
           <div className="theme-picker">
-            <button
-              type="button"
-              className={`theme-option ${(settings.theme || "neo") === "neo" ? "active" : ""}`}
-              onClick={() => saveTheme("neo")}
-            >
-              Moderne (violet)
-            </button>
-            <button
-              type="button"
-              className={`theme-option ${settings.theme === "xp" ? "active" : ""}`}
-              onClick={() => saveTheme("xp")}
-            >
-              Windows XP
-            </button>
+            {[
+              { id: "neo", label: "Moderne (violet)" },
+              { id: "classic", label: "Windows Classic" },
+              { id: "xp", label: "Windows XP" },
+              { id: "win7", label: "Windows 7" },
+              { id: "win10", label: "Windows 10" },
+              { id: "win11", label: "Windows 11" }
+            ].map((t) => (
+              <button
+                key={t.id}
+                type="button"
+                className={`theme-option ${(settings.theme || "neo") === t.id ? "active" : ""}`}
+                onClick={() => saveTheme(t.id)}
+              >
+                {t.label}
+              </button>
+            ))}
           </div>
 
           <h2>Fond de caisse</h2>
