@@ -32,8 +32,36 @@ body { margin: 0; font-family: system-ui, sans-serif; background: #fdf6ec; color
 .payment-methods button { flex: 1; padding: 0.5rem; border-radius: 8px; border: 1px solid #d97b3f; background: white; cursor: pointer; }
 .payment-methods button.active { background: #d97b3f; color: white; }
 
-.especes-block label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.9rem; }
-.especes-block input { padding: 0.5rem; border-radius: 8px; border: 1px solid #ddd; }
+.especes-block { font-size: 0.9rem; }
+.especes-block input { width: 100%; padding: 0.6rem; border-radius: 8px; border: 1px solid #ddd; font-size: 1rem; }
+
+.amount-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; gap: 0.5rem; }
+.amount-label { font-weight: 600; }
+.mode-toggle {
+  background: none; border: none; color: #8a5a2b; text-decoration: underline;
+  font-size: 0.8rem; cursor: pointer; padding: 0.2rem 0;
+}
+
+.amount-display {
+  background: #fdf6ec; border: 1px solid #e0c9a6; border-radius: 10px;
+  padding: 0.7rem; text-align: right; font-size: 1.4rem; font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.keypad {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-bottom: 0.5rem;
+}
+.keypad-btn {
+  padding: 0; height: 56px; border-radius: 10px; border: 1px solid #e0c9a6;
+  background: white; font-size: 1.3rem; font-weight: 600; cursor: pointer;
+}
+.keypad-btn:active { background: #f0e0c8; }
+.keypad-btn.back { color: #c0392b; font-size: 1.5rem; }
+.keypad-clear {
+  width: 100%; padding: 0.6rem; border-radius: 10px; border: 1px solid #c0392b;
+  background: white; color: #c0392b; font-weight: 600; cursor: pointer;
+}
+
 .change { margin-top: 0.5rem; font-weight: 600; color: #2b7a3f; }
 .cb-block, .qr-block { font-size: 0.9rem; }
 .qr-block { text-align: center; }

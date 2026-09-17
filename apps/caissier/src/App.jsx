@@ -18,6 +18,7 @@ export default function App() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [cbConfirmed, setCbConfirmed] = useState(false);
+  const [numpadMode, setNumpadMode] = useState(true);
 
   useEffect(() => {
     fetch(`${API_URL}/api/menu`)
@@ -72,6 +73,19 @@ export default function App() {
     setCustomerName("");
     setCbConfirmed(false);
     setPaymentMethod("especes");
+  }
+
+  function pressKey(key) {
+    setCashReceived((prev) => {
+      if (key === "back") return prev.slice(0, -1);
+      if (key === "clear") return "";
+      if (key === ".") {
+        if (prev.includes(".")) return prev;
+        return prev === "" ? "0." : prev + ".";
+      }
+      if (prev === "0") return key;
+      return prev + key;
+    });
   }
 
   async function submitOrder() {
@@ -177,16 +191,49 @@ export default function App() {
 
             {paymentMethod === "especes" && (
               <div className="especes-block">
-                <label>
-                  Montant recu
+                <div className="amount-header">
+                  <span className="amount-label">Montant recu</span>
+                  <button
+                    type="button"
+                    className="mode-toggle"
+                    onClick={() => setNumpadMode((m) => !m)}
+                  >
+                    {numpadMode ? "Utiliser le clavier" : "Utiliser le pave numerique"}
+                  </button>
+                </div>
+
+                {numpadMode ? (
+                  <>
+                    <div className="amount-display">
+                      {cashReceived === "" ? "0" : cashReceived} EUR
+                    </div>
+                    <div className="keypad">
+                      {["7", "8", "9", "4", "5", "6", "1", "2", "3", ".", "0", "back"].map((k) => (
+                        <button
+                          key={k}
+                          type="button"
+                          className={k === "back" ? "keypad-btn back" : "keypad-btn"}
+                          onClick={() => pressKey(k)}
+                        >
+                          {k === "back" ? "⌫" : k}
+                        </button>
+                      ))}
+                    </div>
+                    <button type="button" className="keypad-clear" onClick={() => pressKey("clear")}>
+                      Effacer
+                    </button>
+                  </>
+                ) : (
                   <input
                     type="number"
+                    inputMode="decimal"
                     min="0"
                     step="0.5"
                     value={cashReceived}
                     onChange={(e) => setCashReceived(e.target.value)}
                   />
-                </label>
+                )}
+
                 {change !== null && (
                   <div className="change">Monnaie a rendre: {change.toFixed(2)} EUR</div>
                 )}
