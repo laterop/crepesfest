@@ -44,9 +44,11 @@ body { margin: 0; font-family: system-ui, sans-serif; background: #fdf6ec; color
 
 .amount-display {
   background: #fdf6ec; border: 1px solid #e0c9a6; border-radius: 10px;
-  padding: 0.7rem; text-align: right; font-size: 1.4rem; font-weight: 700;
-  margin-bottom: 0.6rem;
+  padding: 0.7rem; text-align: right; margin-bottom: 0.6rem;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 0.15rem;
 }
+.amount-value { font-size: 1.4rem; font-weight: 700; }
+.amount-raw { font-size: 0.75rem; color: #999; }
 
 .keypad {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-bottom: 0.5rem;

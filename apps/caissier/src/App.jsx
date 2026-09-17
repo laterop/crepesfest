@@ -51,9 +51,25 @@ export default function App() {
     [cartLines]
   );
 
+  // Saisie "caisse enregistreuse" : sans point, les chiffres tapes remplissent
+  // depuis la droite (les 2 derniers = centimes), comme une calculette de caisse.
+  // Ex: "5" -> 0,05 EUR, "105" -> 1,05 EUR, "1050" -> 10,50 EUR.
+  // Si on tape explicitement un point, on repasse en saisie decimale classique.
+  function cashValue(raw) {
+    if (raw === "") return 0;
+    if (raw.includes(".")) {
+      const v = parseFloat(raw);
+      return Number.isNaN(v) ? 0 : v;
+    }
+    const cents = parseInt(raw, 10);
+    return Number.isNaN(cents) ? 0 : cents / 100;
+  }
+
+  const cashAmount = cashValue(cashReceived);
+
   const change =
     paymentMethod === "especes" && cashReceived !== ""
-      ? Math.max(0, Math.round((Number(cashReceived) - total) * 100) / 100)
+      ? Math.max(0, Math.round((cashAmount - total) * 100) / 100)
       : null;
 
   function addToCart(id) {
@@ -80,10 +96,8 @@ export default function App() {
       if (key === "back") return prev.slice(0, -1);
       if (key === "clear") return "";
       if (key === ".") {
-        if (prev.includes(".")) return prev;
-        return prev === "" ? "0." : prev + ".";
+        return prev.includes(".") ? prev : prev + ".";
       }
-      if (prev === "0") return key;
       return prev + key;
     });
   }
@@ -104,7 +118,7 @@ export default function App() {
           items: cartLines.map((l) => ({ menuItemId: l.id, qty: l.qty })),
           paymentMethod,
           customerName,
-          cashReceived: paymentMethod === "especes" ? Number(cashReceived || 0) : undefined
+          cashReceived: paymentMethod === "especes" ? cashAmount : undefined
         })
       });
       if (!res.ok) throw new Error("Echec de la commande");
@@ -205,7 +219,10 @@ export default function App() {
                 {numpadMode ? (
                   <>
                     <div className="amount-display">
-                      {cashReceived === "" ? "0" : cashReceived} EUR
+                      <span className="amount-value">{cashAmount.toFixed(2)} EUR</span>
+                      {cashReceived !== "" && (
+                        <span className="amount-raw">saisi : {cashReceived}</span>
+                      )}
                     </div>
                     <div className="keypad">
                       {["7", "8", "9", "4", "5", "6", "1", "2", "3", ".", "0", "back"].map((k) => (
