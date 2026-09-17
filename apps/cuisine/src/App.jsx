@@ -8,6 +8,32 @@ const COLUMNS = [
   { status: "prete", label: "Prete" }
 ];
 
+function CardContent({ order }) {
+  return (
+    <>
+      <div className="card-header">
+        <span className="number">#{order.number}</span>
+        {order.customerName && <span className="customer">{order.customerName}</span>}
+      </div>
+      <ul>
+        {order.items.map((it, idx) => (
+          <li key={idx}>
+            {it.qty} x {it.name}
+          </li>
+        ))}
+      </ul>
+      <div className="card-footer">
+        <span className="time">
+          {new Date(order.createdAt).toLocaleTimeString("fr-FR", {
+            hour: "2-digit",
+            minute: "2-digit"
+          })}
+        </span>
+      </div>
+    </>
+  );
+}
+
 export default function App() {
   const [orders, setOrders] = useState([]);
   const [connected, setConnected] = useState(false);
@@ -37,6 +63,8 @@ export default function App() {
     return map;
   }, [orders]);
 
+  const draggedOrder = drag ? orders.find((o) => o.id === drag.id) : null;
+
   async function updateStatus(id, status) {
     await fetch(`${API_URL}/api/orders/${id}/status`, {
       method: "PATCH",
@@ -52,28 +80,25 @@ export default function App() {
   }
 
   function handlePointerDown(e, order) {
-    if (isDisplayOnly) return;
+    if (isDisplayOnly || drag) return;
     e.currentTarget.setPointerCapture(e.pointerId);
     setDrag({
       id: order.id,
       status: order.status,
-      startX: e.clientX,
-      startY: e.clientY,
-      dx: 0,
-      dy: 0,
-      overStatus: null
+      x: e.clientX,
+      y: e.clientY,
+      overStatus: order.status
     });
   }
 
   function handlePointerMove(e, order) {
     if (!drag || drag.id !== order.id) return;
-    const dx = e.clientX - drag.startX;
-    const dy = e.clientY - drag.startY;
+    e.preventDefault();
     const overStatus = targetStatusAt(e.clientX, e.clientY);
-    setDrag((d) => (d && d.id === order.id ? { ...d, dx, dy, overStatus } : d));
+    setDrag((d) => (d && d.id === order.id ? { ...d, x: e.clientX, y: e.clientY, overStatus } : d));
   }
 
-  function handlePointerUp(e, order) {
+  function endDrag(e, order) {
     if (!drag || drag.id !== order.id) return;
     const newStatus = targetStatusAt(e.clientX, e.clientY);
     if (newStatus && newStatus !== order.status) {
@@ -112,36 +137,13 @@ export default function App() {
                 return (
                   <div
                     key={order.id}
-                    className={`card${isDragging ? " dragging" : ""}`}
-                    style={
-                      isDragging
-                        ? { transform: `translate(${drag.dx}px, ${drag.dy}px)` }
-                        : undefined
-                    }
+                    className={`card${isDragging ? " drag-source" : ""}`}
                     onPointerDown={(e) => handlePointerDown(e, order)}
                     onPointerMove={(e) => handlePointerMove(e, order)}
-                    onPointerUp={(e) => handlePointerUp(e, order)}
-                    onPointerCancel={() => setDrag(null)}
+                    onPointerUp={(e) => endDrag(e, order)}
+                    onPointerCancel={(e) => endDrag(e, order)}
                   >
-                    <div className="card-header">
-                      <span className="number">#{order.number}</span>
-                      {order.customerName && <span className="customer">{order.customerName}</span>}
-                    </div>
-                    <ul>
-                      {order.items.map((it, idx) => (
-                        <li key={idx}>
-                          {it.qty} x {it.name}
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="card-footer">
-                      <span className="time">
-                        {new Date(order.createdAt).toLocaleTimeString("fr-FR", {
-                          hour: "2-digit",
-                          minute: "2-digit"
-                        })}
-                      </span>
-                    </div>
+                    <CardContent order={order} />
                   </div>
                 );
               })}
@@ -149,6 +151,12 @@ export default function App() {
           </div>
         ))}
       </div>
+
+      {drag && draggedOrder && (
+        <div className="drag-ghost" style={{ left: drag.x, top: drag.y }}>
+          <CardContent order={draggedOrder} />
+        </div>
+      )}
     </div>
   );
 }
