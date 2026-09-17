@@ -69,35 +69,55 @@ app.get("/api/orders", (req, res) => {
 });
 
 app.post("/api/orders", async (req, res) => {
-  const { items, paymentMethod, customerName, cashReceived } = req.body;
+  const { items, payments, customerName } = req.body;
   if (!Array.isArray(items) || items.length === 0) {
     return res.status(400).json({ error: "la commande doit contenir au moins un article" });
   }
-
-  const enrichedItems = items.map((it) => {
-    const menuItem = db.data.menu.find((m) => m.id === it.menuItemId);
-    if (!menuItem) throw new Error(`produit inconnu: ${it.menuItemId}`);
-    return {
-      menuItemId: menuItem.id,
-      name: menuItem.name,
-      unitPrice: menuItem.price,
-      qty: it.qty || 1
-    };
-  });
-
-  const total = computeOrderTotal(enrichedItems);
-
-  let paymentInfo = { method: paymentMethod || "especes" };
-  if (paymentInfo.method === "especes") {
-    const received = Number(cashReceived || 0);
-    paymentInfo.cashReceived = received;
-    paymentInfo.change = Math.max(0, Math.round((received - total) * 100) / 100);
-  } else if (paymentInfo.method === "qr") {
-    paymentInfo.qrRef = `CREPESFEST-${nanoid(6).toUpperCase()}`;
-    paymentInfo.paid = false;
-  } else if (paymentInfo.method === "cb") {
-    paymentInfo.paid = false;
+  if (!Array.isArray(payments) || payments.length === 0) {
+    return res.status(400).json({ error: "la commande doit contenir au moins un paiement" });
   }
+
+  let enrichedItems;
+  try {
+    enrichedItems = items.map((it) => {
+      const menuItem = db.data.menu.find((m) => m.id === it.menuItemId);
+      if (!menuItem) throw new Error(`produit inconnu: ${it.menuItemId}`);
+      return {
+        menuItemId: menuItem.id,
+        name: menuItem.name,
+        unitPrice: menuItem.price,
+        qty: it.qty || 1
+      };
+    });
+  } catch (e) {
+    return res.status(400).json({ error: e.message });
+  }
+
+  const total = Math.round(computeOrderTotal(enrichedItems) * 100) / 100;
+
+  const paymentsTotal =
+    Math.round(payments.reduce((sum, p) => sum + Number(p.amount || 0), 0) * 100) / 100;
+  if (Math.abs(paymentsTotal - total) > 0.01) {
+    return res.status(400).json({
+      error: `le total des paiements (${paymentsTotal.toFixed(2)} EUR) ne correspond pas au total de la commande (${total.toFixed(2)} EUR)`
+    });
+  }
+
+  const enrichedPayments = payments.map((p) => {
+    const amount = Math.round(Number(p.amount || 0) * 100) / 100;
+    const entry = { method: p.method, amount };
+    if (p.method === "especes") {
+      const received = Number(p.cashReceived ?? amount);
+      entry.cashReceived = received;
+      entry.change = Math.max(0, Math.round((received - amount) * 100) / 100);
+    } else if (p.method === "qr") {
+      entry.qrRef = `CREPESFEST-${nanoid(6).toUpperCase()}`;
+      entry.paid = false;
+    } else if (p.method === "cb") {
+      entry.paid = false;
+    }
+    return entry;
+  });
 
   db.data.counter += 1;
   const order = {
@@ -105,8 +125,8 @@ app.post("/api/orders", async (req, res) => {
     number: db.data.counter,
     customerName: customerName || "",
     items: enrichedItems,
-    total: Math.round(total * 100) / 100,
-    payment: paymentInfo,
+    total,
+    payments: enrichedPayments,
     status: "nouvelle",
     createdAt: new Date().toISOString()
   };
@@ -137,7 +157,13 @@ app.patch("/api/orders/:id/status", async (req, res) => {
 app.patch("/api/orders/:id/paiement", async (req, res) => {
   const order = db.data.orders.find((o) => o.id === req.params.id);
   if (!order) return res.status(404).json({ error: "commande introuvable" });
-  order.payment.paid = true;
+  const { paymentIndex } = req.body;
+  const payments = order.payments || [];
+  if (paymentIndex != null && payments[paymentIndex]) {
+    payments[paymentIndex].paid = true;
+  } else {
+    for (const p of payments) p.paid = true;
+  }
   await db.write();
   broadcastOrders();
   res.json(order);
@@ -161,8 +187,11 @@ app.get("/api/stats", (req, res) => {
 
   const parPaiement = {};
   for (const o of orders) {
-    const m = o.payment?.method || "inconnu";
-    parPaiement[m] = (parPaiement[m] || 0) + o.total;
+    const pays = o.payments || (o.payment ? [{ method: o.payment.method, amount: o.total }] : []);
+    for (const p of pays) {
+      const m = p.method || "inconnu";
+      parPaiement[m] = (parPaiement[m] || 0) + p.amount;
+    }
   }
 
   res.json({

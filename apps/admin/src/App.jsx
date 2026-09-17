@@ -172,7 +172,11 @@ export default function App() {
                   <td>{o.customerName || "-"}</td>
                   <td>{o.items.map((it) => `${it.qty}x ${it.name}`).join(", ")}</td>
                   <td>{o.total.toFixed(2)} EUR</td>
-                  <td>{o.payment?.method}</td>
+                  <td>
+                    {(o.payments || (o.payment ? [{ method: o.payment.method, amount: o.total }] : []))
+                      .map((p) => `${p.method} ${p.amount.toFixed(2)}€`)
+                      .join(" + ")}
+                  </td>
                   <td>{o.status}</td>
                   <td>{new Date(o.createdAt).toLocaleTimeString("fr-FR")}</td>
                 </tr>
