@@ -16,6 +16,12 @@ export default function App() {
   const [clotureBusy, setClotureBusy] = useState(false);
   const [clotureError, setClotureError] = useState("");
   const [newItem, setNewItem] = useState({ name: "", price: "", category: "sucree", color: "#e0c9a6" });
+  const [clock, setClock] = useState(new Date());
+
+  useEffect(() => {
+    const t = setInterval(() => setClock(new Date()), 1000 * 15);
+    return () => clearInterval(t);
+  }, []);
 
   function loadMenu() {
     fetch(`${API_URL}/api/menu`).then((r) => r.json()).then(setMenu);
@@ -143,7 +149,15 @@ export default function App() {
   return (
     <div className="app">
       <header className="topbar">
-        <h1>CrepesFest - Gestion</h1>
+        <div className="title-left">
+          <span className="title-icon">🖥️</span>
+          <h1>CrepesFest - Gestion</h1>
+        </div>
+        <div className="title-controls">
+          <span className="win-btn min">_</span>
+          <span className="win-btn max">□</span>
+          <span className="win-btn close">×</span>
+        </div>
       </header>
 
       <nav className="tabs">
@@ -404,6 +418,17 @@ export default function App() {
           </div>
         </section>
       )}
+
+      <footer className="taskbar">
+        <button className="start-btn">
+          <span className="start-flag">⊞</span> Demarrer
+        </button>
+        <div className="taskbar-sep" />
+        <div className="taskbar-item active">CrepesFest - Gestion</div>
+        <div className="taskbar-clock">
+          {clock.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
+        </div>
+      </footer>
     </div>
   );
 }

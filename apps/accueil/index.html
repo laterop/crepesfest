@@ -6,71 +6,155 @@
   <title>CrepesFest</title>
   <style>
     * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
     body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: system-ui, sans-serif;
-      background: linear-gradient(135deg, #c8632c 0%, #8a5a2b 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
+      font-family: Tahoma, Verdana, "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(180deg, #3a93ff 0%, #6fb4ff 35%, #bfe7ff 55%, #7fbf5a 58%, #4a8f3a 100%);
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem;
     }
-    h1 {
+
+    .window {
+      width: 100%;
+      max-width: 620px;
+      background: #ece9d8;
+      border: 1px solid #0a2fa0;
+      border-radius: 6px 6px 4px 4px;
+      box-shadow: 4px 4px 16px rgba(0,0,0,0.4);
+      overflow: hidden;
+    }
+
+    .titlebar {
+      background: linear-gradient(180deg, #4a9bff 0%, #1958ee 8%, #1958ee 45%, #0f45cf 88%, #0a2fa0 100%);
       color: white;
-      font-size: 2.2rem;
-      margin: 0 0 0.4rem;
-      text-align: center;
+      padding: 0.5rem 0.5rem 0.5rem 0.8rem;
+      display: flex; justify-content: space-between; align-items: center;
     }
-    p.sub {
-      color: rgba(255,255,255,0.85);
-      margin: 0 0 2.2rem;
-      text-align: center;
+    .titlebar .title-left { display: flex; align-items: center; gap: 0.5rem; }
+    .titlebar h1 { margin: 0; font-size: 1rem; font-weight: 700; text-shadow: 1px 1px 1px rgba(0,0,0,0.4); }
+    .win-controls { display: flex; gap: 0.3rem; }
+    .win-btn {
+      width: 22px; height: 20px; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(180deg, #4f92e8 0%, #1c5cd6 100%);
+      border: 1px solid #0a2fa0; border-radius: 2px;
+      font-size: 0.8rem; font-weight: 700; color: white;
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.4);
     }
-    .cards {
-      display: flex;
-      gap: 1.4rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      max-width: 900px;
+    .win-btn.close { background: linear-gradient(180deg, #f3897a 0%, #d0261a 100%); }
+
+    .menubar {
+      background: #ece9d8; padding: 0.3rem 0.8rem; font-size: 0.82rem;
+      display: flex; gap: 1rem; border-bottom: 1px solid #b8b49a; color: #333;
     }
-    a.card {
-      text-decoration: none;
-      background: white;
-      color: #241a0d;
-      border-radius: 16px;
-      padding: 2rem 1.6rem;
-      width: 220px;
-      text-align: center;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.18);
-      transition: transform 0.15s ease;
+
+    .content { padding: 1.4rem 1.2rem 1rem; }
+    .content p.sub { margin: 0 0 1.2rem; font-size: 0.9rem; color: #333; }
+
+    .icons {
+      display: flex; gap: 1.6rem; flex-wrap: wrap; justify-content: center;
+      padding: 0.6rem 0 1.2rem;
     }
-    a.card:active { transform: scale(0.97); }
-    .icon { font-size: 2.6rem; margin-bottom: 0.7rem; display: block; }
-    .label { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.3rem; }
-    .desc { font-size: 0.85rem; color: #777; }
+    a.icon-link {
+      text-decoration: none; color: #000;
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      width: 120px; padding: 0.6rem 0.4rem; border-radius: 3px;
+      border: 1px dotted transparent;
+    }
+    a.icon-link:hover { border-color: #0a2fa0; background: rgba(10,47,160,0.08); }
+    a.icon-link .icon { font-size: 2.8rem; filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.35)); }
+    a.icon-link .label {
+      font-size: 0.85rem; font-weight: 700; text-align: center;
+    }
+    a.icon-link .drive { font-size: 0.72rem; color: #444; }
+
+    .statusbar {
+      border-top: 1px solid #b8b49a; background: #ece9d8;
+      padding: 0.35rem 0.8rem; font-size: 0.78rem; color: #333;
+    }
+
+    .taskbar {
+      position: fixed; left: 0; right: 0; bottom: 0; height: 2.4rem;
+      background: linear-gradient(180deg, #2a6fe0 0%, #1e4fc0 8%, #163d9a 90%, #10306f 100%);
+      border-top: 1px solid #4a9bff;
+      display: flex; align-items: center; gap: 0.6rem; padding: 0 0.4rem;
+    }
+    .start-btn {
+      display: flex; align-items: center; gap: 0.35rem;
+      background: linear-gradient(180deg, #6fce4f 0%, #3c9c1c 55%, #2d7a12 100%);
+      border: 1px solid #1c4a0a; border-radius: 4px;
+      color: white; font-weight: 800; font-style: italic; font-size: 0.85rem;
+      padding: 0.35rem 0.8rem; cursor: default;
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.5);
+    }
+    .start-flag { font-style: normal; }
+    .taskbar-sep { width: 1px; height: 1.7rem; background: rgba(255,255,255,0.3); }
+    .taskbar-item {
+      background: #2f5fc4; border: 1px solid #163d9a; border-radius: 3px;
+      color: white; font-size: 0.8rem; padding: 0.3rem 0.8rem;
+      box-shadow: inset 1px 1px 2px rgba(0,0,0,0.4);
+    }
+    .taskbar-clock {
+      margin-left: auto; color: white; font-size: 0.8rem;
+      background: #163d9a; border: 1px solid #0f2c73; border-radius: 3px;
+      padding: 0.3rem 0.7rem;
+    }
   </style>
 </head>
 <body>
-  <h1>CrepesFest</h1>
-  <p class="sub">Choisis ton acces</p>
-  <div class="cards">
-    <a class="card" href="https://caissier-laterop.vercel.app">
-      <span class="icon">💳</span>
-      <div class="label">Caisse</div>
-      <div class="desc">Prise de commande et paiement</div>
-    </a>
-    <a class="card" href="https://cuisine-laterop.vercel.app">
-      <span class="icon">🍽️</span>
-      <div class="label">Cuisine</div>
-      <div class="desc">Suivi des commandes</div>
-    </a>
-    <a class="card" href="https://admin-laterop.vercel.app">
-      <span class="icon">⚙️</span>
-      <div class="label">Gestion</div>
-      <div class="desc">Menu, stats, caisse</div>
-    </a>
+  <div class="window">
+    <div class="titlebar">
+      <div class="title-left">
+        <span>🖥️</span>
+        <h1>Poste de travail - CrepesFest</h1>
+      </div>
+      <div class="win-controls">
+        <span class="win-btn min">_</span>
+        <span class="win-btn max">□</span>
+        <span class="win-btn close">×</span>
+      </div>
+    </div>
+    <div class="menubar">
+      <span>Fichier</span><span>Edition</span><span>Affichage</span><span>Favoris</span><span>?</span>
+    </div>
+    <div class="content">
+      <p class="sub">Choisis le poste auquel tu veux acceder :</p>
+      <div class="icons">
+        <a class="icon-link" href="https://caissier-laterop.vercel.app">
+          <span class="icon">💽</span>
+          <span class="label">Caisse (C:)</span>
+          <span class="drive">Prise de commande</span>
+        </a>
+        <a class="icon-link" href="https://cuisine-laterop.vercel.app">
+          <span class="icon">💽</span>
+          <span class="label">Cuisine (D:)</span>
+          <span class="drive">Suivi des commandes</span>
+        </a>
+        <a class="icon-link" href="https://admin-laterop.vercel.app">
+          <span class="icon">💽</span>
+          <span class="label">Gestion (E:)</span>
+          <span class="drive">Menu, stats, caisse</span>
+        </a>
+      </div>
+    </div>
+    <div class="statusbar">3 objet(s)</div>
   </div>
+
+  <div class="taskbar">
+    <div class="start-btn"><span class="start-flag">⊞</span> Demarrer</div>
+    <div class="taskbar-sep"></div>
+    <div class="taskbar-item">Poste de travail</div>
+    <div class="taskbar-clock" id="clock">--:--</div>
+  </div>
+
+  <script>
+    function tick() {
+      var d = new Date();
+      var h = String(d.getHours()).padStart(2, "0");
+      var m = String(d.getMinutes()).padStart(2, "0");
+      document.getElementById("clock").textContent = h + ":" + m;
+    }
+    tick();
+    setInterval(tick, 15000);
+  </script>
 </body>
 </html>

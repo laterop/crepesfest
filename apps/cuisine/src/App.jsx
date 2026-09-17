@@ -38,6 +38,12 @@ export default function App() {
   const [orders, setOrders] = useState([]);
   const [connected, setConnected] = useState(false);
   const [drag, setDrag] = useState(null);
+  const [clock, setClock] = useState(new Date());
+
+  useEffect(() => {
+    const t = setInterval(() => setClock(new Date()), 1000 * 15);
+    return () => clearInterval(t);
+  }, []);
 
   // Le grand ecran cuisine (affichage pur, TV au mur par exemple) n'a souvent
   // aucune interaction possible. On ouvre alors cette URL avec ?affichage=1 :
@@ -111,10 +117,20 @@ export default function App() {
   return (
     <div className="app">
       <header className="topbar">
-        <h1>CrepesFest - Cuisine{isDisplayOnly ? " (affichage)" : ""}</h1>
-        <span className={connected ? "status ok" : "status ko"}>
-          {connected ? "Connecte" : "Deconnecte"}
-        </span>
+        <div className="title-left">
+          <span className="title-icon">🍽️</span>
+          <h1>CrepesFest - Cuisine{isDisplayOnly ? " (affichage)" : ""}</h1>
+        </div>
+        <div className="title-right">
+          <span className={connected ? "status ok" : "status ko"}>
+            {connected ? "Connecte" : "Deconnecte"}
+          </span>
+          <div className="title-controls">
+            <span className="win-btn min">_</span>
+            <span className="win-btn max">□</span>
+            <span className="win-btn close">×</span>
+          </div>
+        </div>
       </header>
 
       {!isDisplayOnly && (
@@ -157,6 +173,17 @@ export default function App() {
           <CardContent order={draggedOrder} />
         </div>
       )}
+
+      <footer className="taskbar">
+        <button className="start-btn">
+          <span className="start-flag">⊞</span> Demarrer
+        </button>
+        <div className="taskbar-sep" />
+        <div className="taskbar-item active">CrepesFest - Cuisine</div>
+        <div className="taskbar-clock">
+          {clock.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
+        </div>
+      </footer>
     </div>
   );
 }

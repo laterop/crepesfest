@@ -1,161 +1,199 @@
 * { box-sizing: border-box; }
 html { font-size: 17px; }
-body { margin: 0; font-family: system-ui, sans-serif; background: #f2ede2; color: #241a0d; }
-.app { display: flex; flex-direction: column; min-height: 100vh; }
+body {
+  margin: 0;
+  font-family: Tahoma, Verdana, "Segoe UI", Arial, sans-serif;
+  background: radial-gradient(ellipse at 50% -10%, #7fa8ff 0%, #3a5fc4 55%, #1c2f6b 100%);
+  color: #000;
+}
+.app { display: flex; flex-direction: column; min-height: 100vh; padding-bottom: 2.6rem; }
 
-.topbar { background: #c8632c; color: white; padding: 1rem 1.5rem; }
-.topbar h1 { margin: 0; font-size: 1.4rem; font-weight: 700; }
+/* ---------- Title bar ---------- */
+.topbar {
+  background: linear-gradient(180deg, #4a9bff 0%, #1958ee 8%, #1958ee 45%, #0f45cf 88%, #0a2fa0 100%);
+  color: white;
+  padding: 0.5rem 0.5rem 0.5rem 0.8rem;
+  display: flex; justify-content: space-between; align-items: center;
+  border: 1px solid #0a2fa0; border-bottom: 2px solid #0a2fa0;
+}
+.title-left { display: flex; align-items: center; gap: 0.5rem; }
+.title-icon { font-size: 1.2rem; }
+.topbar h1 { margin: 0; font-size: 1.05rem; font-weight: 700; text-shadow: 1px 1px 1px rgba(0,0,0,0.4); }
+.title-controls { display: flex; gap: 0.3rem; }
+.win-btn {
+  width: 22px; height: 20px; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(180deg, #4f92e8 0%, #1c5cd6 100%);
+  border: 1px solid #0a2fa0; border-radius: 2px;
+  font-size: 0.8rem; font-weight: 700; color: white; cursor: default;
+  box-shadow: inset 1px 1px 0 rgba(255,255,255,0.4);
+}
+.win-btn.close { background: linear-gradient(180deg, #f3897a 0%, #d0261a 100%); }
 
 .layout { display: flex; flex: 1; gap: 1.2rem; padding: 1.2rem; align-items: flex-start; }
 .menu { flex: 2; min-width: 0; }
 
 .category { margin-bottom: 1.2rem; }
 .category h2 {
-  text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.95rem;
-  color: #8a5a2b; margin: 0 0 0.6rem; padding-bottom: 0.3rem;
-  border-bottom: 2px solid #e0c9a6;
+  text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.9rem;
+  color: #0a2fa0; margin: 0 0 0.6rem; padding-bottom: 0.3rem;
+  border-bottom: 2px solid #1958ee;
 }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.7rem; }
 .menu-item {
   display: flex; flex-direction: column; align-items: flex-start; gap: 0.3rem;
-  padding: 1rem; border-radius: 12px; border: 1px solid #e0c9a6; border-top-width: 6px;
-  background: white; cursor: pointer; text-align: left;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  padding: 1rem; border-radius: 4px; border: 1px solid #7f9db9; border-top-width: 6px;
+  background: linear-gradient(180deg, #ffffff 0%, #ece9d8 100%); cursor: pointer; text-align: left;
+  box-shadow: inset 1px 1px 0 #fff, 2px 2px 4px rgba(0,0,0,0.25);
+  font-family: inherit;
 }
-.menu-item:active { background: #fdf0df; }
+.menu-item:active { box-shadow: inset 1px 1px 3px rgba(0,0,0,0.35); }
 .menu-item:disabled { opacity: 0.4; cursor: not-allowed; }
-.menu-item .name { font-weight: 700; font-size: 1rem; line-height: 1.2; }
-.menu-item .price { color: #c8632c; font-weight: 700; font-size: 0.95rem; }
+.menu-item .name { font-weight: 700; font-size: 1rem; line-height: 1.2; color: #000; }
+.menu-item .price { color: #0a2fa0; font-weight: 700; font-size: 0.95rem; }
 
 .cart { flex: 1.1; min-width: 340px; display: flex; flex-direction: column; gap: 1rem; }
 
 .panel-card {
-  background: white; border-radius: 14px; padding: 1.1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  background: #ece9d8; border: 1px solid #7f9db9; border-radius: 4px; padding: 1.1rem;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
 }
 .panel-title {
-  margin: 0 0 0.7rem; font-size: 1.05rem; font-weight: 700; color: #241a0d;
+  margin: 0 0 0.7rem; font-size: 1rem; font-weight: 700; color: #0a2fa0;
+  border-bottom: 1px solid #b8b49a; padding-bottom: 0.4rem;
 }
 
 .customer-input {
-  width: 100%; padding: 0.6rem; margin-bottom: 0.7rem; border-radius: 8px;
-  border: 1px solid #ddd; font-size: 0.95rem;
+  width: 100%; padding: 0.55rem; margin-bottom: 0.7rem; border-radius: 2px;
+  border: 1px solid #7f9db9; font-size: 0.95rem; background: white;
+  box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2); font-family: inherit;
 }
 
 .cart-lines { list-style: none; padding: 0; margin: 0; }
 .cart-line {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0.55rem 0; border-bottom: 1px solid #f0e6d8; gap: 0.6rem;
+  padding: 0.55rem 0; border-bottom: 1px solid #cfcbb0; gap: 0.6rem;
 }
 .cart-line-name { flex: 1; font-weight: 600; font-size: 0.95rem; }
 .qty-controls { display: flex; align-items: center; gap: 0.5rem; }
 .qty-controls button {
-  width: 30px; height: 30px; border-radius: 50%; border: 1px solid #ccc;
-  background: #fafafa; cursor: pointer; font-size: 1rem; font-weight: 700;
+  width: 30px; height: 30px; border-radius: 50%; border: 1px solid #003c74;
+  background: linear-gradient(180deg, #fff 0%, #ece9d8 100%); cursor: pointer;
+  font-size: 1rem; font-weight: 700; box-shadow: inset 1px 1px 0 #fff, 1px 1px 2px rgba(0,0,0,0.3);
 }
 .qty-controls button:disabled { opacity: 0.3; cursor: not-allowed; }
 .line-total { font-weight: 600; min-width: 62px; text-align: right; }
-.empty { color: #999; padding: 0.8rem 0; font-size: 0.9rem; }
+.empty { color: #666; padding: 0.8rem 0; font-size: 0.9rem; }
 
 .total-row {
   display: flex; justify-content: space-between; align-items: baseline;
-  margin-top: 0.7rem; padding-top: 0.7rem; border-top: 2px solid #f0e6d8;
+  margin-top: 0.7rem; padding-top: 0.7rem; border-top: 2px solid #b8b49a;
   font-size: 1.05rem; font-weight: 700;
 }
-.total-value { font-size: 1.5rem; color: #c8632c; }
+.total-value { font-size: 1.5rem; color: #0a2fa0; }
 
 /* -------- Paiement -------- */
 .payment-card { display: flex; flex-direction: column; gap: 0.8rem; }
 
 .remaining-banner {
-  background: #fdeee1; border: 1px solid #e8b98a; color: #8a4a1a;
-  border-radius: 10px; padding: 0.7rem 0.9rem; font-weight: 700; text-align: center;
+  background: #fff3c4; border: 1px solid #d0a300; color: #6b4e00;
+  border-radius: 3px; padding: 0.7rem 0.9rem; font-weight: 700; text-align: center;
+  box-shadow: inset 1px 1px 2px rgba(0,0,0,0.1);
 }
-.remaining-banner.paid { background: #e7f6ea; border-color: #9cd6ab; color: #23703a; }
+.remaining-banner.paid { background: #dcf5c8; border-color: #3c9c1c; color: #2d5a00; }
 
 .payment-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem; }
 .payment-chip {
-  display: flex; align-items: center; gap: 0.5rem; background: #f7f2e9;
-  border: 1px solid #e6dcc8; border-radius: 10px; padding: 0.5rem 0.7rem; font-size: 0.9rem;
+  display: flex; align-items: center; gap: 0.5rem; background: white;
+  border: 1px solid #7f9db9; border-radius: 3px; padding: 0.5rem 0.7rem; font-size: 0.9rem;
 }
-.chip-method { font-weight: 700; }
+.chip-method { font-weight: 700; color: #0a2fa0; }
 .chip-amount { font-weight: 600; }
-.chip-change { color: #2b7a3f; font-size: 0.82rem; }
-.chip-items { color: #777; font-size: 0.8rem; font-style: italic; }
+.chip-change { color: #2d7a12; font-size: 0.82rem; }
+.chip-items { color: #666; font-size: 0.8rem; font-style: italic; }
 .chip-remove {
-  margin-left: auto; background: none; border: none; color: #c0392b;
-  font-size: 1rem; cursor: pointer; padding: 0.1rem 0.3rem;
+  margin-left: auto; background: none; border: none; color: #a30000;
+  font-size: 1rem; cursor: pointer; padding: 0.1rem 0.3rem; font-weight: 700;
 }
 
 .split-toggle { display: flex; gap: 0.4rem; }
 .split-toggle button {
-  flex: 1; padding: 0.5rem; border-radius: 8px; border: 1px solid #d9c19a;
-  background: white; font-size: 0.82rem; cursor: pointer;
+  flex: 1; padding: 0.5rem; border-radius: 3px; border: 1px solid #003c74;
+  background: linear-gradient(180deg, #fff 0%, #ece9d8 100%); font-size: 0.82rem; cursor: pointer;
+  box-shadow: inset 1px 1px 0 #fff, 1px 1px 2px rgba(0,0,0,0.25); font-family: inherit;
 }
-.split-toggle button.active { background: #241a0d; color: white; border-color: #241a0d; }
+.split-toggle button.active { background: linear-gradient(180deg, #4a9bff 0%, #0a2fa0 100%); color: white; }
 
 .split-items { display: flex; flex-direction: column; gap: 0.5rem; }
 .split-item-row {
   display: flex; align-items: center; justify-content: space-between;
-  gap: 0.5rem; padding: 0.4rem 0; border-bottom: 1px solid #f0e6d8;
+  gap: 0.5rem; padding: 0.4rem 0; border-bottom: 1px solid #cfcbb0;
 }
 .split-item-name { font-size: 0.9rem; font-weight: 600; }
-.split-item-avail { font-weight: 400; color: #999; font-size: 0.8rem; }
+.split-item-avail { font-weight: 400; color: #666; font-size: 0.8rem; }
 .split-items-total { text-align: right; font-weight: 700; padding-top: 0.3rem; }
 
 .payment-entry {
-  border: 1px solid #eee0cc; border-radius: 12px; padding: 0.9rem;
-  display: flex; flex-direction: column; gap: 0.7rem; background: #fffdf8;
+  border: 1px solid #7f9db9; border-radius: 4px; padding: 0.9rem;
+  display: flex; flex-direction: column; gap: 0.7rem; background: white;
 }
 .entry-header { display: flex; align-items: center; justify-content: space-between; }
-.entry-title { font-weight: 700; font-size: 0.95rem; }
+.entry-title { font-weight: 700; font-size: 0.95rem; color: #0a2fa0; }
 .mode-toggle {
-  background: none; border: none; color: #8a5a2b; text-decoration: underline;
-  font-size: 0.8rem; cursor: pointer; padding: 0.2rem 0;
+  background: none; border: none; color: #0a2fa0; text-decoration: underline;
+  font-size: 0.8rem; cursor: pointer; padding: 0.2rem 0; font-family: inherit;
 }
 
 .quick-amounts { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 .quick-amounts button {
-  flex: 1; min-width: 80px; padding: 0.5rem; border-radius: 8px;
-  border: 1px solid #d9c19a; background: white; font-size: 0.85rem; cursor: pointer;
+  flex: 1; min-width: 80px; padding: 0.5rem; border-radius: 3px;
+  border: 1px solid #003c74; background: linear-gradient(180deg, #fff 0%, #ece9d8 100%);
+  font-size: 0.85rem; cursor: pointer; box-shadow: inset 1px 1px 0 #fff, 1px 1px 2px rgba(0,0,0,0.25);
+  font-family: inherit;
 }
 
-.amount-input { width: 100%; padding: 0.65rem; border-radius: 8px; border: 1px solid #ddd; font-size: 1.1rem; }
+.amount-input {
+  width: 100%; padding: 0.65rem; border-radius: 2px; border: 1px solid #7f9db9;
+  font-size: 1.1rem; background: white; box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2);
+  font-family: inherit;
+}
 
 .numpad-wrap { display: flex; flex-direction: column; gap: 0.5rem; }
 .amount-display {
-  background: #fdf6ec; border: 1px solid #e0c9a6; border-radius: 10px;
+  background: white; border: 1px solid #7f9db9; border-radius: 2px;
   padding: 0.7rem; text-align: right; display: flex; flex-direction: column;
-  align-items: flex-end; gap: 0.15rem;
+  align-items: flex-end; gap: 0.15rem; box-shadow: inset 1px 1px 3px rgba(0,0,0,0.25);
 }
-.amount-value { font-size: 1.5rem; font-weight: 700; }
-.amount-raw { font-size: 0.75rem; color: #999; }
+.amount-value { font-size: 1.5rem; font-weight: 700; color: #0a2fa0; }
+.amount-raw { font-size: 0.75rem; color: #888; }
 
 .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
 .keypad-btn {
-  padding: 0; height: 54px; border-radius: 10px; border: 1px solid #e0c9a6;
-  background: white; font-size: 1.3rem; font-weight: 700; cursor: pointer;
+  padding: 0; height: 54px; border-radius: 4px; border: 1px solid #003c74;
+  background: linear-gradient(180deg, #fff 0%, #ece9d8 100%); font-size: 1.3rem; font-weight: 700;
+  cursor: pointer; box-shadow: inset 1px 1px 0 #fff, 1px 1px 3px rgba(0,0,0,0.3);
 }
-.keypad-btn:active { background: #f0e0c8; }
-.keypad-btn.back { color: #c0392b; font-size: 1.5rem; }
+.keypad-btn:active { box-shadow: inset 1px 1px 4px rgba(0,0,0,0.4); }
+.keypad-btn.back { color: #a30000; font-size: 1.5rem; }
 .keypad-clear {
-  padding: 0.55rem; border-radius: 10px; border: 1px solid #c0392b;
-  background: white; color: #c0392b; font-weight: 700; cursor: pointer;
+  padding: 0.55rem; border-radius: 3px; border: 1px solid #7a0e08;
+  background: linear-gradient(180deg, #ff9b8c 0%, #d0261a 100%); color: white; font-weight: 700;
+  cursor: pointer; box-shadow: inset 1px 1px 0 rgba(255,255,255,0.4);
 }
 
 .method-select { display: flex; gap: 0.4rem; }
 .method-select button {
-  flex: 1; padding: 0.6rem; border-radius: 10px; border: 1px solid #c8632c;
-  background: white; font-weight: 600; cursor: pointer; font-size: 0.9rem;
+  flex: 1; padding: 0.6rem; border-radius: 3px; border: 1px solid #003c74;
+  background: linear-gradient(180deg, #fff 0%, #ece9d8 100%); font-weight: 600; cursor: pointer;
+  font-size: 0.9rem; box-shadow: inset 1px 1px 0 #fff, 1px 1px 2px rgba(0,0,0,0.25); font-family: inherit;
 }
-.method-select button.active { background: #c8632c; color: white; }
+.method-select button.active { background: linear-gradient(180deg, #4a9bff 0%, #0a2fa0 100%); color: white; }
 
 .cash-received-row { display: flex; flex-direction: column; gap: 0.4rem; }
-.cash-received-label { font-size: 0.82rem; color: #666; }
+.cash-received-label { font-size: 0.82rem; color: #444; }
 .bill-buttons { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 .bill-buttons button {
-  padding: 0.45rem 0.7rem; border-radius: 8px; border: 1px solid #ddd;
-  background: white; cursor: pointer; font-size: 0.85rem; font-weight: 600;
+  padding: 0.45rem 0.7rem; border-radius: 3px; border: 1px solid #7f9db9;
+  background: white; cursor: pointer; font-size: 0.85rem; font-weight: 600; font-family: inherit;
 }
 .bill-buttons button:disabled { opacity: 0.35; cursor: not-allowed; }
 
@@ -164,24 +202,56 @@ body { margin: 0; font-family: system-ui, sans-serif; background: #f2ede2; color
 .qr-block { text-align: center; font-size: 0.9rem; }
 
 .add-payment {
-  padding: 0.7rem; border-radius: 10px; border: none; background: #241a0d;
+  padding: 0.7rem; border-radius: 3px; border: 1px solid #1c4a0a;
+  background: linear-gradient(180deg, #6fce4f 0%, #2d7a12 100%);
   color: white; font-weight: 700; cursor: pointer; font-size: 0.95rem;
+  box-shadow: inset 1px 1px 0 rgba(255,255,255,0.5);
 }
 
-.change { font-weight: 700; color: #2b7a3f; font-size: 0.9rem; }
+.change { font-weight: 700; color: #2d7a12; font-size: 0.9rem; }
 
 .error {
-  color: #c0392b; background: #fdecea; border: 1px solid #f5c2bb;
-  border-radius: 8px; padding: 0.5rem 0.7rem; font-size: 0.85rem;
+  color: #a30000; background: #ffe0dc; border: 1px solid #d0261a;
+  border-radius: 3px; padding: 0.5rem 0.7rem; font-size: 0.85rem;
 }
 
 .submit {
-  width: 100%; padding: 0.9rem; background: #2b7a3f; color: white; border: none;
-  border-radius: 12px; font-size: 1.05rem; font-weight: 700; cursor: pointer;
+  width: 100%; padding: 0.9rem; background: linear-gradient(180deg, #6fce4f 0%, #2d7a12 100%);
+  color: white; border: 1px solid #1c4a0a; border-radius: 4px; font-size: 1.05rem; font-weight: 700;
+  cursor: pointer; box-shadow: inset 1px 1px 0 rgba(255,255,255,0.5), 2px 2px 4px rgba(0,0,0,0.3);
 }
 .submit:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .last-order {
-  background: #eaf7ee; color: #2b7a3f; padding: 0.6rem; border-radius: 8px;
-  text-align: center; font-weight: 600; font-size: 0.9rem;
+  background: #dcf5c8; color: #2d5a00; padding: 0.6rem; border-radius: 3px;
+  text-align: center; font-weight: 600; font-size: 0.9rem; border: 1px solid #3c9c1c;
+}
+
+/* ---------- Taskbar ---------- */
+.taskbar {
+  position: fixed; left: 0; right: 0; bottom: 0; height: 2.6rem;
+  background: linear-gradient(180deg, #2a6fe0 0%, #1e4fc0 8%, #163d9a 90%, #10306f 100%);
+  border-top: 1px solid #4a9bff;
+  display: flex; align-items: center; gap: 0.6rem; padding: 0 0.4rem;
+  z-index: 10;
+}
+.start-btn {
+  display: flex; align-items: center; gap: 0.35rem;
+  background: linear-gradient(180deg, #6fce4f 0%, #3c9c1c 55%, #2d7a12 100%);
+  border: 1px solid #1c4a0a; border-radius: 4px;
+  color: white; font-weight: 800; font-style: italic; font-size: 0.9rem;
+  padding: 0.4rem 0.9rem; cursor: pointer;
+  box-shadow: inset 1px 1px 0 rgba(255,255,255,0.5); font-family: inherit;
+}
+.start-flag { font-style: normal; }
+.taskbar-sep { width: 1px; height: 1.8rem; background: rgba(255,255,255,0.3); }
+.taskbar-item {
+  background: #2f5fc4; border: 1px solid #163d9a; border-radius: 3px;
+  color: white; font-size: 0.85rem; padding: 0.35rem 0.9rem;
+  box-shadow: inset 1px 1px 2px rgba(0,0,0,0.4);
+}
+.taskbar-clock {
+  margin-left: auto; color: white; font-size: 0.85rem;
+  background: #163d9a; border: 1px solid #0f2c73; border-radius: 3px;
+  padding: 0.35rem 0.8rem;
 }

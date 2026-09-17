@@ -100,6 +100,12 @@ export default function App() {
   const [lastOrder, setLastOrder] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [clock, setClock] = useState(new Date());
+
+  useEffect(() => {
+    const t = setInterval(() => setClock(new Date()), 1000 * 15);
+    return () => clearInterval(t);
+  }, []);
 
   useEffect(() => {
     fetch(`${API_URL}/api/menu`)
@@ -312,7 +318,15 @@ export default function App() {
   return (
     <div className="app">
       <header className="topbar">
-        <h1>CrepesFest - Caisse</h1>
+        <div className="title-left">
+          <span className="title-icon">🥞</span>
+          <h1>CrepesFest - Caisse</h1>
+        </div>
+        <div className="title-controls">
+          <span className="win-btn min">_</span>
+          <span className="win-btn max">□</span>
+          <span className="win-btn close">×</span>
+        </div>
       </header>
 
       <div className="layout">
@@ -563,6 +577,17 @@ export default function App() {
           </div>
         </aside>
       </div>
+
+      <footer className="taskbar">
+        <button className="start-btn">
+          <span className="start-flag">⊞</span> Demarrer
+        </button>
+        <div className="taskbar-sep" />
+        <div className="taskbar-item active">CrepesFest - Caisse</div>
+        <div className="taskbar-clock">
+          {clock.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
+        </div>
+      </footer>
     </div>
   );
 }
