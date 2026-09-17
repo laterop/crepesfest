@@ -17,11 +17,23 @@ export default function App() {
   const [clotureError, setClotureError] = useState("");
   const [newItem, setNewItem] = useState({ name: "", price: "", category: "sucree", color: "#e0c9a6" });
   const [clock, setClock] = useState(new Date());
+  const [printCloture, setPrintCloture] = useState(null);
 
   useEffect(() => {
     const t = setInterval(() => setClock(new Date()), 1000 * 15);
     return () => clearInterval(t);
   }, []);
+
+  useEffect(() => {
+    if (!printCloture) return;
+    const t = setTimeout(() => window.print(), 50);
+    const onAfterPrint = () => setPrintCloture(null);
+    window.addEventListener("afterprint", onAfterPrint);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener("afterprint", onAfterPrint);
+    };
+  }, [printCloture]);
 
   function loadMenu() {
     fetch(`${API_URL}/api/menu`).then((r) => r.json()).then(setMenu);
@@ -132,10 +144,11 @@ export default function App() {
         const body = await res.json().catch(() => ({}));
         throw new Error(body.error || "Echec de la cloture");
       }
-      await res.json();
+      const report = await res.json();
       loadOrders();
       loadStats();
       loadClotures();
+      setPrintCloture(report);
     } catch (e) {
       setClotureError(e.message);
     } finally {
@@ -399,6 +412,9 @@ export default function App() {
                     {new Date(c.date).toLocaleString("fr-FR")}
                   </span>
                   <span className="cloture-total">{c.totalVentes.toFixed(2)} EUR</span>
+                  <button type="button" className="print-btn" onClick={() => setPrintCloture(c)}>
+                    🖨️ Imprimer
+                  </button>
                 </div>
                 <div className="cloture-details">
                   <span>{c.nbCommandes} commandes</span>
@@ -429,6 +445,55 @@ export default function App() {
           {clock.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
         </div>
       </footer>
+
+      {printCloture && (
+        <div className="print-ticket">
+          <div className="ticket-center">CrepesFest</div>
+          <div className="ticket-center">Ticket Z</div>
+          <div className="ticket-sep">--------------------------------</div>
+          <div>{new Date(printCloture.date).toLocaleString("fr-FR")}</div>
+          <div className="ticket-sep">--------------------------------</div>
+          <div className="ticket-row">
+            <span>Commandes</span>
+            <span>{printCloture.nbCommandes}</span>
+          </div>
+          <div className="ticket-row">
+            <span>Panier moyen</span>
+            <span>{printCloture.panierMoyen.toFixed(2)} EUR</span>
+          </div>
+          <div className="ticket-sep">--------------------------------</div>
+          <div className="ticket-center ticket-bold">Ventes par produit</div>
+          {printCloture.topProduits.map((p) => (
+            <div className="ticket-row" key={p.name}>
+              <span>{p.qty} x {p.name}</span>
+            </div>
+          ))}
+          <div className="ticket-sep">--------------------------------</div>
+          <div className="ticket-center ticket-bold">Ventes par paiement</div>
+          {Object.entries(printCloture.parPaiement).map(([m, montant]) => (
+            <div className="ticket-row" key={m}>
+              <span>{m}</span>
+              <span>{montant.toFixed(2)} EUR</span>
+            </div>
+          ))}
+          <div className="ticket-sep">--------------------------------</div>
+          <div className="ticket-row ticket-bold ticket-big">
+            <span>TOTAL</span>
+            <span>{printCloture.totalVentes.toFixed(2)} EUR</span>
+          </div>
+          <div className="ticket-sep">--------------------------------</div>
+          <div className="ticket-row">
+            <span>Fond de caisse</span>
+            <span>{printCloture.fondDeCaisse.toFixed(2)} EUR</span>
+          </div>
+          <div className="ticket-row ticket-bold">
+            <span>Especes attendues</span>
+            <span>{printCloture.especesAttendues.toFixed(2)} EUR</span>
+          </div>
+          <div className="ticket-sep">--------------------------------</div>
+          <div className="ticket-center">Merci et a bientot !</div>
+        </div>
+      )}
     </div>
   );
 }
