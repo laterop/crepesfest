@@ -1,0 +1,46 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; background: #fdf6ec; color: #2b1d0e; }
+.app { display: flex; flex-direction: column; min-height: 100vh; }
+.topbar { background: #d97b3f; color: white; padding: 1rem 1.5rem; }
+.topbar h1 { margin: 0; font-size: 1.3rem; }
+.layout { display: flex; flex: 1; gap: 1rem; padding: 1rem; }
+.menu { flex: 2; }
+.category h2 { text-transform: capitalize; margin: 0.8rem 0 0.4rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.6rem; }
+.menu-item {
+  display: flex; flex-direction: column; align-items: flex-start;
+  padding: 0.8rem; border-radius: 10px; border: 1px solid #e0c9a6;
+  background: white; cursor: pointer; text-align: left;
+}
+.menu-item:disabled { opacity: 0.4; cursor: not-allowed; }
+.menu-item .name { font-weight: 600; }
+.menu-item .price { color: #8a5a2b; margin-top: 0.3rem; }
+
+.cart {
+  flex: 1; min-width: 320px; background: white; border-radius: 12px;
+  padding: 1rem; box-shadow: 0 1px 6px rgba(0,0,0,0.08); height: fit-content;
+}
+.customer-input { width: 100%; padding: 0.5rem; margin-bottom: 0.6rem; border-radius: 8px; border: 1px solid #ddd; }
+.cart-lines { list-style: none; padding: 0; margin: 0; }
+.cart-line { display: flex; align-items: center; justify-content: space-between; padding: 0.4rem 0; border-bottom: 1px solid #f0e6d8; gap: 0.5rem; }
+.cart-line .qty-controls { display: flex; align-items: center; gap: 0.4rem; }
+.cart-line .qty-controls button { width: 24px; height: 24px; border-radius: 50%; border: 1px solid #ccc; background: #fafafa; cursor: pointer; }
+.empty { color: #999; padding: 0.6rem 0; }
+.total { font-size: 1.2rem; font-weight: 700; margin: 0.8rem 0; text-align: right; }
+
+.payment-methods { display: flex; gap: 0.4rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
+.payment-methods button { flex: 1; padding: 0.5rem; border-radius: 8px; border: 1px solid #d97b3f; background: white; cursor: pointer; }
+.payment-methods button.active { background: #d97b3f; color: white; }
+
+.especes-block label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.9rem; }
+.especes-block input { padding: 0.5rem; border-radius: 8px; border: 1px solid #ddd; }
+.change { margin-top: 0.5rem; font-weight: 600; color: #2b7a3f; }
+.cb-block, .qr-block { font-size: 0.9rem; }
+.qr-block { text-align: center; }
+.hint { color: #999; font-size: 0.75rem; }
+.checkbox { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.5rem; }
+
+.error { color: #c0392b; margin: 0.5rem 0; font-size: 0.9rem; }
+.submit { width: 100%; padding: 0.8rem; margin-top: 0.8rem; background: #2b7a3f; color: white; border: none; border-radius: 10px; font-size: 1rem; cursor: pointer; }
+.submit:disabled { opacity: 0.5; cursor: not-allowed; }
+.last-order { margin-top: 0.6rem; background: #eaf7ee; color: #2b7a3f; padding: 0.5rem; border-radius: 8px; text-align: center; }

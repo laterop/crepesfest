@@ -1,0 +1,30 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; background: #f4f0e8; color: #2b1d0e; }
+.app { min-height: 100vh; }
+.topbar { background: #6b3fa0; color: white; padding: 1rem 1.5rem; }
+.topbar h1 { margin: 0; font-size: 1.3rem; }
+.tabs { display: flex; gap: 0.5rem; padding: 1rem 1.5rem 0; }
+.tabs button { padding: 0.5rem 1rem; border-radius: 8px 8px 0 0; border: 1px solid #ccc; background: #eee; cursor: pointer; text-transform: capitalize; }
+.tabs button.active { background: white; font-weight: 700; border-bottom: 1px solid white; }
+.panel { background: white; margin: 0 1.5rem 1.5rem; padding: 1.2rem; border-radius: 0 10px 10px 10px; box-shadow: 0 1px 6px rgba(0,0,0,0.08); }
+
+table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
+th, td { text-align: left; padding: 0.5rem; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+input[type="text"], input[type="number"], td input { padding: 0.3rem; border: 1px solid #ddd; border-radius: 6px; width: 100%; }
+.new-item { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.new-item input { padding: 0.5rem; border: 1px solid #ddd; border-radius: 6px; }
+.new-item button { padding: 0.5rem 1rem; background: #6b3fa0; color: white; border: none; border-radius: 6px; cursor: pointer; }
+.danger { background: #c0392b; color: white; border: none; padding: 0.3rem 0.6rem; border-radius: 6px; cursor: pointer; }
+
+.stat-cards { display: flex; gap: 1rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
+.stat-card { background: #f4f0e8; border-radius: 10px; padding: 1rem 1.5rem; text-align: center; flex: 1; min-width: 140px; }
+.stat-card .value { font-size: 1.4rem; font-weight: 700; }
+.stat-card .label { color: #777; font-size: 0.85rem; }
+
+.bars { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+.bar-row { display: grid; grid-template-columns: 140px 1fr 80px; align-items: center; gap: 0.6rem; }
+.bar-label { font-size: 0.85rem; text-transform: capitalize; }
+.bar-track { background: #eee; border-radius: 999px; height: 10px; overflow: hidden; }
+.bar-fill { background: #6b3fa0; height: 100%; }
+.bar-fill.alt { background: #d97b3f; }
+.bar-value { font-size: 0.85rem; text-align: right; }
