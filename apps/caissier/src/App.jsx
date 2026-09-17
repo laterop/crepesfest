@@ -81,6 +81,7 @@ function NumPad({ raw, onChange, numpadMode }) {
 }
 
 export default function App() {
+  const [view, setView] = useState("commande"); // "commande" | "paiement"
   const [menu, setMenu] = useState([]);
   const [cart, setCart] = useState({}); // menuItemId -> qty
   const [customerName, setCustomerName] = useState("");
@@ -308,6 +309,7 @@ export default function App() {
       const order = await res.json();
       setLastOrder(order);
       resetOrder();
+      setView("commande");
     } catch (e) {
       setError(e.message);
     } finally {
@@ -320,7 +322,7 @@ export default function App() {
       <header className="topbar">
         <div className="title-left">
           <span className="title-icon">🥞</span>
-          <h1>CrepesFest - Caisse</h1>
+          <h1>CrepesFest - Caisse{view === "paiement" ? " - Paiement" : ""}</h1>
         </div>
         <div className="title-controls">
           <span className="win-btn min">_</span>
@@ -329,61 +331,114 @@ export default function App() {
         </div>
       </header>
 
-      <div className="layout">
-        <section className="menu">
-          {Object.entries(categories).map(([cat, items]) => (
-            <div key={cat} className="category">
-              <h2>{cat}</h2>
-              <div className="grid">
-                {items.map((item) => (
-                  <button
-                    key={item.id}
-                    className="menu-item"
-                    style={{ borderTopColor: item.color || "#e0c9a6" }}
-                    disabled={!item.available}
-                    onClick={() => addToCart(item.id)}
-                  >
-                    <span className="name">{item.name}</span>
-                    <span className="price">{item.price.toFixed(2)} EUR</span>
-                  </button>
+      {view === "commande" && (
+        <div className="layout">
+          <section className="menu">
+            {Object.entries(categories).map(([cat, items]) => (
+              <div key={cat} className="category">
+                <h2>{cat}</h2>
+                <div className="grid">
+                  {items.map((item) => (
+                    <button
+                      key={item.id}
+                      className="menu-item"
+                      style={{ borderTopColor: item.color || "#e0c9a6" }}
+                      disabled={!item.available}
+                      onClick={() => addToCart(item.id)}
+                    >
+                      <span className="name">{item.name}</span>
+                      <span className="price">{item.price.toFixed(2)} EUR</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </section>
+
+          <aside className="cart">
+            <div className="panel-card">
+              <h2 className="panel-title">Commande</h2>
+              <input
+                className="customer-input"
+                placeholder="Nom du client (optionnel)"
+                value={customerName}
+                onChange={(e) => setCustomerName(e.target.value)}
+              />
+
+              <ul className="cart-lines">
+                {cartLines.length === 0 && <li className="empty">Panier vide, touche un produit a gauche</li>}
+                {cartLines.map((l) => (
+                  <li key={l.id} className="cart-line">
+                    <span className="cart-line-name">{l.name}</span>
+                    <div className="qty-controls">
+                      <button onClick={() => decFromCart(l.id)}>-</button>
+                      <span>{l.qty}</span>
+                      <button onClick={() => addToCart(l.id)}>+</button>
+                    </div>
+                    <span className="line-total">{(l.price * l.qty).toFixed(2)} EUR</span>
+                  </li>
                 ))}
+              </ul>
+
+              <div className="total-row">
+                <span>Total</span>
+                <span className="total-value">{total.toFixed(2)} EUR</span>
               </div>
             </div>
-          ))}
-        </section>
 
-        <aside className="cart">
-          <div className="panel-card">
-            <h2 className="panel-title">Commande</h2>
-            <input
-              className="customer-input"
-              placeholder="Nom du client (optionnel)"
-              value={customerName}
-              onChange={(e) => setCustomerName(e.target.value)}
-            />
+            <button
+              type="button"
+              className="submit"
+              disabled={cartLines.length === 0}
+              onClick={() => setView("paiement")}
+            >
+              Encaisser →
+            </button>
 
-            <ul className="cart-lines">
-              {cartLines.length === 0 && <li className="empty">Panier vide, touche un produit a gauche</li>}
-              {cartLines.map((l) => (
-                <li key={l.id} className="cart-line">
-                  <span className="cart-line-name">{l.name}</span>
-                  <div className="qty-controls">
-                    <button onClick={() => decFromCart(l.id)}>-</button>
-                    <span>{l.qty}</span>
-                    <button onClick={() => addToCart(l.id)}>+</button>
-                  </div>
-                  <span className="line-total">{(l.price * l.qty).toFixed(2)} EUR</span>
-                </li>
-              ))}
-            </ul>
+            {lastOrder && (
+              <div className="last-order">
+                Commande #{lastOrder.number} envoyee en cuisine ({lastOrder.total.toFixed(2)} EUR)
+              </div>
+            )}
+          </aside>
+        </div>
+      )}
 
-            <div className="total-row">
-              <span>Total</span>
-              <span className="total-value">{total.toFixed(2)} EUR</span>
+      {view === "paiement" && (
+        <div className="layout paiement-screen">
+          <aside className="cart recap-panel">
+            <button type="button" className="back-btn" onClick={() => setView("commande")}>
+              ← Modifier la commande
+            </button>
+
+            <div className="panel-card">
+              <h2 className="panel-title">Recapitulatif</h2>
+              {customerName && <div className="hint-text">Client : {customerName}</div>}
+
+              <ul className="cart-lines">
+                {cartLines.length === 0 && <li className="empty">Panier vide</li>}
+                {cartLines.map((l) => (
+                  <li key={l.id} className="cart-line">
+                    <span className="cart-line-name">{l.name}</span>
+                    <div className="qty-controls">
+                      <button onClick={() => decFromCart(l.id)}>-</button>
+                      <span>{l.qty}</span>
+                      <button onClick={() => addToCart(l.id)}>+</button>
+                    </div>
+                    <span className="line-total">{(l.price * l.qty).toFixed(2)} EUR</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="total-row">
+                <span>Total</span>
+                <span className="total-value">{total.toFixed(2)} EUR</span>
+              </div>
             </div>
-          </div>
+          </aside>
 
-          <div className="panel-card payment-card">
+          <section className="payment-full">
+            <div className="panel-card payment-card">
             <h2 className="panel-title">Paiement</h2>
 
             <div className={`remaining-banner ${fullyPaid && total > 0 ? "paid" : ""}`}>
@@ -574,9 +629,10 @@ export default function App() {
                 Commande #{lastOrder.number} envoyee en cuisine ({lastOrder.total.toFixed(2)} EUR)
               </div>
             )}
-          </div>
-        </aside>
-      </div>
+            </div>
+          </section>
+        </div>
+      )}
 
       <footer className="taskbar">
         <button className="start-btn">
